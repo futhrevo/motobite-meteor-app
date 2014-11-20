@@ -1,6 +1,9 @@
 # README #
 
-Created using meteor in MAC
+Created using meteor in Mac
+Authors:
+Rakesh k.rakeshlal@gmail.com
+Sandeep sandepkumr@gmail.com
 
 ### What is this repository for? ###
 
