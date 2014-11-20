@@ -11,6 +11,17 @@ Template.dispMap.rendered = function(){
 			gmap.addMarker(objMarker);
 	}	
 }
+
+Template.dispMap.events({
+	"keypress .form-control":function(event,template){
+		if(event.which === 13){
+			console.log(event);
+			var searchBox = new google.maps.places.SearchBox(event.text);
+		}
+			
+	}
+});
+
 Template.dispMap.destroyed = function(){
 	Session.set('map', false);
 }
