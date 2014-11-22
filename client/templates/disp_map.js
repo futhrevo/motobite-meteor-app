@@ -5,10 +5,10 @@ Template.dispMap.rendered = function(){
 	var locs = Posts.find().fetch();
 	for(var loc in locs){
 		var objMarker = locs[loc];
-		console.log(objMarker);
+		console.log(typeof objMarker.lat);
 		//check if marker already exists
 		if(! gmap.markerExists('id',objMarker.id))
-			gmap.addMarker(objMarker);
+			gmap.addMarker(objMarker,"taxi");
 	}
 	gmap.calcBounds();	
 }
@@ -28,7 +28,9 @@ Template.dispMap.events({
 		console.log("DestinationLat : "+placesDest[0].geometry.location.lat());
 		console.log("DestinationLong : "+placesDest[0].geometry.location.lng());
 		gmap.haversine(placesSrc[0].geometry.location, placesDest[0].geometry.location, "km");
-		console.log(gmap.sphericalD(placesSrc[0].geometry.location, placesDest[0].geometry.location));
+		console.log("google calculated without distancematrix : "+gmap.sphericalD(placesSrc[0].geometry.location, placesDest[0].geometry.location));
+		gmap.distanceMatrix(placesSrc[0].geometry.location,placesDest[0].geometry.location);
+
 	}
 });
 

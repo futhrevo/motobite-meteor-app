@@ -17,15 +17,36 @@ gmap = {
 	markerData: [],
 
 	//add a marker from the given marker object
-	addMarker: function(marker) {
-		var myLatlng = new google.maps.LatLng(marker.lat,marker.lng);
+	addMarker: function(marker,type) {
+		var icon;
+		var myLatlng;
+		var title;
+		if(type == "origin"){
+			icon = '/origin.png';
+			title = 'Origin';
+		}else if(type == "dest"){
+			icon = '/destination.png';
+			title = 'Destination';
+		}else{
+			icon = '/taxi.png';
+			title = 'taxi';
+		}
+
+		if(typeof marker.lat === 'number'){
+			myLatlng = new google.maps.LatLng(marker.lat,marker.lng);
+			title = marker.title;
+		}else{
+			myLatlng = marker;
+		}
+
+		
 		// To add the marker to the map, use the 'map' property
 		var mymarker = new google.maps.Marker({
 		    position: myLatlng,
 		    map: this.map,
-		    title:marker.title,
+		    title:title,
 		    animation: google.maps.Animation.DROP,
-		    icon:'/taxi.png'
+		    icon: icon
 		});
 
 		//keep track of markers and geo data
@@ -89,12 +110,50 @@ gmap = {
 		var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon/2) * Math.sin(dLon/2);
 		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 		var d = R * c; // Distance in km
-		console.log(d);
+		console.log("haversine distance in km : "+d);
 		return(d);
 	},
 
 	sphericalD: function(src, dest){
 		return google.maps.geometry.spherical.computeDistanceBetween(src,dest);
-	}
+	},
 
+	//Distance Matrix service - this has rate limitations need to reduce its use as much as possible
+	//https://developers.google.com/maps/documentation/javascript/distancematrix
+	distanceMatrix : function (origin1,destinationA) {
+		var service = new google.maps.DistanceMatrixService();
+		service.getDistanceMatrix(
+		{
+			origins: [origin1],
+			destinations: [destinationA],
+			travelMode: google.maps.TravelMode.DRIVING,
+			unitSystem: google.maps.UnitSystem.METRIC,
+			avoidHighways: false,
+			avoidTolls: false
+		}, this.dMcallback);
+	},
+
+	//callback to get distance matrix response
+	dMcallback: function callback(response, status) {
+		if (status != google.maps.DistanceMatrixStatus.OK) {
+			alert('Error was: ' + status);
+		} else {
+			var origins = response.originAddresses;
+			var destinations = response.destinationAddresses;
+			var outputDiv = document.getElementById('outputDiv');
+			outputDiv.innerHTML = '';
+//			deleteOverlays();
+
+			for (var i = 0; i < origins.length; i++) {
+				var results = response.rows[i].elements;
+//				addMarker(origins[i], false);
+				for (var j = 0; j < results.length; j++) {
+//					addMarker(destinations[j], true);
+					outputDiv.innerHTML += origins[i] + ' to ' + destinations[j]
+					+ ': ' + results[j].distance.text + ' in '
+					+ results[j].duration.text + '<br>';
+				}
+			}
+		}
+	}
 }
