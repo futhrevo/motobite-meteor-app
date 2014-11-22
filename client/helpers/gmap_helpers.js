@@ -3,6 +3,10 @@ gmap = {
 	//map object
 	map: null,
 
+	//searchbox
+	searchBoxSrc: null,
+	searchBoxDest: null,
+
 	//google markers objects
 	markers: [],
 
@@ -58,8 +62,39 @@ gmap = {
 			zoom: 17
 		};
 		this.map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
-
+		this.searchBoxSrc = new google.maps.places.SearchBox(document.getElementById("map-src-search"));
+		this.searchBoxDest = new google.maps.places.SearchBox(document.getElementById("map-dest-search"));
 		//global flag saying we initialized already
 		Session.set('map', true);
+	},
+
+	//distance calculation using Haversine formula
+	//http://andrew.hedges.name/experiments/haversine/
+/*	dlon = lon2 - lon1 
+	dlat = lat2 - lat1 
+	a = (sin(dlat/2))^2 + cos(lat1) * cos(lat2) * (sin(dlon/2))^2 
+	c = 2 * atan2( sqrt(a), sqrt(1-a) ) 
+	d = R * c (where R is the radius of the Earth)*/
+	haversine: function(src,dest,unit){
+		if(unit == "km"){
+			var R = 6373;
+		}else{
+			var R = 3961;
+		}
+		var dLat = (Math.PI/180) * (dest.lat() - src.lat());
+		var dLon = (Math.PI/180) * (dest.lng() - src.lng());
+		var lat1 = (Math.PI/180) * src.lat();
+		var lat2 = (Math.PI/180) * dest.lat();
+
+		var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon/2) * Math.sin(dLon/2);
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		var d = R * c; // Distance in km
+		console.log(d);
+		return(d);
+	},
+
+	sphericalD: function(src, dest){
+		return google.maps.geometry.spherical.computeDistanceBetween(src,dest);
 	}
+
 }

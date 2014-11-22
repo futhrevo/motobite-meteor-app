@@ -1,7 +1,11 @@
 <template name="dispMap">
 	<div class ="col-xs-6">
-		<input type="text" class="form-control" placeholder="Enter your loc destination and distance" id="map-search">
+		<form>
+			<input type="text" class="form-control" placeholder="Enter your source location" id="map-src-search">
+			<input type="text" class="form-control" placeholder="Enter your destination location and distance" id="map-dest-search">
+			<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+			<input type="submit" class="btn btn-primary" value="Submit">
+		</form>
 	</div>
-	<div class="google-map-canvas col-xs-6" id="map-canvas">
-	</div>
+	<div class="google-map-canvas col-xs-6" id="map-canvas"></div>
 </template>
