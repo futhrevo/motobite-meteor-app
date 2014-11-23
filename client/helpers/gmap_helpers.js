@@ -38,7 +38,7 @@ gmap = {
 		}else if(objType == 'latlng'){
 			myLatlng = marker;
 		}else if(objType == 'geoLatLng'){
-			//geocoder to get latlng object from address provided
+			//geocoder to get latlng object from address provided. Callbacks do not have this scope.so we need to expicitly call using gmap object
 			var geocoder= new google.maps.Geocoder();
 			geocoder.geocode({'address': marker}, function(results, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
