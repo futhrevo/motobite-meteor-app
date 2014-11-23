@@ -1,6 +1,6 @@
 
 Template.dispMap.rendered = function(){
-	//session variable to check map initialization
+	//session variablessss
 	if(! Session.get('map'))
 		gmap.initialize();
 
