@@ -17,7 +17,7 @@ gmap = {
 	markerData: [],
 
 	//add a marker from the given marker object
-	addMarker: function(marker,type) {
+	addMarker: function(marker,type,objType) {
 		var icon;
 		var myLatlng;
 		var title;
@@ -32,11 +32,37 @@ gmap = {
 			title = 'taxi';
 		}
 
-		if(typeof marker.lat === 'number'){
+		if(objType == 'gmapMarker'){
 			myLatlng = new google.maps.LatLng(marker.lat,marker.lng);
 			title = marker.title;
-		}else{
+		}else if(objType == 'latlng'){
 			myLatlng = marker;
+		}else if(objType == 'geoLatLng'){
+			//geocoder to get latlng object from address provided
+			var geocoder= new google.maps.Geocoder();
+			geocoder.geocode({'address': marker}, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					bounds.extend(results[0].geometry.location);
+					gmap.map.fitBounds(bounds);
+					console.log('Geocode calculated as : ' + results[0].geometry.location);
+					myLatlng = results[0].geometry.location;
+					//special case for async function 
+					var mymarker = new google.maps.Marker({
+					    position: myLatlng,
+					    map: gmap.map,
+					    title:title,
+					    animation: google.maps.Animation.DROP,
+					    icon: icon
+
+					});
+					console.log(myLatlng);
+					gmap.latLngs.push(myLatlng);
+					return myLatlng;
+				} else{
+					alert('Geocode was not successful for the following reason: '+ status);
+					myLatlng = null;
+				}
+			});
 		}
 
 		
@@ -47,8 +73,9 @@ gmap = {
 		    title:title,
 		    animation: google.maps.Animation.DROP,
 		    icon: icon
-		});
 
+		});
+		console.log('marker added at loc : '+myLatlng);
 		//keep track of markers and geo data
 		this.latLngs.push(myLatlng);
 		this.markers.push(mymarker);
@@ -59,8 +86,9 @@ gmap = {
 
 	// calculate and move the bound box based on our markers
 	calcBounds: function(){
-		var bounds = new google.maps.LatLngBounds();
+
 		for (var index in this.latLngs){
+			console.log(this.latLngs[index]);
 			bounds.extend(this.latLngs[index]);
 		}
 		this.map.fitBounds(bounds);
@@ -85,6 +113,7 @@ gmap = {
 		this.map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
 		this.searchBoxSrc = new google.maps.places.SearchBox(document.getElementById("map-src-search"));
 		this.searchBoxDest = new google.maps.places.SearchBox(document.getElementById("map-dest-search"));
+		bounds = new google.maps.LatLngBounds();
 		//global flag saying we initialized already
 		Session.set('map', true);
 	},
@@ -130,29 +159,33 @@ gmap = {
 			unitSystem: google.maps.UnitSystem.METRIC,
 			avoidHighways: false,
 			avoidTolls: false
-		}, this.dMcallback);
+		}, dMcallback);
 	},
 
-	//callback to get distance matrix response
-	dMcallback: function callback(response, status) {
-		if (status != google.maps.DistanceMatrixStatus.OK) {
-			alert('Error was: ' + status);
-		} else {
-			var origins = response.originAddresses;
-			var destinations = response.destinationAddresses;
-			var outputDiv = document.getElementById('outputDiv');
-			outputDiv.innerHTML = '';
+	
+
+}
+
+//callback to get distance matrix response
+function dMcallback(response, status) {
+	if (status != google.maps.DistanceMatrixStatus.OK) {
+		alert('Error was: ' + status);
+	} else {
+		var origins = response.originAddresses;
+		var destinations = response.destinationAddresses;
+		var outputDiv = document.getElementById('outputDiv');
+		outputDiv.innerHTML = '';
 //			deleteOverlays();
 
-			for (var i = 0; i < origins.length; i++) {
-				var results = response.rows[i].elements;
-//				addMarker(origins[i], false);
+		for (var i = 0; i < origins.length; i++) {
+			var results = response.rows[i].elements;
+			// console.log(origins[i]);
+			gmap.addMarker(origins[i], "origin",'geoLatLng');
 				for (var j = 0; j < results.length; j++) {
-//					addMarker(destinations[j], true);
+					gmap.addMarker(destinations[j], "dest",'geoLatLng');
 					outputDiv.innerHTML += origins[i] + ' to ' + destinations[j]
 					+ ': ' + results[j].distance.text + ' in '
-					+ results[j].duration.text + '<br>';
-				}
+				+ results[j].duration.text + '<br>';
 			}
 		}
 	}

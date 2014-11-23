@@ -1,5 +1,5 @@
 Template.dispMap.rendered = function(){
-//	if(! Session.get('map'))
+	if(! Session.get('map'))
 		gmap.initialize();
 
 	var locs = Posts.find().fetch();
@@ -8,7 +8,7 @@ Template.dispMap.rendered = function(){
 		console.log(typeof objMarker.lat);
 		//check if marker already exists
 		if(! gmap.markerExists('id',objMarker.id))
-			gmap.addMarker(objMarker,"taxi");
+			gmap.addMarker(objMarker,"taxi",'gmapMarker');
 	}
 	gmap.calcBounds();	
 }
@@ -30,7 +30,7 @@ Template.dispMap.events({
 		gmap.haversine(placesSrc[0].geometry.location, placesDest[0].geometry.location, "km");
 		console.log("google calculated without distancematrix : "+gmap.sphericalD(placesSrc[0].geometry.location, placesDest[0].geometry.location));
 		gmap.distanceMatrix(placesSrc[0].geometry.location,placesDest[0].geometry.location);
-
+		gmap.calcBounds();
 	}
 });
 
