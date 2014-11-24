@@ -4,3 +4,10 @@
 #map-canvas {
  	height : 400px;
 }
+
+#directions-panel {
+        height: 400px;
+        float: left;
+        width: 390px;
+        overflow: auto;
+      }

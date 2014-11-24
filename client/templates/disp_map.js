@@ -34,6 +34,7 @@ Template.dispMap.events({
 		gmap.haversine(placesSrc[0].geometry.location, placesDest[0].geometry.location, "km");
 		console.log("google calculated without distancematrix : "+gmap.sphericalD(placesSrc[0].geometry.location, placesDest[0].geometry.location));
 		gmap.distanceMatrix(placesSrc[0].geometry.location,placesDest[0].geometry.location);
+		gmap.calcRoute(placesSrc[0].geometry.location,placesDest[0].geometry.location);
 		gmap.calcBounds();
 	}
 });

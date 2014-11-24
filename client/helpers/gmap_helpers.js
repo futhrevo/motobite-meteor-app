@@ -162,7 +162,28 @@ gmap = {
 		}, dMcallback);
 	},
 
-	
+	//directions service with panel display
+	calcRoute : function (origin1,destinationA) {
+		var directionsDisplay = new google.maps.DirectionsRenderer();
+		var directionsService = new google.maps.DirectionsService();
+		directionsDisplay.setMap(this.map);
+		directionsDisplay.setPanel(document.getElementById('directions-panel'));
+
+		var request = {
+			origin: origin1,
+			destination: destinationA,
+			travelMode: google.maps.TravelMode.DRIVING,
+			unitSystem: google.maps.UnitSystem.METRIC,
+			avoidHighways: false,
+			avoidTolls: false
+		};
+
+		directionsService.route(request, function(response, status) {
+		    if (status == google.maps.DirectionsStatus.OK) {
+		      directionsDisplay.setDirections(response);
+		    }
+		  });
+	},
 
 }
 
