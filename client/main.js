@@ -1,4 +1,5 @@
 (function(){
-	console.log("Immediate function fired up");
-	
+
+	console.info("Immediate function fired up");
+
 }());

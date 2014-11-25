@@ -1,4 +1,5 @@
 //http://www.andrehonsberg.com/article/reactive-google-maps-markers-meteor-js
+
 gmap = {
 	//map object
 	map: null,
@@ -105,7 +106,7 @@ gmap = {
 
 	//initialize the map
 	initialize: function(){
-		console.log("[+] Initializing Google Maps...");
+		console.info("[+] Initializing Google Maps...");
 		var mapOptions ={
 			center: new google.maps.LatLng(12.9525812,77.7034538),
 			zoom: 17
@@ -174,12 +175,14 @@ gmap = {
 			destination: destinationA,
 			travelMode: google.maps.TravelMode.DRIVING,
 			unitSystem: google.maps.UnitSystem.METRIC,
+			provideRouteAlternatives : true,
 			avoidHighways: false,
 			avoidTolls: false
 		};
 
 		directionsService.route(request, function(response, status) {
 		    if (status == google.maps.DirectionsStatus.OK) {
+		    	console.log(response);
 		      directionsDisplay.setDirections(response);
 		    }
 		  });
