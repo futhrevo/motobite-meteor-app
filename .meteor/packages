@@ -9,4 +9,6 @@ insecure
 mizzao:bootstrap-3
 underscore
 mrt:geohash
+accounts-password
+ian:accounts-ui-bootstrap-3
 
