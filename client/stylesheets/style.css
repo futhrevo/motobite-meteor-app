@@ -3,6 +3,7 @@
 }
 #map-canvas {
  	height : 400px;
+ 	overflow: auto;
 }
 
 #directions-panel {
