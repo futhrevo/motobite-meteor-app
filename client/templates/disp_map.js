@@ -1,21 +1,4 @@
 
-Template.dispMap.rendered = function(){
-
-	//session variable to check map initialization
-	//stored a session variable map to store status
-	if(! Session.get('map'))
-		gmap.initialize();
-
-	/*var locs = Posts.find().fetch();
-	for(var loc in locs){
-		var objMarker = locs[loc];
-		console.log(typeof objMarker.lat);
-		//check if marker already exists
-		if(! gmap.markerExists('id',objMarker.id))
-			gmap.addMarker(objMarker,"taxi",'gmapMarker');
-	}*/
-	// gmap.calcBounds();	
-}
 
 Template.dispMap.events({
 	'submit form':function(event){
@@ -33,7 +16,7 @@ Template.dispMap.events({
 		console.log("DestinationLong : "+placesDest[0].geometry.location.lng());
 		gmap.haversine(placesSrc[0].geometry.location, placesDest[0].geometry.location, "km");
 		console.log("google calculated without distancematrix : "+gmap.sphericalD(placesSrc[0].geometry.location, placesDest[0].geometry.location));
-		gmap.distanceMatrix(placesSrc[0].geometry.location,placesDest[0].geometry.location);
+		//gmap.distanceMatrix(placesSrc[0].geometry.location,placesDest[0].geometry.location);
 		gmap.calcRoute(placesSrc[0].geometry.location,placesDest[0].geometry.location);
 		gmap.calcBounds();
 	}
@@ -46,7 +29,7 @@ Template.dispMap.destroyed = function(){
 Template.dispMap.helpers({
 	marker: function(){
 		if(Session.get('map'))
-			return Marker.find();
+			return Marker.find({valid: true});
 		else
 			return null;
 	}

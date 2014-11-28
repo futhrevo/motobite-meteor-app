@@ -9,7 +9,7 @@ gmap = {
 	searchBoxDest: null,
 
 	//google markers objects
-	markers: [],
+	markers: {},
 
 	//google lat lng objects
 	latLngs: [],
@@ -76,10 +76,13 @@ gmap = {
 		    icon: icon
 
 		});
-		console.log('marker added at loc : '+mymarker.toString());
+		console.log('marker added at loc : '+marker.id+mymarker.toString());
+		// var obj ={};
+		// var key = marker.id;
+		// obj[key] = mymarker;
 		//keep track of markers and geo data
 		this.latLngs.push(myLatlng);
-		this.markers.push(mymarker);
+		this.markers[marker.id] = mymarker;
 		this.markerData.push(marker);
 
 		return mymarker;
@@ -118,8 +121,9 @@ gmap = {
 		bounds = new google.maps.LatLngBounds();
 		bounds.extend(loc);
 		this.map.fitBounds(bounds);
+		directionsDisplay = new google.maps.DirectionsRenderer();
 		//global flag saying we initialized already
-		Session.set('map', true);
+		// Session.set('map', true);
 		console.info('[+] map initialized');
 	},
 
@@ -169,10 +173,14 @@ gmap = {
 
 	//directions service with panel display
 	calcRoute : function (origin1,destinationA) {
-		var directionsDisplay = new google.maps.DirectionsRenderer();
+		// var directionsDisplay = new google.maps.DirectionsRenderer();
+		// this.directionDisplay.setMap(null);
 		var directionsService = new google.maps.DirectionsService();
 		directionsDisplay.setMap(this.map);
-		directionsDisplay.setPanel(document.getElementById('directions-panel'));
+
+		var outputDiv = document.getElementById('directions-panel');
+		outputDiv.innerHTML = '';
+		directionsDisplay.setPanel(outputDiv);
 
 		var request = {
 			origin: origin1,
@@ -217,4 +225,23 @@ function dMcallback(response, status) {
 			}
 		}
 	}
+}
+
+
+Template.dispMap.rendered = function(){
+
+	//session variable to check map initialization
+	//stored a session variable map to store status
+	// if(! Session.get('map') || gmap.map === null)
+		gmap.initialize();
+		Session.set('map', true);
+	/*var locs = Posts.find().fetch();
+	for(var loc in locs){
+		var objMarker = locs[loc];
+		console.log(typeof objMarker.lat);
+		//check if marker already exists
+		if(! gmap.markerExists('id',objMarker.id))
+			gmap.addMarker(objMarker,"taxi",'gmapMarker');
+	}*/
+	// gmap.calcBounds();	
 }
