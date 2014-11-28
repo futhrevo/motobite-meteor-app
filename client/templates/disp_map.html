@@ -8,6 +8,8 @@
 			<input type="submit" class="btn btn-primary" value="Submit">
 		</form>
 	</div>
+	{{#each marker}}
+		{{> drawMarker}}
+	{{/each}}
 	{{/if}}
-	
 </template>

@@ -76,7 +76,7 @@ gmap = {
 		    icon: icon
 
 		});
-		console.log('marker added at loc : '+myLatlng);
+		console.log('marker added at loc : '+mymarker.toString());
 		//keep track of markers and geo data
 		this.latLngs.push(myLatlng);
 		this.markers.push(mymarker);
@@ -107,16 +107,20 @@ gmap = {
 	//initialize the map
 	initialize: function(){
 		console.info("[+] Initializing Google Maps...");
+		var loc = new google.maps.LatLng(12.9525812,77.7034538);
 		var mapOptions ={
-			center: new google.maps.LatLng(12.9525812,77.7034538),
-			zoom: 17
+			center: loc,
+			zoom: 15
 		};
 		this.map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
 		this.searchBoxSrc = new google.maps.places.SearchBox(document.getElementById("map-src-search"));
 		this.searchBoxDest = new google.maps.places.SearchBox(document.getElementById("map-dest-search"));
 		bounds = new google.maps.LatLngBounds();
+		bounds.extend(loc);
+		this.map.fitBounds(bounds);
 		//global flag saying we initialized already
 		Session.set('map', true);
+		console.info('[+] map initialized');
 	},
 
 	//distance calculation using Haversine formula
