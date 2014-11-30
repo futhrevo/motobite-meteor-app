@@ -3,6 +3,7 @@ if (Marker.find().count() === 0){
 		gh: 'tdr38jvym8ns',
 		id: 123456789,
 		type: "taxi",
+		at: new Date,
 		valid: true
 	});
 }

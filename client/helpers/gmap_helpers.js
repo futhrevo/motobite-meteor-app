@@ -134,16 +134,29 @@ gmap = {
 	a = (sin(dlat/2))^2 + cos(lat1) * cos(lat2) * (sin(dlon/2))^2 
 	c = 2 * atan2( sqrt(a), sqrt(1-a) ) 
 	d = R * c (where R is the radius of the Earth)*/
-	haversine: function(src,dest,unit){
+	haversine: function(src,dest,unit,type){
+		if(type == 'hash'){
+			var srcMarker = geohash.decode(src);
+			var destMarker = geohash.decode(dest);
+			var srclat = srcMarker[0];
+			var srclng = srcMarker[1];
+			var destlat = destMarker[0];
+			var destlng = destMarker[1];
+		}else{
+			var srclat = src.lat();
+			var srclng = src.lng();
+			var destlat = dest.lat();
+			var destlng = dest.lng();
+		}
 		if(unit == "km"){
 			var R = 6373;
 		}else{
 			var R = 3961;
 		}
-		var dLat = (Math.PI/180) * (dest.lat() - src.lat());
-		var dLon = (Math.PI/180) * (dest.lng() - src.lng());
-		var lat1 = (Math.PI/180) * src.lat();
-		var lat2 = (Math.PI/180) * dest.lat();
+		var dLat = (Math.PI/180) * (destlat - srclat);
+		var dLon = (Math.PI/180) * (destlng - srclng);
+		var lat1 = (Math.PI/180) * srclat;
+		var lat2 = (Math.PI/180) * destlat;
 
 		var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon/2) * Math.sin(dLon/2);
 		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));

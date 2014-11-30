@@ -14,7 +14,7 @@ Template.dispMap.events({
 
 		console.log("DestinationLat : "+placesDest[0].geometry.location.lat());
 		console.log("DestinationLong : "+placesDest[0].geometry.location.lng());
-		gmap.haversine(placesSrc[0].geometry.location, placesDest[0].geometry.location, "km");
+		console.log(gmap.haversine(placesSrc[0].geometry.location, placesDest[0].geometry.location, "km"));
 		console.log("google calculated without distancematrix : "+gmap.sphericalD(placesSrc[0].geometry.location, placesDest[0].geometry.location));
 		//gmap.distanceMatrix(placesSrc[0].geometry.location,placesDest[0].geometry.location);
 		gmap.calcRoute(placesSrc[0].geometry.location,placesDest[0].geometry.location);
