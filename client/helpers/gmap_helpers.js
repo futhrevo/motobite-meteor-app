@@ -115,7 +115,7 @@ gmap = {
 			center: loc,
 			zoom: 15
 		};
-		this.map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+		this.map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
 		this.searchBoxSrc = new google.maps.places.SearchBox(document.getElementById("map-src-search"));
 		this.searchBoxDest = new google.maps.places.SearchBox(document.getElementById("map-dest-search"));
 		bounds = new google.maps.LatLngBounds();
@@ -123,7 +123,8 @@ gmap = {
 		this.map.fitBounds(bounds);
 		directionsDisplay = new google.maps.DirectionsRenderer();
 		//global flag saying we initialized already
-		// Session.set('map', true);
+		Session.set('map', true);
+		var temp = "c_bnAygfyMrARfBHhCNTcAZ@AOEg@C]LABV\dDl@fGzAxOl@zFrA|Lf@`GTjCpBra@JpGErAKz@}BrGkJbVc@nAeBrFWfASzBKzAQdGQbJA`CWdFQtB_AEeAAWEaAAu@@w@Dm@PeAh@gAr@oAdAq@n@uAbAuDnBoB`AqJbG_E~BmDrBmF~CiJnFaFlC}At@uB|@sFhCkCzAgD|B}CdCcAbAp@bBx@xBn@k@~@|CFHhBFjADvCJ`GHBc@~@@L|CRlBHdC@xA@jALA\zCJ~@P~Bd@|ELjF@nADhJDhDU?";
 		console.info('[+] map initialized');
 	},
 
@@ -245,9 +246,23 @@ Template.dispMap.rendered = function(){
 
 	//session variable to check map initialization
 	//stored a session variable map to store status
-	// if(! Session.get('map') || gmap.map === null)
-		gmap.initialize();
-		Session.set('map', true);
+		function drawCanvas(){
+			if($('#map-canvas').length){
+				console.info("map-canvas added to the dom");
+				$('#map-canvas').ready(gmap.initialize());
+			}else
+			{
+				console.info("wait for map-canvas to be ready");
+				setTimeout(drawCanvas, 500);
+			}
+		}
+		drawCanvas();
+		google.maps.event.addDomListener(window, "resize", function() {
+		 var center = gmap.map.getCenter();
+		 google.maps.event.trigger(gmap.map, "resize");
+		 gmap.map.setCenter(center); 
+		});
+		// Session.set('map', true);
 	/*var locs = Posts.find().fetch();
 	for(var loc in locs){
 		var objMarker = locs[loc];
@@ -258,3 +273,4 @@ Template.dispMap.rendered = function(){
 	}*/
 	// gmap.calcBounds();	
 }
+
