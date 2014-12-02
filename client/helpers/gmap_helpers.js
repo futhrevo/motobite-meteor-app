@@ -113,19 +113,21 @@ gmap = {
 		var loc = new google.maps.LatLng(12.9525812,77.7034538);
 		var mapOptions ={
 			center: loc,
-			zoom: 15
+			zoom: 16
 		};
 		this.map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
 		this.searchBoxSrc = new google.maps.places.SearchBox(document.getElementById("map-src-search"));
 		this.searchBoxDest = new google.maps.places.SearchBox(document.getElementById("map-dest-search"));
 		bounds = new google.maps.LatLngBounds();
 		bounds.extend(loc);
-		this.map.fitBounds(bounds);
+		// this.map.fitBounds(bounds);
+		this.map.setCenter(loc);
 		directionsDisplay = new google.maps.DirectionsRenderer();
 		//global flag saying we initialized already
 		Session.set('map', true);
-		var temp = "c_bnAygfyMrARfBHhCNTcAZ@AOEg@C]LABV\dDl@fGzAxOl@zFrA|Lf@`GTjCpBra@JpGErAKz@}BrGkJbVc@nAeBrFWfASzBKzAQdGQbJA`CWdFQtB_AEeAAWEaAAu@@w@Dm@PeAh@gAr@oAdAq@n@uAbAuDnBoB`AqJbG_E~BmDrBmF~CiJnFaFlC}At@uB|@sFhCkCzAgD|B}CdCcAbAp@bBx@xBn@k@~@|CFHhBFjADvCJ`GHBc@~@@L|CRlBHdC@xA@jALA\zCJ~@P~Bd@|ELjF@nADhJDhDU?";
+		var temp = "ujhnAgidyMbGeE|EiC~BcA|H{D~MeH~KcGbMwGpIiEnTcLlJcFzH{DvHwDdGaD";
 		console.info('[+] map initialized');
+		console.log(polyline.decode(temp,5));
 	},
 
 	//distance calculation using Haversine formula
