@@ -2,7 +2,7 @@
   <title>Experimental Polo</title>
   <!--Bootstrap to enable mobile first design disabling zoom to get native like feel-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimum-scale=1.0">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>-->
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQxRjO3fFcUJUHlw5O1BAKUmRztAWUUgw&libraries=geometry,places"></script>
 </head>
 
@@ -25,7 +25,9 @@
 				<li><a href="#about">About</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				{{> loginButtons }}
+				
+					{{> loginButtons}}
+				
 			</ul> 
 		</div>
 	</div>
@@ -36,5 +38,7 @@
 		{{> dispMap}}
 	</div>
 		{{> deleteMarker}}
+		{{> rideDiv}}
+		{{> riderDiv}}
 </div>
 </body>

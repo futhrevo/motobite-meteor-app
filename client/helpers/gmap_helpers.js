@@ -92,7 +92,6 @@ gmap = {
 	calcBounds: function(){
 
 		for (var index in this.latLngs){
-			console.log(this.latLngs[index]);
 			bounds.extend(this.latLngs[index]);
 		}
 		this.map.fitBounds(bounds);
@@ -122,12 +121,15 @@ gmap = {
 		bounds.extend(loc);
 		// this.map.fitBounds(bounds);
 		this.map.setCenter(loc);
-		directionsDisplay = new google.maps.DirectionsRenderer();
+		var rendererOptions = {
+		  draggable: true
+		};
+		directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
 		//global flag saying we initialized already
 		Session.set('map', true);
-		var temp = "ujhnAgidyMbGeE|EiC~BcA|H{D~MeH~KcGbMwGpIiEnTcLlJcFzH{DvHwDdGaD";
+		
 		console.info('[+] map initialized');
-		console.log(polyline.decode(temp,5));
+
 	},
 
 	//distance calculation using Haversine formula
@@ -197,6 +199,10 @@ gmap = {
 		var outputDiv = document.getElementById('directions-panel');
 		outputDiv.innerHTML = '';
 		directionsDisplay.setPanel(outputDiv);
+		google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
+		    console.log("route dragged ");
+		  });
+
 
 		var request = {
 			origin: origin1,
@@ -210,7 +216,6 @@ gmap = {
 
 		directionsService.route(request, function(response, status) {
 		    if (status == google.maps.DirectionsStatus.OK) {
-		    	console.log(response);
 		      directionsDisplay.setDirections(response);
 		    }
 		  });
@@ -227,6 +232,7 @@ function dMcallback(response, status) {
 		var destinations = response.destinationAddresses;
 		var outputDiv = document.getElementById('outputDiv');
 		outputDiv.innerHTML = '';
+
 //			deleteOverlays();
 
 		for (var i = 0; i < origins.length; i++) {
@@ -246,9 +252,7 @@ function dMcallback(response, status) {
 
 Template.dispMap.rendered = function(){
 
-	//session variable to check map initialization
-	//stored a session variable map to store status
-		function drawCanvas(){
+	function drawCanvas(){
 			if($('#map-canvas').length){
 				console.info("map-canvas added to the dom");
 				$('#map-canvas').ready(gmap.initialize());
@@ -264,15 +268,7 @@ Template.dispMap.rendered = function(){
 		 google.maps.event.trigger(gmap.map, "resize");
 		 gmap.map.setCenter(center); 
 		});
-		// Session.set('map', true);
-	/*var locs = Posts.find().fetch();
-	for(var loc in locs){
-		var objMarker = locs[loc];
-		console.log(typeof objMarker.lat);
-		//check if marker already exists
-		if(! gmap.markerExists('id',objMarker.id))
-			gmap.addMarker(objMarker,"taxi",'gmapMarker');
-	}*/
-	// gmap.calcBounds();	
 }
+
+
 

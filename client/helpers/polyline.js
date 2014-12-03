@@ -92,7 +92,7 @@ polyline.decode = function(str, precision) {
         } while (byte >= 0x20);
 
         longitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
-
+        console.log(latitude_change,longitude_change);
         lat += latitude_change;
         lng += longitude_change;
 
@@ -115,4 +115,76 @@ polyline.encode = function(coordinates, precision) {
     }
 
     return output;
+};
+
+polyline.hashdecode = function(str, precision) {
+    var index = 0,
+        lat = 0,
+        lng = 0,
+        coordinates = [],
+        shift = 0,
+        result = 0,
+        byte = null,
+        latitude_change,
+        longitude_change,
+        factor = Math.pow(10, precision || 5);
+
+    // Coordinates have variable length when encoded, so just keep
+    // track of whether we've hit the end of the string. In each
+    // loop iteration, a single coordinate is decoded.
+    while (index < str.length) {
+
+        // Reset shift, result, and byte
+        byte = null;
+        shift = 0;
+        result = 0;
+
+        do {
+            byte = str.charCodeAt(index++) - 63;
+            result |= (byte & 0x1f) << shift;
+            shift += 5;
+        } while (byte >= 0x20);
+
+        latitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
+
+        shift = result = 0;
+
+        do {
+            byte = str.charCodeAt(index++) - 63;
+            result |= (byte & 0x1f) << shift;
+            shift += 5;
+        } while (byte >= 0x20);
+
+        longitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
+        // interpolating lat and long if distance between two points is more than 100m
+        if((lat != 0 && lng != 0 )&& (latitude_change > 100 || longitude_change > 100)){
+            var latfactor = 1;
+            var lngfactor = 1;
+            if(longitude_change > 100){
+                lngfactor = Math.round(longitude_change/100);
+            }
+            if(latitude_change > 100){
+                latfactor = Math.round(latitude_change/100);
+            }
+
+            var interp = (latfactor > lngfactor)? latfactor : lngfactor;
+            console.log(interp);
+
+            for (var i = 0; i < interp; i++) {
+                lat += latitude_change/interp;
+                lng += longitude_change/interp;
+                coordinates.push([lat / factor, lng / factor]);
+            };
+
+
+        }else{
+            lat += latitude_change;
+            lng += longitude_change;
+
+            coordinates.push([lat / factor, lng / factor]);
+        }
+        
+    }
+
+    return coordinates;
 };

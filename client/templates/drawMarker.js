@@ -2,7 +2,7 @@ Template.drawMarker.helpers({
 	draw: function(){
 		var index = this.id;
 		var decMarker = geohash.decode(this.gh);
-		console.log(decMarker);
+		//console.log(decMarker);
 		var marker = {
 			lat:decMarker[0],
 			lng:decMarker[1],

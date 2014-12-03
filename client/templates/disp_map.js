@@ -23,10 +23,11 @@ Template.dispMap.events({
 		console.log("DestinationLat : "+placesDest[0].geometry.location.lat());
 		console.log("DestinationLong : "+placesDest[0].geometry.location.lng());
 		console.log(gmap.haversine(placesSrc[0].geometry.location, placesDest[0].geometry.location, "km"));
-		console.log("google calculated without distancematrix : "+gmap.sphericalD(placesSrc[0].geometry.location, placesDest[0].geometry.location));
+		//console.log("google calculated without distancematrix : "+gmap.sphericalD(placesSrc[0].geometry.location, placesDest[0].geometry.location));
 		//gmap.distanceMatrix(placesSrc[0].geometry.location,placesDest[0].geometry.location);
 		
 		if(checked == 'rider'){
+			Session.set('mode', 'rider');
 			if(!$('#directions-panel').length){
 				$('#map-canvas').addClass('col-sm-9 col-md-9 col-lg-9').removeClass('col-sm-12 col-md-12 col-lg-12');
 				$(".mapd").append('<div class="col-xs-12 col-sm-3 col-md-3" id="directions-panel"></div>');
@@ -34,6 +35,7 @@ Template.dispMap.events({
 			gmap.calcRoute(placesSrc[0].geometry.location,placesDest[0].geometry.location);
 			gmap.calcBounds();
 		}else{
+			Session.set('mode', 'ride');
 			console.log('TODO show markers of riders from surrounding areas to destination');
 		}
 	}

@@ -1,6 +1,7 @@
 (function(){
 	console.info("Immediate function fired up");
 	Session.set('map', false);
+	Session.set('mode', null);
 	if (supports_html5_storage()) {
 	  // window.localStorage is available!
 	  console.info("window.localStorage is available!");
