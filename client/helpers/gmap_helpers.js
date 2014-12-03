@@ -9,7 +9,7 @@ gmap = {
 	searchBoxDest: null,
 
 	//google markers objects
-	markers: [],
+	markers: {},
 
 	//google lat lng objects
 	latLngs: [],
@@ -76,10 +76,13 @@ gmap = {
 		    icon: icon
 
 		});
-		console.log('marker added at loc : '+myLatlng);
+		console.log('marker added at loc : '+marker.id+mymarker.toString());
+		// var obj ={};
+		// var key = marker.id;
+		// obj[key] = mymarker;
 		//keep track of markers and geo data
 		this.latLngs.push(myLatlng);
-		this.markers.push(mymarker);
+		this.markers[marker.id] = mymarker;
 		this.markerData.push(marker);
 
 		return mymarker;
@@ -89,7 +92,6 @@ gmap = {
 	calcBounds: function(){
 
 		for (var index in this.latLngs){
-			console.log(this.latLngs[index]);
 			bounds.extend(this.latLngs[index]);
 		}
 		this.map.fitBounds(bounds);
@@ -107,16 +109,27 @@ gmap = {
 	//initialize the map
 	initialize: function(){
 		console.info("[+] Initializing Google Maps...");
+		var loc = new google.maps.LatLng(12.9525812,77.7034538);
 		var mapOptions ={
-			center: new google.maps.LatLng(12.9525812,77.7034538),
-			zoom: 17
+			center: loc,
+			zoom: 16
 		};
-		this.map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+		this.map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
 		this.searchBoxSrc = new google.maps.places.SearchBox(document.getElementById("map-src-search"));
 		this.searchBoxDest = new google.maps.places.SearchBox(document.getElementById("map-dest-search"));
 		bounds = new google.maps.LatLngBounds();
+		bounds.extend(loc);
+		// this.map.fitBounds(bounds);
+		this.map.setCenter(loc);
+		var rendererOptions = {
+		  draggable: true
+		};
+		directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
 		//global flag saying we initialized already
 		Session.set('map', true);
+		
+		console.info('[+] map initialized');
+
 	},
 
 	//distance calculation using Haversine formula
@@ -126,16 +139,29 @@ gmap = {
 	a = (sin(dlat/2))^2 + cos(lat1) * cos(lat2) * (sin(dlon/2))^2 
 	c = 2 * atan2( sqrt(a), sqrt(1-a) ) 
 	d = R * c (where R is the radius of the Earth)*/
-	haversine: function(src,dest,unit){
+	haversine: function(src,dest,unit,type){
+		if(type == 'hash'){
+			var srcMarker = geohash.decode(src);
+			var destMarker = geohash.decode(dest);
+			var srclat = srcMarker[0];
+			var srclng = srcMarker[1];
+			var destlat = destMarker[0];
+			var destlng = destMarker[1];
+		}else{
+			var srclat = src.lat();
+			var srclng = src.lng();
+			var destlat = dest.lat();
+			var destlng = dest.lng();
+		}
 		if(unit == "km"){
 			var R = 6373;
 		}else{
 			var R = 3961;
 		}
-		var dLat = (Math.PI/180) * (dest.lat() - src.lat());
-		var dLon = (Math.PI/180) * (dest.lng() - src.lng());
-		var lat1 = (Math.PI/180) * src.lat();
-		var lat2 = (Math.PI/180) * dest.lat();
+		var dLat = (Math.PI/180) * (destlat - srclat);
+		var dLon = (Math.PI/180) * (destlng - srclng);
+		var lat1 = (Math.PI/180) * srclat;
+		var lat2 = (Math.PI/180) * destlat;
 
 		var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon/2) * Math.sin(dLon/2);
 		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
@@ -165,10 +191,18 @@ gmap = {
 
 	//directions service with panel display
 	calcRoute : function (origin1,destinationA) {
-		var directionsDisplay = new google.maps.DirectionsRenderer();
+		// var directionsDisplay = new google.maps.DirectionsRenderer();
+		// this.directionDisplay.setMap(null);
 		var directionsService = new google.maps.DirectionsService();
 		directionsDisplay.setMap(this.map);
-		directionsDisplay.setPanel(document.getElementById('directions-panel'));
+
+		var outputDiv = document.getElementById('directions-panel');
+		outputDiv.innerHTML = '';
+		directionsDisplay.setPanel(outputDiv);
+		google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
+		    console.log("route dragged ");
+		  });
+
 
 		var request = {
 			origin: origin1,
@@ -182,7 +216,6 @@ gmap = {
 
 		directionsService.route(request, function(response, status) {
 		    if (status == google.maps.DirectionsStatus.OK) {
-		    	console.log(response);
 		      directionsDisplay.setDirections(response);
 		    }
 		  });
@@ -199,6 +232,7 @@ function dMcallback(response, status) {
 		var destinations = response.destinationAddresses;
 		var outputDiv = document.getElementById('outputDiv');
 		outputDiv.innerHTML = '';
+
 //			deleteOverlays();
 
 		for (var i = 0; i < origins.length; i++) {
@@ -214,3 +248,27 @@ function dMcallback(response, status) {
 		}
 	}
 }
+
+
+Template.dispMap.rendered = function(){
+
+	function drawCanvas(){
+			if($('#map-canvas').length){
+				console.info("map-canvas added to the dom");
+				$('#map-canvas').ready(gmap.initialize());
+			}else
+			{
+				console.info("wait for map-canvas to be ready");
+				setTimeout(drawCanvas, 500);
+			}
+		}
+		drawCanvas();
+		google.maps.event.addDomListener(window, "resize", function() {
+		 var center = gmap.map.getCenter();
+		 google.maps.event.trigger(gmap.map, "resize");
+		 gmap.map.setCenter(center); 
+		});
+}
+
+
+
