@@ -108,8 +108,10 @@ gmap = {
 
 	//initialize the map
 	initialize: function(){
-		console.info("[+] Initializing Google Maps...");
-		var loc = new google.maps.LatLng(12.9525812,77.7034538);
+		console.info("[+] Initializing Google Maps with center ("+Session.get('lat')+","+Session.get('lng')+")");
+		var clat = Session.get('lat');
+		var clng = Session.get('lng');
+		var loc = new google.maps.LatLng(clat,clng);
 		var mapOptions ={
 			center: loc,
 			zoom: 16
@@ -129,7 +131,28 @@ gmap = {
 		Session.set('map', true);
 		
 		console.info('[+] map initialized');
-
+		var chash = geohash.encode(clat,clng);
+		var userid = Meteor.user()._id;
+		var qw = Marker.find({id:userid}).fetch();
+		if(qw.length < 1){
+			console.log("new user");
+			var entry = Marker.insert({
+						gh: chash,
+						id: userid,
+						type: "user",
+						at: new Date,
+						valid: true
+					});
+			Session.set('entry',entry);
+		}else{
+			console.log('user entry present at '+qw[0]._id);
+			Session.set('entry',qw[0]._id);
+			Marker.update(qw[0]._id,{$set:{
+				gh:chash,
+				at:new Date,
+				valid: true
+			}});
+		}
 	},
 
 	//distance calculation using Haversine formula
@@ -251,24 +274,66 @@ function dMcallback(response, status) {
 
 
 Template.dispMap.rendered = function(){
-
-	function drawCanvas(){
-			if($('#map-canvas').length){
-				console.info("map-canvas added to the dom");
-				$('#map-canvas').ready(gmap.initialize());
-			}else
-			{
-				console.info("wait for map-canvas to be ready");
-				setTimeout(drawCanvas, 500);
-			}
+	function geo_success(position) {
+		Session.set('lat', position.coords.latitude);
+		Session.set('lng', position.coords.longitude);
+		Session.set('accuracy', position.coords.accuracy);
+		Session.set('speed', position.coords.speed);
+		Session.set('atTime', position.timestamp);
+		console.log("Got location");
+		if(!Session.get('map')){
+			drawCanvas();
 		}
-		drawCanvas();
-		google.maps.event.addDomListener(window, "resize", function() {
-		 var center = gmap.map.getCenter();
-		 google.maps.event.trigger(gmap.map, "resize");
-		 gmap.map.setCenter(center); 
-		});
+	}
+
+	function geo_error(poserr) {
+		if(poserr == 'PERMISSION_DENIED'){
+			alert("Please accept permission and try again");
+		}else if(poserr == 'POSITION_UNAVAILABLE'){
+			alert("The acquisition of the geolocation failed because one or several internal source of position returned an internal error");
+		}else if(poserr == 'TIMEOUT'){
+			alert("The time allowed to aquire the geolocation was reached before the information was obtained");
+		}
+
+	}
+
+	var geo_options = {
+		enableHighAccuracy: true, 
+		maximumAge        : 100, 
+		timeout           : 27000
+	};
+
+	wpid = navigator.geolocation.watchPosition(geo_success, geo_error, geo_options);
+	function drawCanvas(){
+		if($('#map-canvas').length){
+			console.info("map-canvas added to the dom");
+			$('#map-canvas').ready(gmap.initialize());
+		}else
+		{
+			console.info("wait for map-canvas to be ready");
+			setTimeout(drawCanvas, 500);
+		}
+	}
+	// drawCanvas();
+	google.maps.event.addDomListener(window, "resize", function() {
+		var center = gmap.map.getCenter();
+		google.maps.event.trigger(gmap.map, "resize");
+		gmap.map.setCenter(center); 
+	});
 }
 
+gmap.geocode = function(lat,lng){
+	var latlng = new google.maps.LatLng(lat,lng);
+	var geocoder= new google.maps.Geocoder();
+	geocoder.geocode({'latLng': latlng}, function(results, status) {
+		var result;
+		if (status == google.maps.GeocoderStatus.OK) {
+			result = results[1].formatted_address;
+		}else{
+			result = "Cannot determine address at this location";
+		}
+		$('#map-src-search').val(result);
+	});
+}
 
 

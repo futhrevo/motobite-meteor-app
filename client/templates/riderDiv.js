@@ -9,6 +9,7 @@ Template.riderDiv.helpers({
 		$('.inputForm').hide();
 	},
 	selected:function(){
+		
 		return "TODO final route confirmation : ";
 	}
 });
