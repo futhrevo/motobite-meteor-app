@@ -33,8 +33,8 @@ Template.riderDiv.events({
 
 gmap.parseRoute = function(response){
 	var coordinates = polyline.hashdecode(response,5);
-	// DriversAdvt.insert({locs:coordinates})
-	console.log(coordinates);
+	DriversAdvt.insert({locs:{type:"LineString", coordinates: coordinates}});
+	/*console.log(coordinates);
 	var hashinates = [];
 	for(var coordinate in coordinates){
 		var element = coordinates[coordinate];
@@ -44,6 +44,6 @@ gmap.parseRoute = function(response){
 	hashinates = _.uniq(hashinates);
 	console.log(hashinates);
 	console.log("TODO advertise unique hashinates");
-
+*/
 		
 }
