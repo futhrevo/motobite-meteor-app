@@ -147,6 +147,7 @@ gmap = {
 		}else{
 			console.log('user entry present at '+qw[0]._id);
 			Session.set('entry',qw[0]._id);
+			ULogs.update({_id:userid},{$push:{logs : EJSON.stringify(qw)}},{upsert:true});
 			Marker.update(qw[0]._id,{$set:{
 				gh:chash,
 				at:new Date,
