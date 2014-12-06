@@ -33,16 +33,16 @@ Template.riderDiv.events({
 
 gmap.parseRoute = function(response){
 	var coordinates = polyline.hashdecode(response,5);
-	Drivers_advt.insert({user:Meteor.user()._id,locs:coordinates});
-	// console.log(coordinates);
-	// var hashinates = [];
-	// for(var coordinate in coordinates){
-	// 	var element = coordinates[coordinate];
-	// 	hashinates.push(geohash.encode(element[0],element[1],7)); //change the digit according to accuracy required
-	// }
-	// console.log(hashinates.length);
-	// hashinates = _.uniq(hashinates);
-	// console.log(hashinates.length);
+	// DriversAdvt.insert({locs:coordinates})
+	console.log(coordinates);
+	var hashinates = [];
+	for(var coordinate in coordinates){
+		var element = coordinates[coordinate];
+		hashinates.push(geohash.encode(element[0],element[1],7)); //change the digit according to accuracy required
+	}
+	console.log(hashinates.length);
+	hashinates = _.uniq(hashinates);
+	console.log(hashinates);
 	console.log("TODO advertise unique hashinates");
 
 		
