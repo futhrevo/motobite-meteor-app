@@ -33,7 +33,12 @@ Template.riderDiv.events({
 
 gmap.parseRoute = function(response){
 	var coordinates = polyline.hashdecode(response,5);
-	DriversAdvt.insert({locs:{type:"LineString", coordinates: coordinates}});
+	DriversAdvt.insert({
+		locs:{
+			type:"LineString", 
+			coordinates: coordinates
+		}
+	});
 	/*console.log(coordinates);
 	var hashinates = [];
 	for(var coordinate in coordinates){
