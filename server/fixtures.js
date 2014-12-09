@@ -1,11 +1,18 @@
-if (Marker.find().count() === 0){
-	Marker.insert({
-		gh: 'tdr38jvym8ns',
-		id: 123456789,
+if (MarkerColl.find().count() === 0){
+	MarkerColl.insert({
+		gh: 'tdr38juym8ns',
+		_id: 'tEsTdAtA',
 		type: "taxi",
 		at: new Date,
 		valid: true
 	});
 } 
 
-console.log(DrivesAdvt.find({"nodes.locs": {$near: {$geometry : {type : "Point", coordinates:[77.6762463,12.9260308]},$maxDistance : 10}}}).fetch());
+
+Meteor.methods({
+	rideQuery: function(){
+		var result = DriversAdvtColl.find({"locs": {$near: {$geometry : {type : "Point", coordinates:[77.698649,12.947997]},$maxDistance : 150}}},{fields: {"locs":0}});
+		console.log("found "+ result.count()+" drivers");
+		return result.fetch();
+	}
+});

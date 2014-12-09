@@ -1,10 +1,4 @@
 Template.riderDiv.helpers({
-	valid: function(){
-		if(Session.get('mode') == 'rider')
-			return true;
-		else
-			return false;
-	},
 	hideInput: function(){
 		$('.inputForm').hide();
 	},
@@ -33,7 +27,8 @@ Template.riderDiv.events({
 
 gmap.parseRoute = function(response){
 	var coordinates = polyline.hashdecode(response,5);
-	DriversAdvt.insert({
+	DriversAdvtColl.insert({
+		overview:response,
 		locs:{
 			type:"LineString", 
 			coordinates: coordinates

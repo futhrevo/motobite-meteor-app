@@ -1,15 +1,12 @@
+Template.rideDiv.rendered = function(){
+	console.log("rideDiv rendered");
+}
+
 Template.rideDiv.helpers({
-	valid: function(){
-		if(Session.get('mode') == 'ride')
-			return true;
-		else
-			return false;
-	},
 	hideInput: function(){
 		$('.inputForm').hide();
 	},
 	selected:function(){
-		
 		return "TODO final rider confirmation before notifying other end : ";
 	}
 });
@@ -27,7 +24,7 @@ Template.rideDiv.events({
 		var toCoord = [placesDest[0].geometry.location.lng(),placesDest[0].geometry.location.lat()];
 
 		console.info('user selected a ride from '+fromCoord+' to '+toCoord);
-		DrivesAdvt.insert({
+		DrivesAdvtColl.insert({
 			nodes : [{
 				addr:"from",
 				locs:{
@@ -42,6 +39,7 @@ Template.rideDiv.events({
 				}
 			}]
 		});
+		
 		console.log("TODO update user status into collection");
 	},
 	'click .cancel':function(event){
@@ -51,3 +49,4 @@ Template.rideDiv.events({
 		Session.set('mode', null);
 	}
 });
+

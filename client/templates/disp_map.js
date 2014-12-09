@@ -11,18 +11,9 @@ Template.dispMap.events({
 
 		localStorage["checked"] = checked;
 		console.info("selected element is : " + checked);
-		// var placesSrc = gmap.searchBoxSrc.getPlaces();
-		// var placesDest = gmap.searchBoxDest.getPlaces();
-		// console.log("TODO input validation");
-		// if ($('#map-src-search').val == " " || $('#map-dest-search').val == " ") {
-		// 	console.error("null places");
-		// 	return;
-		// }
-		// console.log("SourceLat : "+placesSrc[0].geometry.location.lat());
-		// console.log("SourceLong : "+placesSrc[0].geometry.location.lng());
-
-		// console.log("DestinationLat : "+placesDest[0].geometry.location.lat());
-		// console.log("DestinationLong : "+placesDest[0].geometry.location.lng());
+		
+		console.log("TODO input validation");
+		
 		// console.log(gmap.haversine(placesSrc[0].geometry.location, placesDest[0].geometry.location, "km"));
 		// console.log("google calculated without distancematrix : "+gmap.sphericalD(placesSrc[0].geometry.location, placesDest[0].geometry.location));
 		// gmap.distanceMatrix(placesSrc[0].geometry.location,placesDest[0].geometry.location);
@@ -39,9 +30,18 @@ Template.dispMap.events({
 			// gmap.calcBounds();
 		}else{
 			Session.set('mode', 'ride');
+			gmap.polyArray=[];
+			Meteor.call('rideQuery',function(err,data){
+				console.log(data);
+				_.each(data,function(poly){
+					gmap.polyDraw(poly);
+				});
+				// gmap.polyDraw(data[0].overview);
+			});
 			console.log('TODO show markers of riders from surrounding areas to destination');
 		}
 	},
+	
 	'change .checkbox':function(event){
 		event.preventDefault();
 		if(event.target.checked){
@@ -60,7 +60,7 @@ Template.dispMap.destroyed = function(){
 Template.dispMap.helpers({
 	marker: function(){
 		if(Session.get('map'))
-			return Marker.find({valid: true});
+			return MarkerColl.find({valid: true});
 		else
 			return null;
 	}

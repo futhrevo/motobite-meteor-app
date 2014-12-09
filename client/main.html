@@ -32,13 +32,14 @@
 		</div>
 	</div>
 </nav>
+{{#if currentUser}}
 <div class="container-fluid">
 	{{> mapPlaceHolders}}
 	<div class="row">
 		{{> dispMap}}
 	</div>
 	{{> deleteMarker}}
-	{{> rideDiv}}
-	{{> riderDiv}}
+	{{> functionsDiv}}
 </div>
+{{/if}}
 </body>

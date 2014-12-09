@@ -1,6 +1,6 @@
 Template.drawMarker.helpers({
 	draw: function(){
-		var index = this.id;
+		var index = this._id;
 		var decMarker = geohash.decode(this.gh);
 		//console.log(decMarker);
 		var marker = {

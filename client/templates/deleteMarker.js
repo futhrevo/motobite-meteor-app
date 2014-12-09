@@ -1,7 +1,7 @@
 Template.deleteMarker.helpers({
 	marker: function(){
 		if(Session.get('map'))
-			return Marker.find({valid: false});
+			return MarkerColl.find({valid: false});
 		else
 			return null;
 	},

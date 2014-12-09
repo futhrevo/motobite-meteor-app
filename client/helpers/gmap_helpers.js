@@ -14,6 +14,9 @@ gmap = {
 	//google lat lng objects
 	latLngs: [],
 
+	//Array to store polylines
+	polyArray:[],
+
 	//formatted marker data objects
 	markerData: [],
 
@@ -132,23 +135,23 @@ gmap = {
 		
 		console.info('[+] map initialized');
 		var chash = geohash.encode(clat,clng);
-		var userid = Meteor.user()._id;
-		var qw = Marker.find({id:userid}).fetch();
+		var userid = Meteor.userId();
+		var qw = MarkerColl.findOne({_id:userid});
 		if(qw.length < 1){
 			console.log("new user");
-			var entry = Marker.insert({
+			var entry = MarkerColl.insert({
 						gh: chash,
-						id: userid,
+						_id: userid,
 						type: "user",
 						at: new Date,
 						valid: true
 					});
 			Session.set('entry',entry);
 		}else{
-			console.log('user entry present at '+qw[0]._id);
-			Session.set('entry',qw[0]._id);
-			ULogs.update({_id:userid},{$push:{logs : EJSON.stringify(qw)}},{upsert:true});
-			Marker.update(qw[0]._id,{$set:{
+			console.log('user entry present at '+userid);
+			Session.set('entry',userid);
+			ULogsColl.update({_id:userid},{$push:{logs : EJSON.stringify(qw)}},{upsert:true});
+			MarkerColl.update(userid,{$set:{
 				gh:chash,
 				at:new Date,
 				valid: true
@@ -273,6 +276,37 @@ function dMcallback(response, status) {
 	}
 }
 
+gmap.geocode = function(lat,lng){
+	var latlng = new google.maps.LatLng(lat,lng);
+	var geocoder= new google.maps.Geocoder();
+	geocoder.geocode({'latLng': latlng}, function(results, status) {
+		var result;
+		if (status == google.maps.GeocoderStatus.OK) {
+			result = results[1].formatted_address;
+		}else{
+			result = "Cannot determine address at this location";
+		}
+		$('#map-src-search').val(result);
+	});
+}
+
+//function to draw polyline on map
+gmap.polyDraw = function(poly){
+	var path = google.maps.geometry.encoding.decodePath(poly.overview);
+	var polydraw = new google.maps.Polyline({
+		path:path,
+		strokeColor : '#00acc1',
+		strokeOpacity: 0.4,
+		strokeWeight: 10,
+		visible : true,
+		map:this.map
+	});
+	var polyObject = {_id: poly._id,
+		overview:poly.overview,
+		polydraw:polydraw
+	}
+	this.polyArray.push(polyObject);
+}
 
 Template.dispMap.rendered = function(){
 	function geo_success(position) {
@@ -323,18 +357,5 @@ Template.dispMap.rendered = function(){
 	});
 }
 
-gmap.geocode = function(lat,lng){
-	var latlng = new google.maps.LatLng(lat,lng);
-	var geocoder= new google.maps.Geocoder();
-	geocoder.geocode({'latLng': latlng}, function(results, status) {
-		var result;
-		if (status == google.maps.GeocoderStatus.OK) {
-			result = results[1].formatted_address;
-		}else{
-			result = "Cannot determine address at this location";
-		}
-		$('#map-src-search').val(result);
-	});
-}
 
 
