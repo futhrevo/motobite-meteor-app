@@ -10,8 +10,9 @@ if (MarkerColl.find().count() === 0){
 
 
 Meteor.methods({
-	rideQuery: function(){
-		var result = DriversAdvtColl.find({"locs": {$near: {$geometry : {type : "Point", coordinates:[77.698649,12.947997]},$maxDistance : 150}}},{fields: {"locs":0}});
+	rideQuery: function(post){
+		//TODO use $and to query from and to which is not working in current mongodb < 2.55
+		var result = DriversAdvtColl.find({"locs": {$near: {$geometry : {type : "Point", coordinates:post[0]},$maxDistance : 200}}},{fields: {"locs":0}});
 		console.log("found "+ result.count()+" drivers");
 		return result.fetch();
 	}

@@ -8,6 +8,13 @@
 				<form class="form-horizontal">
 					<fieldset>
 						 <legend>Drive details</legend>
+						 <div class="list-group">
+						 {{#each names}}
+						 	<a href="#" class="list-group-item">
+						 	    {{this._id}}
+						 	</a>
+						 {{/each}}
+						 </div>
 						 {{selected}}
 						 <div class="form-group">
 						   <div class="col-md-offset-4 col-xs-offset-4">

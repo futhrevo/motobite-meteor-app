@@ -14,9 +14,6 @@ gmap = {
 	//google lat lng objects
 	latLngs: [],
 
-	//Array to store polylines
-	polyArray:[],
-
 	//formatted marker data objects
 	markerData: [],
 
@@ -298,14 +295,14 @@ gmap.polyDraw = function(poly){
 		strokeColor : '#00acc1',
 		strokeOpacity: 0.4,
 		strokeWeight: 10,
-		visible : true,
+		visible : false,
 		map:this.map
 	});
 	var polyObject = {_id: poly._id,
 		overview:poly.overview,
 		polydraw:polydraw
 	}
-	this.polyArray.push(polyObject);
+	polyArray.push(polyObject);
 }
 
 Template.dispMap.rendered = function(){

@@ -30,11 +30,15 @@
 	}
 	//Subscriptions goes here
 	Meteor.subscribe('theMarkers');
-	// Meteor.subscribe('theDrivers');
+	// subHandleDriver = Meteor.subscribe('theDrivers');
 	// Meteor.subscribe('theDrives');
 	Meteor.subscribe('theLogs');
 
 	//TODO implement Routeboxer into functions http://google-maps-utility-library-v3.googlecode.com/svn/tags/routeboxer/1.0/docs/examples.html
 	//TODO create packed client codes
 	//Use NoScript, a limited user account and a virtual machine and be safe(r)!
+
+	//ReactiveArray to store polylines
+	//http://reactivearray.meteor.com/
+	polyArray =  new ReactiveArray();
 	}());

@@ -4,13 +4,13 @@ Template.dispMap.events({
 	'submit form':function(event,template){
 		event.preventDefault();
 		var element = template.find('input:radio[name=transit]:checked');
-		var checked = $(element).val();
+		var selectedOption = $(element).val();
 		//http://diveintohtml5.info/storage.html
 		//using local storage to store more permanently
 		//TODO: add interface to clear/delete local storage data from above link
 
-		localStorage["checked"] = checked;
-		console.info("selected element is : " + checked);
+		localStorage["checked"] = selectedOption;
+		console.info("selected element is : " + selectedOption);
 		
 		console.log("TODO input validation");
 		
@@ -19,7 +19,7 @@ Template.dispMap.events({
 		// gmap.distanceMatrix(placesSrc[0].geometry.location,placesDest[0].geometry.location);
 		var from = $('#map-src-search').val();
 		var to = $('#map-dest-search').val();
-		if(checked == 'rider'){
+		if(selectedOption == 'rider'){
 			Session.set('mode', 'rider');
 			if(!$('#directions-panel').length){
 				$('#map-canvas').addClass('col-sm-9 col-md-9 col-lg-9').removeClass('col-sm-12 col-md-12 col-lg-12');
@@ -30,8 +30,9 @@ Template.dispMap.events({
 			// gmap.calcBounds();
 		}else{
 			Session.set('mode', 'ride');
-			gmap.polyArray=[];
-			Meteor.call('rideQuery',function(err,data){
+			polyArray.clear();
+			Meteor.call('rideQuery',getSearchBoxdata(),function(err,data){
+				if(err) console.log(err);
 				console.log(data);
 				_.each(data,function(poly){
 					gmap.polyDraw(poly);
@@ -45,7 +46,7 @@ Template.dispMap.events({
 	'change .checkbox':function(event){
 		event.preventDefault();
 		if(event.target.checked){
-			$('#map-src-search').val("");
+			$('#map-src-search').val("").attr("disabled",true);
 			gmap.geocode(Session.get('lat'),Session.get('lng'));
 		}else{
 			$('#map-src-search').attr("disabled",false).val("");
