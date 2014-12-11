@@ -47,7 +47,7 @@ gmap = {
 					gmap.map.fitBounds(bounds);
 					console.log('Geocode calculated as : ' + results[0].geometry.location);
 					myLatlng = results[0].geometry.location;
-					//special case for async function 
+					//special case for async function
 					var mymarker = new google.maps.Marker({
 					    position: myLatlng,
 					    map: gmap.map,
@@ -66,7 +66,7 @@ gmap = {
 			});
 		}
 
-		
+
 		// To add the marker to the map, use the 'map' property
 		var mymarker = new google.maps.Marker({
 		    position: myLatlng,
@@ -129,39 +129,27 @@ gmap = {
 		directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
 		//global flag saying we initialized already
 		Session.set('map', true);
-		
+
 		console.info('[+] map initialized');
 		var chash = geohash.encode(clat,clng);
-		var userid = Meteor.userId();
-		var qw = MarkerColl.findOne({_id:userid});
-		if(qw.length < 1){
-			console.log("new user");
-			var entry = MarkerColl.insert({
-						gh: chash,
-						_id: userid,
-						type: "user",
-						at: new Date,
-						valid: true
-					});
-			Session.set('entry',entry);
-		}else{
-			console.log('user entry present at '+userid);
-			Session.set('entry',userid);
-			ULogsColl.update({_id:userid},{$push:{logs : EJSON.stringify(qw)}},{upsert:true});
-			MarkerColl.update(userid,{$set:{
-				gh:chash,
-				at:new Date,
-				valid: true
-			}});
-		}
+		var post = {
+			gh:chash
+		};
+		Meteor.call('postLocation',post,function(error,result){
+			// display the error to the user and abort
+			if (error)
+			  return alert(error.reason);
+
+		});
+	// ported insert into server
 	},
 
 	//distance calculation using Haversine formula
 	//http://andrew.hedges.name/experiments/haversine/
-/*	dlon = lon2 - lon1 
-	dlat = lat2 - lat1 
-	a = (sin(dlat/2))^2 + cos(lat1) * cos(lat2) * (sin(dlon/2))^2 
-	c = 2 * atan2( sqrt(a), sqrt(1-a) ) 
+/*	dlon = lon2 - lon1
+	dlat = lat2 - lat1
+	a = (sin(dlat/2))^2 + cos(lat1) * cos(lat2) * (sin(dlon/2))^2
+	c = 2 * atan2( sqrt(a), sqrt(1-a) )
 	d = R * c (where R is the radius of the Earth)*/
 	haversine: function(src,dest,unit,type){
 		if(type == 'hash'){
@@ -330,8 +318,8 @@ Template.dispMap.rendered = function(){
 	}
 
 	var geo_options = {
-		enableHighAccuracy: true, 
-		maximumAge        : 100, 
+		enableHighAccuracy: true,
+		maximumAge        : 100,
 		timeout           : 27000
 	};
 
@@ -350,9 +338,6 @@ Template.dispMap.rendered = function(){
 	google.maps.event.addDomListener(window, "resize", function() {
 		var center = gmap.map.getCenter();
 		google.maps.event.trigger(gmap.map, "resize");
-		gmap.map.setCenter(center); 
+		gmap.map.setCenter(center);
 	});
 }
-
-
-

@@ -12,7 +12,7 @@
 	  	console.info("maybe try dojox.storage or a third-party solution");
 	}
 
-	  
+
 	if ("geolocation" in navigator) {
 	  	/* geolocation is available */
 	  	console.info("geolocation is available");
