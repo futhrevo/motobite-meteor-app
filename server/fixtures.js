@@ -3,7 +3,7 @@ if (MarkerColl.find().count() === 0){
 		gh: 'tdr38juym8ns',
 		_id: 'tEsTdAtA',
 		type: "taxi",
-		at: new Date,
+		at: new Date(),
 		valid: true
 	});
 }
@@ -15,7 +15,7 @@ Meteor.methods({
 		check(postAttributes,{
 			gh: String
 		});
-		var userid = Meteor.userId();
+		var userid = Meteor.user()._id;
 		var qw = MarkerColl.findOne({_id:userid});
 		if(qw.length < 1){
 			console.log("new user");
@@ -36,8 +36,6 @@ Meteor.methods({
 			MarkerColl.update(userid,{$set:post});
 		}
 
-		
-
 	},
 
 	rideQuery: function(post){
@@ -45,5 +43,33 @@ Meteor.methods({
 		var result = DriversAdvtColl.find({"locs": {$near: {$geometry : {type : "Point", coordinates:post[0]},$maxDistance : 200}}},{fields: {"locs":0}});
 		console.log("found "+ result.count()+" drivers");
 		return result.fetch();
+	},
+
+	postDriveAdvt : function(postAttributes){
+		check(this.userId, String);
+		//TODO find a better way to check for array of numbers
+		check(postAttributes,[Match.Any]);
+		var userid = Meteor.user()._id;
+		var post = {
+				id		: userid,
+				at		: new Date(),
+				mapid	: null,
+				avgTime	: postAttributes[2],
+				nodes	: [{
+						addr:"from",
+						locs:{
+							type:"Point",
+							coordinates:postAttributes[0]
+						}
+						},{
+						addr:"to",
+						locs:{
+							type:"Point",
+							coordinates:postAttributes[1]
+						}
+					}]
+			};
+		DrivesAdvtColl.insert(post);
+
 	}
 });

@@ -4,12 +4,14 @@ Meteor.publish('theMarkers',function(){
 	return MarkerColl.find();
 });
 
-// Meteor.publish('theDrivers',function(){
-// 	return DriversAdvtColl.find();
-// });
+Meteor.publish('theDrivers',function(){
+	var userid = this.userId;
+	return DriversAdvtColl.find({id:userid});
+});
 
 Meteor.publish('theDrives',function(){
-	return DrivesAdvtColl.find();
+	var userid = this.userId;
+	return DrivesAdvtColl.find({id:userid});
 });
 
 Meteor.publish('theLogs',function(){

@@ -159,6 +159,11 @@ gmap = {
 			var srclng = srcMarker[1];
 			var destlat = destMarker[0];
 			var destlng = destMarker[1];
+		}else if(type == "geo"){
+			var srclat = src[1];
+			var srclng = src[0];
+			var destlat = dest[1];
+			var destlng = dest[0];
 		}else{
 			var srclat = src.lat();
 			var srclng = src.lng();
