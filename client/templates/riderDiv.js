@@ -3,7 +3,7 @@ Template.riderDiv.helpers({
 		$('.inputForm').hide();
 	},
 	selected:function(){
-		
+
 		return "TODO final route confirmation : ";
 	}
 });
@@ -12,9 +12,7 @@ Template.riderDiv.events({
 	'submit form':function(event){
 		event.preventDefault();
 		console.info('rider accepted the drive');
-		var directions = directionsDisplay.getDirections();
-		var choice = directionsDisplay.getRouteIndex();
-		gmap.parseRoute(directions.routes[choice].overview_polyline);
+		gmap.parseRoute();
 		console.log("TODO update overview polyline to collection");
 	},
 	'click .cancel':function(event){
@@ -25,15 +23,31 @@ Template.riderDiv.events({
 	}
 });
 
-gmap.parseRoute = function(response){
-	var coordinates = polyline.hashdecode(response,5);
+gmap.parseRoute = function(){
+	var directions = directionsDisplay.getDirections();
+	var choice = directionsDisplay.getRouteIndex();
+	var response = directions.routes[choice];
+	var distance = 0;
+	var duration = 0;
+
+	for (var i = 0; i < response.legs.length; i++) {
+		distance += response.legs[i].distance.value;
+		duration += response.legs[i].duration.value;
+	}
+	var coordinates = polyline.hashdecode(response.overview_polyline,5);
 	DriversAdvtColl.insert({
-		overview:response,
+		overview : response.overview_polyline,
+		summary : response.summary,
+		bounds : response.bounds,
+		distance : distance,
+		duration : duration,
+		destination : directions.lc.destination,
 		locs:{
-			type:"LineString", 
+			type:"LineString",
 			coordinates: coordinates
 		}
 	});
+
 	/*console.log(coordinates);
 	var hashinates = [];
 	for(var coordinate in coordinates){
@@ -45,5 +59,4 @@ gmap.parseRoute = function(response){
 	console.log(hashinates);
 	console.log("TODO advertise unique hashinates");
 */
-		
 }

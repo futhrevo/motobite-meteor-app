@@ -17,3 +17,8 @@ Meteor.publish('theDrives',function(){
 Meteor.publish('theLogs',function(){
 	return ULogsColl.find();
 });
+
+DriversAdvtColl.before.insert(function (userId, doc) {
+	doc.at = Date.now();
+	doc.id = userId;
+});

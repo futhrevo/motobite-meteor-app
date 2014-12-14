@@ -49,7 +49,7 @@ Meteor.methods({
 		check(this.userId, String);
 		//TODO find a better way to check for array of numbers
 		check(postAttributes,[Match.Any]);
-		var userid = Meteor.user()._id;
+		var userid = this.userId;
 		var post = {
 				id		: userid,
 				at		: new Date(),
