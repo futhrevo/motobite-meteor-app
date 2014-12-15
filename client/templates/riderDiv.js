@@ -23,31 +23,37 @@ Template.riderDiv.events({
 	}
 });
 
-gmap.parseRoute = function(){
-	var directions = directionsDisplay.getDirections();
-	var choice = directionsDisplay.getRouteIndex();
-	var response = directions.routes[choice];
-	var distance = 0;
-	var duration = 0;
+gmap.parseRoute = function() {
+    var directions = directionsDisplay.getDirections();
+    var choice = directionsDisplay.getRouteIndex();
+    var response = directions.routes[choice];
+    var distance = 0;
+    var duration = 0;
+    var startTime = directionsDisplay.time;
 
-	for (var i = 0; i < response.legs.length; i++) {
-		distance += response.legs[i].distance.value;
-		duration += response.legs[i].duration.value;
-	}
-	var coordinates = polyline.hashdecode(response.overview_polyline,5);
-	DriversAdvtColl.insert({
-		overview : response.overview_polyline,
-		summary : response.summary,
-		bounds : response.bounds,
-		distance : distance,
-		duration : duration,
-		startTime : new Date(directionsDisplay.time),
-		destination : directions.lc.destination,
-		locs:{
-			type:"LineString",
-			coordinates: coordinates
-		}
-	});
+    for (var i = 0; i < response.legs.length; i++) {
+      distance += response.legs[i].distance.value;
+      duration += response.legs[i].duration.value;
+    }
+    duration = 15 + (duration / 60);
+    if (validateTime(startTime, duration)) {
+      var coordinates = polyline.hashdecode(response.overview_polyline, 5);
+      DriversAdvtColl.insert({
+        overview: response.overview_polyline,
+        summary: response.summary,
+        bounds: response.bounds,
+        distance: distance,
+        duration: duration,
+        startTime: startTime,
+        destination: directions.lc.destination,
+        locs: {
+          type: "LineString",
+          coordinates: coordinates
+        }
+      });
+    } else {
+      alert("You have a ride already scheduled during this time range. Choose a new time");
+    }
 
 	/*console.log(coordinates);
 	var hashinates = [];

@@ -1,4 +1,11 @@
-
+Template.dispMap.helpers({
+	marker: function(){
+		if(Session.get('map'))
+			return MarkerColl.find({valid: true});
+			else
+				return null;
+			}
+		});
 
 Template.dispMap.events({
 	'submit form':function(event,template){
@@ -16,8 +23,7 @@ Template.dispMap.events({
 
 		// console.log(gmap.haversine(placesSrc[0].geometry.location, placesDest[0].geometry.location, "km"));
 		// console.log("google calculated without distancematrix : "+gmap.sphericalD(placesSrc[0].geometry.location, placesDest[0].geometry.location));
-
-;		if(selectedOption == 'rider'){
+		if(selectedOption == 'rider'){
 			Session.set('mode', 'rider');
 			if(!$('#directions-panel').length){
 				$('#map-canvas').addClass('col-sm-9 col-md-9 col-lg-9').removeClass('col-sm-12 col-md-12 col-lg-12');
@@ -55,12 +61,3 @@ Template.dispMap.events({
 Template.dispMap.destroyed = function(){
 	Session.set('map', false);
 }
-
-Template.dispMap.helpers({
-	marker: function(){
-		if(Session.get('map'))
-			return MarkerColl.find({valid: true});
-		else
-			return null;
-	}
-});

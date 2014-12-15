@@ -25,13 +25,17 @@ Template.rideDiv.events({
 		var distance = gmap.haversine(search[0],search[1],"km","geo");
 		var time = 15 + (distance * 6);
 		search.push(time);
+		if(validateTime(search[2],time)){
+			Meteor.call('postDriveAdvt',search,function(error,result){
+				// display the error to the user and abort
+				if (error)
+					return alert(error.reason);
 
-		Meteor.call('postDriveAdvt',search,function(error,result){
-			// display the error to the user and abort
-			if (error)
-				return alert(error.reason);
+				});
+		}else{
+			alert("You have a ride already scheduled during this time range. Choose a new time");
+		}
 
-			});
 		console.log("TODO update user status into collection");
 	},
 	'click .cancel':function(event){
@@ -65,7 +69,7 @@ getSearchBoxdata = function (){
 	}
 	var placesDest = gmap.searchBoxDest.getPlaces();
 	var toCoord = [placesDest[0].geometry.location.lng(),placesDest[0].geometry.location.lat()];
-	var inputTime = $("#datetimepicker1").data("DateTimePicker").getDate().toISOString();
+	var inputTime = $("#datetimepicker1").data("DateTimePicker").getDate().unix();
 	console.log(inputTime);
 	return [fromCoord,toCoord,inputTime];
 }

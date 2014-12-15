@@ -56,8 +56,8 @@ Meteor.methods({
 				id		: userid,
 				at		: new Date(),
 				mapid	: null,
-				avgTime	: postAttributes[3],
-				tripStart : new Date(postAttributes[2]),
+				duration: postAttributes[3],
+				startTime : postAttributes[2],
 				nodes	: [{
 						addr:"from",
 						locs:{

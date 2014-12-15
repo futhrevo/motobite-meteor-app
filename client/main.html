@@ -33,9 +33,9 @@
 	</div>
 </nav>
 {{#if currentUser}}
-{{> inflateDrives}}
-{{> inflateDrivers}}
 <div class="container-fluid">
+    {{> inflateDrives}}
+    {{> inflateDrivers}}
 	{{> mapPlaceHolders}}
 	<div class="row">
 		{{> dispMap}}
