@@ -41,6 +41,7 @@ gmap.parseRoute = function(){
 		bounds : response.bounds,
 		distance : distance,
 		duration : duration,
+		startTime : new Date(directionsDisplay.time),
 		destination : directions.lc.destination,
 		locs:{
 			type:"LineString",

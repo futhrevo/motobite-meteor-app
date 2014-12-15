@@ -45,6 +45,7 @@ Template.rideDiv.events({
 		clearPolylines();
     	$(event.target).addClass("active").siblings().removeClass('active');
     	this.polydraw.setVisible(true);
+		gmap.map.fitBounds(asBounds(this.bounds));
   	}
 });
 
@@ -64,5 +65,7 @@ getSearchBoxdata = function (){
 	}
 	var placesDest = gmap.searchBoxDest.getPlaces();
 	var toCoord = [placesDest[0].geometry.location.lng(),placesDest[0].geometry.location.lat()];
-	return [fromCoord,toCoord];
+	var inputTime = $("#datetimepicker1").data("DateTimePicker").getDate().toISOString();
+	console.log(inputTime);
+	return [fromCoord,toCoord,inputTime];
 }

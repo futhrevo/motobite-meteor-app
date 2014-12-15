@@ -7,11 +7,11 @@
 				</div>
 				<form class="form-horizontal">
 					<fieldset>
-						 <legend>Drive details</legend>
+						 <legend>Driver details</legend>
 						 <div class="list-group">
 						 {{#each names}}
 						 	<a href="#" class="list-group-item">
-						 	    {{this._id}}
+						 	    {{this._id}}  -  {{this.summary}}  -  {{this.distance}} meters
 						 	</a>
 						 {{/each}}
 						 </div>

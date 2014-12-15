@@ -1,0 +1,10 @@
+<template name="inflateDrivers">
+    <legend>Drivers Scheduled</legend>
+<div class="list-group">
+    {{#each driver}}
+    <a href="#" class="list-group-item">
+        {{this._id}}
+    </a>
+    {{/each}}
+</div>
+</template>

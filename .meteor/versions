@@ -43,6 +43,7 @@ minimongo@1.0.5
 mobile-status-bar@1.0.1
 mongo@1.0.9
 mrt:geohash@0.0.5
+mrt:moment@2.8.1
 msavin:mongoinspector@1.1.1
 npm-bcrypt@0.7.7
 observe-sequence@1.0.3
@@ -62,6 +63,7 @@ srp@1.0.1
 stylus@1.0.5
 templating@1.0.9
 tracker@1.0.3
+tsega:bootstrap3-datetimepicker@3.1.3_1
 ui@1.0.4
 underscore@1.0.1
 url@1.0.2

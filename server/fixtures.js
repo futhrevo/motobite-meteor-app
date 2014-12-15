@@ -40,6 +40,7 @@ Meteor.methods({
 
 	rideQuery: function(post){
 		//TODO use $and to query from and to which is not working in current mongodb < 2.55
+		//TODO mongo aggregation http://joshowens.me/using-mongodb-aggregations-to-power-a-meteor-js-publication/
 		var result = DriversAdvtColl.find({"locs": {$near: {$geometry : {type : "Point", coordinates:post[0]},$maxDistance : 200}}},{fields: {"locs":0}});
 		console.log("found "+ result.count()+" drivers");
 		return result.fetch();
@@ -49,12 +50,14 @@ Meteor.methods({
 		check(this.userId, String);
 		//TODO find a better way to check for array of numbers
 		check(postAttributes,[Match.Any]);
+		console.log(postAttributes[2]);
 		var userid = this.userId;
 		var post = {
 				id		: userid,
 				at		: new Date(),
 				mapid	: null,
-				avgTime	: postAttributes[2],
+				avgTime	: postAttributes[3],
+				tripStart : new Date(postAttributes[2]),
 				nodes	: [{
 						addr:"from",
 						locs:{

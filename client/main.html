@@ -25,14 +25,16 @@
 				<li><a href="#about">About</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				
+
 					{{> loginButtons}}
-				
-			</ul> 
+
+			</ul>
 		</div>
 	</div>
 </nav>
 {{#if currentUser}}
+{{> inflateDrives}}
+{{> inflateDrivers}}
 <div class="container-fluid">
 	{{> mapPlaceHolders}}
 	<div class="row">

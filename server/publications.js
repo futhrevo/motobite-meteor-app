@@ -19,6 +19,6 @@ Meteor.publish('theLogs',function(){
 });
 
 DriversAdvtColl.before.insert(function (userId, doc) {
-	doc.at = Date.now();
+	doc.at = new Date();
 	doc.id = userId;
 });

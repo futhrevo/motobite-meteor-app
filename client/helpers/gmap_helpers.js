@@ -117,8 +117,9 @@ gmap = {
 			zoom: 16
 		};
 		this.map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
-		this.searchBoxSrc = new google.maps.places.SearchBox(document.getElementById("map-src-search"));
-		this.searchBoxDest = new google.maps.places.SearchBox(document.getElementById("map-dest-search"));
+		var searchBounds = new google.maps.LatLngBounds(asLatLng(5.5,66.5),asLatLng(37,97));
+		this.searchBoxSrc = new google.maps.places.SearchBox(document.getElementById("map-src-search"),{bounds:searchBounds});
+		this.searchBoxDest = new google.maps.places.SearchBox(document.getElementById("map-dest-search"),{bounds:searchBounds});
 		bounds = new google.maps.LatLngBounds();
 		bounds.extend(loc);
 		// this.map.fitBounds(bounds);
@@ -207,7 +208,7 @@ gmap = {
 	},
 
 	//directions service with panel display
-	calcRoute : function (origin1,destinationA) {
+	calcRoute : function () {
 		// var directionsDisplay = new google.maps.DirectionsRenderer();
 		// this.directionDisplay.setMap(null);
 		var directionsService = new google.maps.DirectionsService();
@@ -219,11 +220,13 @@ gmap = {
 		google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
 		    console.log("route dragged ");
 		  });
-
+		var search = getSearchBoxdata();
+		var origin1 = search[0];
+		var destinationA = search[1];
 
 		var request = {
-			origin: origin1,
-			destination: destinationA,
+			origin: asLatLng(origin1[1],origin1[0]),
+			destination: asLatLng(destinationA[1],destinationA[0]),
 			travelMode: google.maps.TravelMode.DRIVING,
 			unitSystem: google.maps.UnitSystem.METRIC,
 			provideRouteAlternatives : true,
@@ -234,6 +237,7 @@ gmap = {
 		directionsService.route(request, function(response, status) {
 		    if (status == google.maps.DirectionsStatus.OK) {
 		      directionsDisplay.setDirections(response);
+			  directionsDisplay.time = search[2];
 		    }
 		  });
 	},
@@ -291,8 +295,13 @@ gmap.polyDraw = function(poly){
 		visible : false,
 		map:this.map
 	});
-	var polyObject = {_id: poly._id,
+	var polyObject = {
+		_id: poly._id,
 		overview:poly.overview,
+		summary:poly.summary,
+		bounds:poly.bounds,
+		distance:poly.distance,
+		duration:poly.duration,
 		polydraw:polydraw
 	}
 	polyArray.push(polyObject);
@@ -345,4 +354,18 @@ Template.dispMap.rendered = function(){
 		google.maps.event.trigger(gmap.map, "resize");
 		gmap.map.setCenter(center);
 	});
+
+	$('#datetimepicker1').datetimepicker({
+		minDate:new Date(),
+		maxDate:new Date((new Date()).getTime() + 2*24 * 60 * 60 * 1000),
+	});
+}
+
+asBounds = function (bound){
+	return new google.maps.LatLngBounds(asLatLng(bound.Ea.j,bound.wa.j),
+	asLatLng(bound.Ea.k,bound.wa.k));
+}
+
+function asLatLng(lat,lng){
+	return new google.maps.LatLng(lat, lng);
 }
