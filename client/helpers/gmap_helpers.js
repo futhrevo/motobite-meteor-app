@@ -355,9 +355,11 @@ Template.dispMap.rendered = function(){
 		gmap.map.setCenter(center);
 	});
 
-	$('#datetimepicker1').datetimepicker({
-		minDate: 0,
-		maxDate:new Date((new Date()).getTime() + 2*24 * 60 * 60 * 1000),
+	$('.datetimepicker').datetimepicker({
+		format: "dd MM yyyy - hh:ii",
+		autoclose: true,
+		todayBtn: true,
+		minuteStep: 10
 	});
 
 	$('#form').parsley({trigger: 'change'});

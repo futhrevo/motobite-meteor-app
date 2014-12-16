@@ -1,4 +1,4 @@
-//Publications ffrom the server after removal of autopublish
+//Publications from the server after removal of autopublish
 
 Meteor.publish('theMarkers',function(){
 	return MarkerColl.find();

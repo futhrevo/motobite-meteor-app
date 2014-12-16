@@ -17,7 +17,7 @@ Meteor.methods({
 		});
 		var userid = Meteor.user()._id;
 		var qw = MarkerColl.findOne({_id:userid});
-		if(qw.length < 1){
+		if(!qw){
 			console.log("new user");
 			var post = _.extend(postAttributes,{
 				_id:userid,
