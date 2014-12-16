@@ -5,36 +5,40 @@
 			<button type="button" class="close" data-dismiss="alert">×</button>
 			<strong>OOps!</strong> You already have something scheduled at this time range
 		</div>
-		<form class="form-horizontal">
+		<form id="form" class="form-horizontal" data-parsley-validate>
 			<fieldset>
 				<legend>Enter Details</legend>
 				<!-- TODO Validation states for showing correct/wrong input from http://getbootstrap.com/css/ -->
 				<div class="form-group">
 					<label for="modeRadio" class="col-md-2 control-label">Mode</label>
 					<div class="col-md-offset-4 col-xs-offset-4">
+					<p>
 						<div class="radio">
 							<input type="radio" name="transit" value="ride" checked="checked">I need a ride<br>
 						</div>
 						<div class="radio">
 							<input type="radio" name="transit" value="rider">I am riding<br>
 						</div>
+					</p>
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="fromInput" class="col-md-2 control-label">From</label>
-					<div class="checkbox col-xs-8">
+					<div class="checkbox col-xs-12">
 						<label>
 							<input type="checkbox" id = "checkboxSrc"> Use my current location
 						</label>
 					</div>
+				</div>
+				<div class="form-group">
+					<label for="fromInput" class="col-md-2 control-label">From</label>
 					<div class="col-xs-12">
-						<input type="text" class="form-control" placeholder="Enter your source location" id="map-src-search">
+						<input type="text" class="form-control" placeholder="Enter your source location" id="map-src-search" required data-parsley-minlength="4">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="ToInput" class="col-md-2 control-label">To</label>
 					<div class="col-xs-12">
-						<input type="text" class="form-control" placeholder="Enter your destination location" id="map-dest-search" >
+						<input type="text" class="form-control" placeholder="Enter your destination location" id="map-dest-search" required data-parsley-minlength="4">
 					</div>
 				</div>
 

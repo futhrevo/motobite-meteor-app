@@ -356,9 +356,11 @@ Template.dispMap.rendered = function(){
 	});
 
 	$('#datetimepicker1').datetimepicker({
-		minDate:new Date(),
+		minDate: 0,
 		maxDate:new Date((new Date()).getTime() + 2*24 * 60 * 60 * 1000),
 	});
+
+	$('#form').parsley({trigger: 'change'});
 }
 
 asBounds = function (bound){
