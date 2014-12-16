@@ -16,7 +16,7 @@ validateTime = function(date,duration){
         var end2 = start2+drives[i].duration;
         console.log(start1 +"\t" + end1 +"\t" + start2 + "\t" + end2);
         if(start1 <= end2 && start2 <= end1)
-            return false;
+            return [false,"drives",drives[i]._id];
     }
 
     for(var i=0;i < drivers.length;i++){
@@ -24,7 +24,7 @@ validateTime = function(date,duration){
         var end2 = start2+drivers[i].duration;
         console.log(start1 +"\t" + end1 +"\t" + start2 + "\t" + end2);
         if(start1 <= end2 && start2 <= end1)
-            return false;
+            return [false,"drivers",drivers[i]._id];
         }
-    return true;
+    return [true];
 }

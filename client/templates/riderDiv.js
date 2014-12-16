@@ -36,7 +36,9 @@ gmap.parseRoute = function() {
       duration += response.legs[i].duration.value;
     }
     duration = 15 + (duration / 60);
-    if (validateTime(startTime, duration)) {
+	var validTime = validateTime(startTime, duration);
+	console.log(validTime);
+    if (validTime[0]) {
       var coordinates = polyline.hashdecode(response.overview_polyline, 5);
       DriversAdvtColl.insert({
         overview: response.overview_polyline,
@@ -45,6 +47,7 @@ gmap.parseRoute = function() {
         distance: distance,
         duration: duration,
         startTime: startTime,
+		origin:directions.lc.origin,
         destination: directions.lc.destination,
         locs: {
           type: "LineString",
@@ -52,18 +55,13 @@ gmap.parseRoute = function() {
         }
       });
     } else {
-      alert("You have a ride already scheduled during this time range. Choose a new time");
+		var result;
+		if(validTime[1] == "drives"){
+			result = DrivesAdvtColl.find({_id:validTime[2]});
+		}else{
+			result = DriversAdvtColl.find({_id:validTime[2]});
+		}
+		$('.alert-danger').css('display','inline-block');
     }
 
-	/*console.log(coordinates);
-	var hashinates = [];
-	for(var coordinate in coordinates){
-		var element = coordinates[coordinate];
-		hashinates.push(geohash.encode(element[0],element[1],7)); //change the digit according to accuracy required
-	}
-	console.log(hashinates.length);
-	hashinates = _.uniq(hashinates);
-	console.log(hashinates);
-	console.log("TODO advertise unique hashinates");
-*/
 }

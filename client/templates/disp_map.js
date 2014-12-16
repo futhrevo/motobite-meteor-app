@@ -23,28 +23,44 @@ Template.dispMap.events({
 
 		// console.log(gmap.haversine(placesSrc[0].geometry.location, placesDest[0].geometry.location, "km"));
 		// console.log("google calculated without distancematrix : "+gmap.sphericalD(placesSrc[0].geometry.location, placesDest[0].geometry.location));
-		if(selectedOption == 'rider'){
-			Session.set('mode', 'rider');
-			if(!$('#directions-panel').length){
-				$('#map-canvas').addClass('col-sm-9 col-md-9 col-lg-9').removeClass('col-sm-12 col-md-12 col-lg-12');
-				$(".mapd").append('<div class="col-xs-12 col-sm-3 col-md-3" id="directions-panel"></div>');
-			}
-			// gmap.calcRoute(placesSrc[0].geometry.location,placesDest[0].geometry.location);
-			gmap.calcRoute();
+		var search = getSearchBoxdata();
+		var distance = gmap.haversine(search[0],search[1],"km","geo");
+		var duration = 15 + (distance * 6);
+		var validTime = validateTime(search[2], duration);
+		if(validTime[0]){
+			if(selectedOption == 'rider'){
+				Session.set('mode', 'rider');
+				if(!$('#directions-panel').length){
+					$('#map-canvas').addClass('col-sm-9 col-md-9 col-lg-9').removeClass('col-sm-12 col-md-12 col-lg-12');
+					$(".mapd").append('<div class="col-xs-12 col-sm-3 col-md-3" id="directions-panel"></div>');
+				}
+				// gmap.calcRoute(placesSrc[0].geometry.location,placesDest[0].geometry.location);
+				gmap.calcRoute();
 
-		}else{
-			Session.set('mode', 'ride');
-			polyArray.clear();
-			Meteor.call('rideQuery',getSearchBoxdata(),function(err,data){
-				if(err) console.log(err);
-				console.log(data);
-				_.each(data,function(poly){
-					gmap.polyDraw(poly);
+			}else{
+				Session.set('mode', 'ride');
+				polyArray.clear();
+				Meteor.call('rideQuery',getSearchBoxdata(),function(err,data){
+					if(err) console.log(err);
+					console.log(data);
+					_.each(data,function(poly){
+						gmap.polyDraw(poly);
+					});
+					// gmap.polyDraw(data[0].overview);
 				});
-				// gmap.polyDraw(data[0].overview);
-			});
-			console.log('TODO show markers of riders from surrounding areas to destination');
+				console.log('TODO show markers of riders from surrounding areas to destination');
+			}
+		}else{
+			var result;
+			if(validTime[1] == "drives"){
+				result = DrivesAdvtColl.find({_id:validTime[2]});
+			}else{
+				result = DriversAdvtColl.find({_id:validTime[2]});
+			}
+			$('.alert-danger').css('display','inline-block');
+
 		}
+
 	},
 
 	'change .checkbox':function(event){
