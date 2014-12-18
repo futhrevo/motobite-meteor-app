@@ -355,13 +355,7 @@ Template.dispMap.rendered = function(){
 		gmap.map.setCenter(center);
 	});
 
-	$('.datetimepicker').datetimepicker({
-		format: "dd MM yyyy - hh:ii",
-		autoclose: true,
-		todayBtn: true,
-		minuteStep: 10
-	});
-
+	$('.clockpicker').clockpicker();
 	$('#form').parsley({trigger: 'change'});
 }
 
