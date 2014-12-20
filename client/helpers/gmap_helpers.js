@@ -355,7 +355,11 @@ Template.dispMap.rendered = function(){
 		gmap.map.setCenter(center);
 	});
 
-	$('.clockpicker').clockpicker();
+	//http://weareoutman.github.io/clockpicker/
+	$('.clockpicker').clockpicker({
+		'default': 'now',
+	});
+
 	$('#form').parsley({trigger: 'change'});
 }
 
