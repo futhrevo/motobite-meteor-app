@@ -78,7 +78,21 @@ getSearchBoxdata = function (){
 	}
 	var placesDest = gmap.searchBoxDest.getPlaces();
 	var toCoord = [placesDest[0].geometry.location.lng(),placesDest[0].geometry.location.lat()];
-	var inputTime = $("#datetimepicker1").data("DateTimePicker").getDate().unix();
-	console.log(inputTime);
-	return [fromCoord,toCoord,inputTime];
+
+	var selectedDate = $('#select').val();
+	var selectedTime = $('#timeInput').val();
+
+	var inputTime = new Date();
+	if(selectedDate == 'tomorrow'){
+		inputTime.setDate(inputTime.getDate()+1);
+	}
+
+	if(selectedTime != ""){
+		var parts = selectedTime.match(/(\d+):(\d+)/);
+		inputTime.setHours(parseInt(parts[1],10));
+		inputTime.setMinutes(parseInt(parts[2],10));
+
+	}
+	console.log(inputTime.getTime() / 1000);
+	return [fromCoord,toCoord,inputTime.getTime() / 1000,$('#map-src-search').val().split(", "),$('#map-dest-search').val().split(", ")];
 }

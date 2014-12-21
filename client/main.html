@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimum-scale=1.0">
   <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>-->
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQxRjO3fFcUJUHlw5O1BAKUmRztAWUUgw&libraries=geometry,places"></script>
-  
+
 </head>
 
 <body>
@@ -35,8 +35,14 @@
 </nav>
 {{#if currentUser}}
 <div class="container-fluid">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#inflatedDrivers" data-toggle="tab" aria-expanded="true">Drivers Scheduled</a></li>
+        <li class=""><a href="#inflatedDrives" data-toggle="tab" aria-expanded="false">Drives Scheduled</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
     {{> inflateDrives}}
     {{> inflateDrivers}}
+</div>
 	{{> mapPlaceHolders}}
 	<div class="row">
 		{{> dispMap}}

@@ -57,7 +57,12 @@ Template.dispMap.events({
 			}else{
 				result = DriversAdvtColl.find({_id:validTime[2]});
 			}
-			$('.alert-danger').css('display','inline-block');
+			if (confirm("Duplicate ride already exists. Do you want to edit it?")) {
+				console.log("TODO go to edit page for the conflict ride");
+			} else {
+				// Do nothing!
+			}
+
 
 		}
 

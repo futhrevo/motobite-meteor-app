@@ -47,8 +47,10 @@ gmap.parseRoute = function() {
         distance: distance,
         duration: duration,
         startTime: startTime,
-		origin:directions.lc.origin,
-        destination: directions.lc.destination,
+		originCoord:directions.kc.origin,
+        destinationCoord: directions.kc.destination,
+		origin: response.legs[0].start_address.split(", "),
+		destination: response.legs[0].end_address.split(", "),
         locs: {
           type: "LineString",
           coordinates: coordinates

@@ -1,3 +1,5 @@
+Meteor.startup(function () {
+
 if (MarkerColl.find().count() === 0){
 	MarkerColl.insert({
 		gh: 'tdr38juym8ns',
@@ -7,6 +9,11 @@ if (MarkerColl.find().count() === 0){
 		valid: true
 	});
 }
+// to enable indexing based on 2d sphere for DrivesAdvtColl
+DrivesAdvtColl._ensureIndex({"nodes.locs":"2dsphere"});
+
+DriversAdvtColl._ensureIndex({"locs":"2dsphere"});
+});
 
 
 Meteor.methods({
@@ -50,13 +57,15 @@ Meteor.methods({
 		check(this.userId, String);
 		//TODO find a better way to check for array of numbers
 		check(postAttributes,[Match.Any]);
-		console.log(postAttributes[2]);
+		// console.log(postAttributes[2]);
 		var userid = this.userId;
 		var post = {
 				id		: userid,
 				at		: new Date(),
 				mapid	: null,
-				duration: postAttributes[3],
+				duration: postAttributes[postAttributes.length-1],
+				origin 	: postAttributes[3],
+				destination : postAttributes[4],
 				startTime : postAttributes[2],
 				nodes	: [{
 						addr:"from",

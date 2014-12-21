@@ -1,9 +1,11 @@
 <template name="inflateDrivers">
-    <legend>Drivers Scheduled</legend>
-<div class="list-group">
+    {{!-- <legend>Drivers Scheduled</legend> --}}
+<div class="list-group tab-pane fade active in" id = "inflatedDrivers">
     {{#each driver}}
     <a href="#" class="list-group-item">
-        {{this._id}}
+        {{tripOrigin}}  &nbsp; to &nbsp; {{tripDest}}  &nbsp; at &nbsp;   {{start}}
+        <a href="#" class="btn btn-info btn-xs btnInfo">Edit</a>
+        <a href="#" class="btn btn-danger btn-xs btnDel">Delete</a>
     </a>
     {{/each}}
 </div>
