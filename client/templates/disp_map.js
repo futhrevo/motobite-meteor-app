@@ -1,11 +1,20 @@
 Template.dispMap.helpers({
-	marker: function(){
-		if(Session.get('map'))
-			return MarkerColl.find({valid: true});
-			else
-				return null;
-			}
-		});
+  marker: function() {
+    if (Session.get('map'))
+      return MarkerColl.find({ valid: true });
+    else
+      return null;
+  },
+  mapState: function(){
+	var currentRoute = Router.current();
+	var route = currentRoute.lookupTemplate();
+	if(route ==""){
+		$('.mapState').show();
+	}else{
+		$('.mapState').hide("slow");
+	}
+  }
+});
 
 Template.dispMap.events({
 	'submit form':function(event,template){

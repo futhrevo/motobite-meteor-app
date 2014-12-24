@@ -33,7 +33,7 @@
 </template>
 
 <template name='navItems'>
-    <li class="active"><a href="/">Home</a></li>
-    <li><a href="{{pathFor 'schedules'}}">Schedules</a></li>
-    <li><a href="{{pathFor 'about'}}">About</a></li>
+    <li class={{activeIfTemplateIs 'home'}}><a href="/" data-toggle="collapse" data-target=".navbar-collapse">Home</a></li>
+    <li class={{activeIfTemplateIs 'Schedules'}}><a href="{{pathFor 'schedules'}}" data-toggle="collapse" data-target=".navbar-collapse">Schedules</a></li>
+    <li class={{activeIfTemplateIs 'About'}}><a href="{{pathFor 'about'}}" data-toggle="collapse" data-target=".navbar-collapse">About</a></li>
 </template>
