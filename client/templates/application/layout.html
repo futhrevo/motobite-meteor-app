@@ -14,7 +14,7 @@
             <div class="collapse navbar-collapse" id="navigation">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Schedules</a></li>
+                    <li><a href="{{pathFor 'schedules'}}">Schedules</a></li>
                     <li><a href="#about">About</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -27,14 +27,7 @@
     </nav>
     {{#if currentUser}}
     <div class="container-fluid">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#inflatedDrivers" data-toggle="tab" aria-expanded="true">Drivers Scheduled</a></li>
-            <li class=""><a href="#inflatedDrives" data-toggle="tab" aria-expanded="false">Drives Scheduled</a></li>
-        </ul>
-        <div id="myTabContent" class="tab-content">
-            {{> inflateDrives}}
-            {{> inflateDrivers}}
-        </div>
+        {{> yield}}
         {{> mapPlaceHolders}}
         <div class="row">
             {{> dispMap}}

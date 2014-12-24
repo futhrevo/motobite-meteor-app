@@ -1,0 +1,10 @@
+<template name="schedules">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#inflatedDrivers" data-toggle="tab" aria-expanded="true">Drivers Scheduled</a></li>
+        <li class=""><a href="#inflatedDrives" data-toggle="tab" aria-expanded="false">Drives Scheduled</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        {{> inflateDrives}}
+        {{> inflateDrivers}}
+    </div>
+</template>
