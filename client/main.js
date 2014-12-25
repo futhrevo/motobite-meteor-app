@@ -30,8 +30,8 @@
 	}
 	//Subscriptions goes here
 	Meteor.subscribe('theMarkers');
-	Meteor.subscribe('theDrivers');
-	Meteor.subscribe('theDrives');
+	// Meteor.subscribe('theDrivers');
+	// Meteor.subscribe('theDrives');
 	Meteor.subscribe('theLogs');
 
 	//TODO implement Routeboxer into functions http://google-maps-utility-library-v3.googlecode.com/svn/tags/routeboxer/1.0/docs/examples.html
