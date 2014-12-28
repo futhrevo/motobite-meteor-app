@@ -1,15 +1,27 @@
 <template name="layout">
-    <header>
-        {{> navs}}
-    </header>
-    {{#if currentUser}}
-    <div class="container-fluid">
+    {{#famousContext id="mainCtx"}}
+    {{#HeaderFooterLayout headerSize="50" footerSize="0"}}
+
+    {{#Surface target="header" translate="[0,0,100]"}}
+    <div id="header">{{> navs}}</div>
+    {{/Surface}}
+
+    {{#Surface target="content" class="blue-bg" }}
+    <div class="row mapState">
+        {{> dispMap}}
+    </div>
+    {{/Surface}}
+
+    {{!-- {{#RenderController target="content"}}
         {{> yield}}
         <div class="row mapState">
             {{> dispMap}}
         </div>
-        {{> deleteMarker}}
-        {{> functionsDiv}}
-    </div>
-    {{/if}}
+    {{/RenderController}} --}}
+
+
+
+    {{/HeaderFooterLayout}}
+    {{/famousContext}}
+
 </template>

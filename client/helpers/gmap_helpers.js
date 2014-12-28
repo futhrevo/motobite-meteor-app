@@ -145,6 +145,7 @@ gmap = {
 		// ported insert into server
 		google.maps.event.addDomListener(window, "resize", function() {
 		  var center = gmap.map.getCenter();
+		console.log("map resize");
 		  google.maps.event.trigger(gmap.map, "resize");
 		  gmap.map.setCenter(center);
 		});
