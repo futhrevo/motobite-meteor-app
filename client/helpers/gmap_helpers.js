@@ -118,8 +118,8 @@ gmap = {
 		};
 		this.map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
 		var searchBounds = new google.maps.LatLngBounds(asLatLng(5.5,66.5),asLatLng(37,97));
-		this.searchBoxSrc = new google.maps.places.SearchBox(document.getElementById("map-src-search"),{bounds:searchBounds});
-		this.searchBoxDest = new google.maps.places.SearchBox(document.getElementById("map-dest-search"),{bounds:searchBounds});
+		this.searchBoxSrc = new google.maps.places.SearchBox(document.getElementById("polyMapSrcSearch"),{bounds:searchBounds});
+		this.searchBoxDest = new google.maps.places.SearchBox(document.getElementById("polyMapDesSearch"),{bounds:searchBounds});
 		bounds = new google.maps.LatLngBounds();
 		bounds.extend(loc);
 		// this.map.fitBounds(bounds);
@@ -285,7 +285,7 @@ gmap.geocode = function(lat,lng){
 		}else{
 			result = "Cannot determine address at this location";
 		}
-		$('#map-src-search').val(result);
+		$('#polyMapSrcSearch').val(result);
 	});
 }
 

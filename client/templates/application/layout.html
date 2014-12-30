@@ -1,7 +1,14 @@
 <template name="layout">
-    <header>
+    <core-scaffold>
+        <core-header-panel navigation flex>
+            <core-toolbar>
+                <span>Menu</span>
+            </core-toolbar>
+        </core-header-panel>
+
+    {{!-- <header>
         {{> navs}}
-    </header>
+    </header> --}}
     {{#if currentUser}}
     <div class="container-fluid">
         {{> yield}}
@@ -12,4 +19,5 @@
         {{> functionsDiv}}
     </div>
     {{/if}}
+</core-scaffold>
 </template>

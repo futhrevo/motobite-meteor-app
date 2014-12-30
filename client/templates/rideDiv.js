@@ -70,7 +70,7 @@ function clearPolylines(){
 
 getSearchBoxdata = function (){
 
-	if($("#checkboxSrc").prop( "checked")){
+	if($("#polycheckboxSrc").prop( "checked")){
 		var fromCoord = [Session.get('lng'),Session.get('lat')];
 	}else{
 		var placesSrc = gmap.searchBoxSrc.getPlaces();
@@ -94,5 +94,5 @@ getSearchBoxdata = function (){
 
 	}
 	console.log(inputTime.getTime() / 1000);
-	return [fromCoord,toCoord,inputTime.getTime() / 1000,$('#map-src-search').val().split(", "),$('#map-dest-search').val().split(", ")];
+	return [fromCoord,toCoord,inputTime.getTime() / 1000,$('#polyMapSrcSearch').val().split(", "),$('#polyMapDesSearch').val().split(", ")];
 }

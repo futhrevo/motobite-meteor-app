@@ -17,10 +17,13 @@ Template.dispMap.helpers({
 });
 
 Template.dispMap.events({
-	'submit form':function(event,template){
+	// 'submit form':function(event,template){
+    'click #polySubmit':function(event,template){
 		event.preventDefault();
-		var element = template.find('input:radio[name=transit]:checked');
-		var selectedOption = $(element).val();
+        //console.log("submit clicked");
+		// var element = template.find('input:radio[name=transit]:checked');
+		// var selectedOption = $(element).val();
+        var selectedOption = $('#polyInpMode').prop('selected');
 		//http://diveintohtml5.info/storage.html
 		//using local storage to store more permanently
 		//TODO: add interface to clear/delete local storage data from above link
@@ -77,7 +80,8 @@ Template.dispMap.events({
 
 	},
 
-	'change .checkbox':function(event){
+	//TODO delete the below event if paper checkbox is working fine
+    'change .checkbox':function(event){
 		event.preventDefault();
 		if(event.target.checked){
 			$('#map-src-search').val("").attr("disabled",true);
@@ -85,7 +89,17 @@ Template.dispMap.events({
 		}else{
 			$('#map-src-search').attr("disabled",false).val("");
 		}
-	}
+	},
+
+    'change #polycheckboxSrc':function(event){
+        event.preventDefault();
+        if(event.target.checked){
+            $('#polyMapSrcSearch').val("").attr("disabled",true);
+            gmap.geocode(Session.get('lat'),Session.get('lng'));
+        }else{
+            $('#polyMapSrcSearch').attr("disabled",false).val("");
+        }
+    }
 });
 
 Template.dispMap.destroyed = function(){
