@@ -104,6 +104,7 @@ Template.dispMap.events({
     'click #inpIcon' : function(event){
         event.preventDefault();
         $('.inputForm').slideToggle(200);
+        $('.modSelect').slideToggle(600);
 
     }
 });

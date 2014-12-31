@@ -4,10 +4,14 @@
 	<div class = "row mapd">
 		<div class="google-map-canvas col-xs-12 col-sm-12 col-md-12 col-lg-12" id="map-canvas"></div>
 	</div>
-	<div vertical layout class="inpdiv">
-		<div vertical layout class="modSelect">
-			<paper-fab mini id="inpIcon" icon="settings-input-svideo" class="shade1" title="rider"></paper-fab>
-			<paper-fab mini id="inpIcon" icon="face-unlock" class="shade2" title="ride"></paper-fab>
+	<div vertical center layout class="fabdiv">
+		<div vertical layout class="modSelect" style="display: none;">
+			<core-tooltip label="I am a rider" large show>
+				<paper-fab mini id="fabRider" icon="settings-input-svideo" class="shade1" title="rider"></paper-fab>
+			</core-tooltip>
+			<core-tooltip label="I need a ride" large show>
+				<paper-fab mini id="fabRide" icon="face-unlock" class="shade2" title="ride"></paper-fab>
+			</core-tooltip>
 		</div>
 		<paper-fab id="inpIcon" icon="add" class="blue" title="create"></paper-fab>
 	</div>
