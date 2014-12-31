@@ -1,3 +1,21 @@
+TODO
+1. Accounts pages
+2. Schedule tabs
+3. Server side filtering
+4. input panel Today/tomorrow
+5. better timepicker preferably polymer
+6. map heigth adjustement according to view port
+    6.1 map terms and conditions minimize
+    6.2 remove zoom icons and support pinching
+    6.3 limit map to india/bangalore
+    6.4 hide map type on top of map
+7. User profile page
+8. Fuel points management, billing and charging
+
+
+TODO SERVER
+1. Remove 1 day old records to archives
+
 # README #
 
 Created using meteor in Mac
