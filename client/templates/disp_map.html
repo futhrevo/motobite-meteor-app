@@ -4,9 +4,12 @@
 	<div class = "row mapd">
 		<div class="google-map-canvas col-xs-12 col-sm-12 col-md-12 col-lg-12" id="map-canvas"></div>
 	</div>
-	<div horizontal layout id="inpdiv">
-		<span flex></span>
-		<paper-fab id="inpIcon" icon="create" class="blue" title="create"></paper-fab>
+	<div vertical layout class="inpdiv">
+		<div vertical layout class="modSelect">
+			<paper-fab mini id="inpIcon" icon="settings-input-svideo" class="shade1" title="rider"></paper-fab>
+			<paper-fab mini id="inpIcon" icon="face-unlock" class="shade2" title="ride"></paper-fab>
+		</div>
+		<paper-fab id="inpIcon" icon="add" class="blue" title="create"></paper-fab>
 	</div>
 	<div id="outputDiv"></div>
 	{{> inpForm}}

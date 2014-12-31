@@ -9,3 +9,43 @@
 
 // Temp solution to implement /deep/ in LESS // -----------------------------------
 @deep: ~"/deep/";
+
+@base03: #002b36;  //dark blue
+@base01: #586e75;
+
+@base2 : #F9F6F4;  //for back-ground
+
+@green : #859900;
+@orange : #cb4b16;
+
+paper-fab {
+    color: #fff;
+}
+
+paper-fab.blue {
+    background: @base03;
+}
+
+paper-fab.shade1 {
+    background: @green;
+}
+
+paper-fab.shade2 {
+    background: @orange;
+}
+
+core-toolbar {
+    background-color: @base03;
+    color: @base2;
+    fill: @base2;
+}
+
+.inpdiv{
+        bottom: 0;
+        position: fixed;
+        right: 0;
+        white-space: nowrap;
+        padding: 10px;
+        padding-left:15px;
+        z-index: 21;
+}
