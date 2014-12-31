@@ -18,7 +18,7 @@ Template.dispMap.helpers({
 
 Template.dispMap.events({
 	// 'submit form':function(event,template){
-    'click #polySubmit':function(event,template){
+    'click #fabInpSubmit':function(event,template){
 		event.preventDefault();
         //console.log("submit clicked");
 		// var element = template.find('input:radio[name=transit]:checked');
@@ -103,9 +103,22 @@ Template.dispMap.events({
 
     'click #inpIcon' : function(event){
         event.preventDefault();
-        $('.inputForm').slideToggle(200);
-        $('.modSelect').slideToggle(600);
+        $('.modSelect').slideToggle(400);
 
+    },
+    'click #fabRider' : function(event){
+        event.preventDefault();
+        $('.inputForm').show(200);
+        Session.set('modeSel','rider');
+        $('.modSelect').hide(200);
+        $('.fabdiv').hide();
+    },
+    'click #fabRide' : function(event){
+        event.preventDefault();
+        $('.inputForm').show(200);
+        Session.set('modeSel','ride');
+        $('.modSelect').hide(200);
+        $('.fabdiv').hide();
     }
 });
 

@@ -1,31 +1,13 @@
 <template name="inpForm">
 	<div class ="col-xs-12 col-md-6 col-md-offset-2 inputForm" style="display: none;">
-		<div class="alert alert-dismissable alert-danger" style="display: none;">
-			<button type="button" class="close" data-dismiss="alert">×</button>
-			<strong>OOps!</strong> You already have something scheduled at this time range
-		</div>
 		<form id="form" class="form-horizontal" data-parsley-validate>
 			<fieldset>
-				<legend>Enter Details</legend>
+				<legend>{{modeSelect}}</legend>
 				<!-- TODO Validation states for showing correct/wrong input from http://getbootstrap.com/css/ -->
-				{{!-- <div class="form-group">
-					<label for="modeRadio" class="col-md-2 control-label">Mode</label>
-					<div class="col-md-offset-4 col-xs-offset-4">
-						<p>
-							<div class="radio">
-								<input type="radio" name="transit" value="ride" checked="checked">I need a ride<br>
-							</div>
-							<div class="radio">
-								<input type="radio" name="transit" value="rider">I am riding<br>
-							</div>
-						</p>
-					</div>
-				</div> --}}
-
-				<paper-radio-group id="polyInpMode" selected="ride">
+				{{!-- <paper-radio-group id="polyInpMode" selected="ride">
 					<paper-radio-button name="ride" label="I need a ride"></paper-radio-button>
 					<paper-radio-button name="rider" label="I am riding"></paper-radio-button>
-				</paper-radio-group>
+				</paper-radio-group> --}}
 
 				{{!-- <div class="form-group">
 					<label for="timeInput" class="col-xs-2 col-md-2 control-label">Time</label>
@@ -54,8 +36,12 @@
 
 				<paper-input id="polyMapSrcSearch" label="Enter your source location" floatingLabel></paper-input>
 				<paper-input id="polyMapDesSearch" label="Enter your destination location" floatingLabel></paper-input>
-				<paper-button raised class="colored" id="polySubmit" >Submit</paper-button>
-
+				<div horizontal layout>
+					{{!-- <paper-button raised class="colored" id="polySubmit" >Submit</paper-button> --}}
+					<paper-fab mini id="fabInpSubmit" icon="check" class="green" title="create"></paper-fab>
+					<div flex></div>
+					<paper-fab mini id="fabInpCancel" icon="close" class="red" title="create"></paper-fab>
+				</div>
 
 				{{!-- <div class="form-group">
 					<label for="fromInput" class="col-xs-4 col-md-2 control-label">From</label>

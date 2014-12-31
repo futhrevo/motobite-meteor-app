@@ -47,4 +47,22 @@ Template.inpForm.rendered = function() {
     }
 
   });
-}
+};
+
+Template.inpForm.helpers({
+    modeSelect : function(){
+        var sel = Session.get('modeSel');
+        if(sel == "rider")
+            return "I am Riding at around ";
+        else
+            return "I need a ride at around ";
+    }
+});
+
+Template.inpForm.events({
+    'click #fabInpCancel':function(event){
+        event.preventDefault();
+        $('.inputForm').hide(200);
+        $('.fabdiv').show(200);
+    }
+});
