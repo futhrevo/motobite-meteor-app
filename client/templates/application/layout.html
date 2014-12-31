@@ -1,30 +1,51 @@
 <template name="layout">
-    <core-scaffold>
-        <core-header-panel navigation flex>
-            <core-toolbar>
-                <span>Menu</span>
-            </core-toolbar>
-            <core-menu>
-                <core-item label="Android" icon="android"></core-item>
-                <core-item label="Bug Report" icon="bug-report"></core-item>
-                <core-item label="Account" icon="account-circle"></core-item>
-            </core-menu>
-        </core-header-panel>
-        <span tool>
-            Team Polo
-        </span>
-    {{!-- <header>
+  <core-drawer-panel id="drawerPanel" responsiveWidth="1200px">
+    <core-header-panel  drawer>
+      <core-toolbar id="navheader" class="medium-tall">
+        <span>Menu</span>
+      </core-toolbar>
+      <core-menu class="nav">
+        <a href="/" >
+            <paper-item>
+            <core-icon icon="home"></core-icon>
+            Home
+            </paper-item>
+        </a>
+
+        <a href="{{pathFor 'schedules'}}" >
+            <paper-item>
+            <core-icon icon="schedule"></core-icon>
+            Schedule
+            </paper-item>
+        </a>
+
+        <a href="{{pathFor 'about'}}" >
+            <paper-item>
+            <core-icon icon="info"></core-icon>
+            About
+        </paper-item>
+        </a>
+      </core-menu>
+    </core-header-panel>
+    <core-header-panel main>
+      <core-toolbar id="mainheader">
+        <paper-icon-button id="navicon" icon="menu"></paper-icon-button>
+        <span flex>Team Polo</span>
+        <paper-icon-button icon="refresh"></paper-icon-button>
+        <paper-icon-button icon="more-vert"></paper-icon-button>
+      </core-toolbar>
+      {{!--
+      <header>
         {{> navs}}
-    </header> --}}
-    {{#if currentUser}}
-    <div class="container-fluid">
+      </header> --}} {{#if currentUser}}
+      <div class="container-fluid">
         {{> yield}}
         <div class="row mapState">
-            {{> dispMap}}
+          {{> dispMap}}
         </div>
-        {{> deleteMarker}}
-        {{> functionsDiv}}
-    </div>
-    {{/if}}
-</core-scaffold>
+        {{> deleteMarker}} {{> functionsDiv}}
+      </div>
+      {{/if}}
+    </core-header-panel>
+  </core-drawer-panel>
 </template>

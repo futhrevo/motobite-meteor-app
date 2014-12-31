@@ -99,6 +99,12 @@ Template.dispMap.events({
         }else{
             $('#polyMapSrcSearch').attr("disabled",false).val("");
         }
+    },
+
+    'click #inpIcon' : function(event){
+        event.preventDefault();
+        $('.inputForm').slideToggle(200);
+
     }
 });
 

@@ -41,4 +41,5 @@
 	//ReactiveArray to store polylines
 	//http://reactivearray.meteor.com/
 	polyArray =  new ReactiveArray();
+	
 	}());
