@@ -25,12 +25,18 @@
             About
         </paper-item>
         </a>
+
+        <paper-item data-action="sign-out">
+            <core-icon icon="exit-to-app"></core-icon>
+            Sign out
+        </paper-item>
+
       </core-menu>
     </core-header-panel>
     <core-header-panel main>
       <core-toolbar id="mainheader">
 
-        <paper-icon-button id="navicon" icon="menu"></paper-icon-button>
+        <paper-icon-button icon="menu" data-action="toggle-drawer"></paper-icon-button>
         <span flex>Team Polo</span>
         <paper-icon-button icon="refresh"></paper-icon-button>
         <paper-icon-button icon="more-vert"></paper-icon-button>

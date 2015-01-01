@@ -1,18 +1,14 @@
 <template name="publicHome">
-  <div class="public-billboard" relative>
-    <div class="public-billboard-container" fit layout vertical center-justified center>
-      <h1>Ride made Easy</h1>
-      <p>Now you can ride in car with ease <br>All you need is to sign-in </p>
-    <paper-button class="btn btn-accent btn-lg" raised>Get Started</paper-button>
-    </div>
-  </div>
-  <div class="public-feature" layout vertical center>
-    <div class="slider-container">
-      <simple-slider style="width:500px; height:500px">
-        <img src="http://placekitten.com/g/612/612"/>
-        <img src="http://placekitten.com/g/612/613"/>
-        <img src="http://placekitten.com/g/612/614"/>
-      </simple-slider>
-    </div>
+  <div fit layout vertical center center-justified>
+    <a href="{{pathFor 'signIn'}}">
+      <paper-item>
+        Sign In
+      </paper-item>
+    </a>
+    <a href="{{pathFor 'signUp'}}">
+      <paper-item>
+        Sign Up
+      </paper-item>
+    </a>
   </div>
 </template>

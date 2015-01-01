@@ -313,6 +313,7 @@ gmap.polyDraw = function(poly){
 }
 
 Template.dispMap.rendered = function(){
+	console.log("display map rendered");
 	function geo_success(position) {
 		Session.set('lat', position.coords.latitude);
 		Session.set('lng', position.coords.longitude);
@@ -333,7 +334,9 @@ Template.dispMap.rendered = function(){
 		}else if(poserr == 'TIMEOUT'){
 			alert("The time allowed to aquire the geolocation was reached before the information was obtained");
 		}
-
+		else{
+			alert("Position error");
+		}
 	}
 
 	var geo_options = {
@@ -354,14 +357,14 @@ Template.dispMap.rendered = function(){
 		}
 	}
 	// drawCanvas();
-	document.addEventListener('polymer-ready', function() {
-		var navicon = document.getElementById('navicon');
-		var drawerPanel = document.getElementById('drawerPanel');
-		navicon.addEventListener('click', function() {
-			drawerPanel.togglePanel();
-		});
-	});
-	
+	// document.addEventListener('polymer-ready', function() {
+	// 	var navicon = document.getElementById('navicon');
+	// 	var drawerPanel = document.getElementById('drawerPanel');
+	// 	navicon.addEventListener('click', function() {
+	// 		drawerPanel.togglePanel();
+	// 	});
+	// });
+
 }
 
 asBounds = function (bound){

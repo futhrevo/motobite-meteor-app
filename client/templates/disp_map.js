@@ -119,9 +119,15 @@ Template.dispMap.events({
         Session.set('modeSel','ride');
         $('.modSelect').hide(200);
         $('.fabdiv').hide();
-    }
+    },
+
 });
 
 Template.dispMap.destroyed = function(){
+    console.log("display map destroyed");
 	Session.set('map', false);
+}
+
+Template.dispMap.created = function(){
+    console.log("display map created");
 }
