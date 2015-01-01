@@ -1,0 +1,15 @@
+<template name="signUp">
+  <div fit layout vertical center center-justified id="signupForm">
+    <paper-input-decorator label="Email Address" error="We need a valid email!" floatingLabel class="input-light">
+      <input is="core-input" id="signupEmail" type="email" required>
+    </paper-input-decorator>
+
+    <paper-input-decorator label="Password" error="Whats your password?" floatingLabel class="input-light">
+      <input is="core-input" id="signupPassword" type="password" required>
+    </paper-input-decorator>
+
+    <div horizontal layout reverse>
+      <paper-button raised class="btn btn-accent" type="submit" id="signupSubmit">Sign Up</paper-button>
+    </div>
+  </div>
+</template>
