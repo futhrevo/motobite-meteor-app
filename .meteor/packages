@@ -10,7 +10,6 @@ mrt:geohash
 accounts-password
 jquery
 ian:bootstrap-3
-ian:accounts-ui-bootstrap-3
 accounts-base
 manuel:reactivearray
 matb33:collection-hooks
