@@ -12,7 +12,6 @@ jquery
 ian:bootstrap-3
 ian:accounts-ui-bootstrap-3
 accounts-base
-msavin:mongoinspector
 manuel:reactivearray
 matb33:collection-hooks
 amr:parsley.js

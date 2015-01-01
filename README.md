@@ -11,7 +11,13 @@ TODO
     6.4 hide map type on top of map
 7. User profile page
 8. Fuel points management, billing and charging
-
+9. User input validation - remove or implement parsely for paper elements
+10. Remove Insecure Package
+11. Remove geohash package if not required
+12. modify core tool-bar height according to ios specs
+13. Wait button when rider is waiting
+14. edit delete disable after drive started
+15. driver renting
 
 TODO SERVER
 1. Remove 1 day old records to archives
