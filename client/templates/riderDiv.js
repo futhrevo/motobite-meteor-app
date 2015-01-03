@@ -39,8 +39,9 @@ gmap.parseRoute = function() {
 	var validTime = validateTime(startTime, duration);
 	console.log(validTime);
     if (validTime[0]) {
-      var coordinates = polyline.hashdecode(response.overview_polyline, 5);
-      DriversAdvtColl.insert({
+      var coord = polyline.hashdecode(response.overview_polyline, 5);
+	var coordinates = coord[0];
+	DriversAdvtColl.insert({
         overview: response.overview_polyline,
         summary: response.summary,
         bounds: response.bounds,
@@ -51,6 +52,7 @@ gmap.parseRoute = function() {
         destinationCoord: directions.kc.destination,
 		origin: response.legs[0].start_address.split(", "),
 		destination: response.legs[0].end_address.split(", "),
+		gh6 : coord[1],
         locs: {
           type: "LineString",
           coordinates: coordinates

@@ -1,74 +1,39 @@
 <template name="inpForm">
-	<div class ="col-xs-12 col-md-6 col-md-offset-2 inputForm" style="display: none;">
+	<div class ="inputForm" style="display: none;">
 		<form id="form" class="form-horizontal" data-parsley-validate>
 			<fieldset>
 				<legend>{{modeSelect}}</legend>
 				<!-- TODO Validation states for showing correct/wrong input from http://getbootstrap.com/css/ -->
-				{{!-- <paper-radio-group id="polyInpMode" selected="ride">
-					<paper-radio-button name="ride" label="I need a ride"></paper-radio-button>
-					<paper-radio-button name="rider" label="I am riding"></paper-radio-button>
-				</paper-radio-group> --}}
-
-				{{!-- <div class="form-group">
-					<label for="timeInput" class="col-xs-2 col-md-2 control-label">Time</label>
-					<div class="col-xs-4 col-md-4">
-						<select class="form-control" id="select">
-							<option value="today">Today</option>
-							<option value="tomorrow">Tomorrow</option>
-						</select>
+				<div horizontal layout>
+					<div>
+						<paper-radio-group id="polyDateSel" selected="today">
+							<paper-radio-button name="today" label="Today"></paper-radio-button>
+							<paper-radio-button name="tomorrow" label="Tomorrow"></paper-radio-button>
+						</paper-radio-group>
 					</div>
-					<div class="input-group clockpicker col-xs-4 col-md-3" data-placement="left" data-align="top" data-autoclose="true">
-						<input type="text" class="form-control" placeholder="Now"  id="timeInput" data-parsley-tomoValidator data-parsley-validate-if-empty>
-						<span class="input-group-addon ">
-							<span class="glyphicon glyphicon-time"></span>
-						</span>
+					<div flex>
+						<div class="input-group clockpicker" data-placement="left" data-align="bottom" data-autoclose="true">
+
+							<input type="text" class="form-control" placeholder="Now"  id="timeInput" data-parsley-tomoValidator data-parsley-validate-if-empty>
+							<span class="input-group-addon ">
+								<span class="glyphicon glyphicon-time"></span>
+							</span>
+						</div>
 					</div>
-
-				</div> --}}
-
-				<div class="input-group clockpicker col-xs-4 col-md-3" data-placement="left" data-align="top" data-autoclose="true">
-					<input type="text" class="form-control" placeholder="Now"  id="timeInput" data-parsley-tomoValidator data-parsley-validate-if-empty>
-					<span class="input-group-addon ">
-						<span class="glyphicon glyphicon-time"></span>
-					</span>
 				</div>
+
+
+
 				<paper-checkbox id="polycheckboxSrc" label="Use my current location"></paper-checkbox>
 
 				<paper-input id="polyMapSrcSearch" label="Enter your source location" floatingLabel></paper-input>
 				<paper-input id="polyMapDesSearch" label="Enter your destination location" floatingLabel></paper-input>
 				<div horizontal layout>
-					{{!-- <paper-button raised class="colored" id="polySubmit" >Submit</paper-button> --}}
 					<div flex></div>
 					<paper-fab mini id="fabInpSubmit" icon="check" class="green" title="Submit"></paper-fab>
-					<!-- <div flex></div> -->
 					<paper-fab mini id="fabInpCancel" icon="close" class="red" title="Cancel"></paper-fab>
-					<!-- <div flex></div> -->
 				</div>
 
-				{{!-- <div class="form-group">
-					<label for="fromInput" class="col-xs-4 col-md-2 control-label">From</label>
-					<div class="checkbox col-xs-8 col-md-8">
-						<label>
-							<input type="checkbox" id = "checkboxSrc"> Use my current location
-						</label>
-					</div>
-					<div class="col-xs-12">
-						<input type="text" class="form-control" placeholder="Enter your source location" id="map-src-search" required data-parsley-minlength="4" >
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="ToInput" class="col-md-2 control-label">To</label>
-					<div class="col-xs-12">
-						<input type="text" class="form-control" placeholder="Enter your destination location" id="map-dest-search" required data-parsley-minlength="4">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-4 col-xs-offset-4">
-						<input type="submit" class="btn btn-primary" value="Submit">
-					</div>
-
-				</div> --}}
 			</fieldset>
 		</form>
 

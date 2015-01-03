@@ -7,7 +7,7 @@ Template.drawMarker.helpers({
 			lat:decMarker[0],
 			lng:decMarker[1],
 			id: index
-		};	
+		};
 		if(gmap.markers[index] === undefined){
 			console.log(marker);
 			gmap.addMarker(marker,this.type,'gmapMarker');
@@ -18,8 +18,8 @@ Template.drawMarker.helpers({
 			}else{
 				console.log(this.id);
 			}
-			
+
 		}
-		
+
 	},
 });

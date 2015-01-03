@@ -20,10 +20,8 @@ Template.dispMap.events({
 	// 'submit form':function(event,template){
     'click #fabInpSubmit':function(event,template){
 		event.preventDefault();
-        //console.log("submit clicked");
-		// var element = template.find('input:radio[name=transit]:checked');
-		// var selectedOption = $(element).val();
-        var selectedOption = $('#polyInpMode').prop('selected');
+
+        var selectedOption = Session.get('modeSel');
 		//http://diveintohtml5.info/storage.html
 		//using local storage to store more permanently
 		//TODO: add interface to clear/delete local storage data from above link

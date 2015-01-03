@@ -1,5 +1,5 @@
 TODO
-1. Accounts pages
+X1. Accounts pages
 2. Schedule tabs
 3. Server side filtering
 4. input panel Today/tomorrow
@@ -14,7 +14,7 @@ TODO
 9. User input validation - remove or implement parsely for paper elements
 10. Remove Insecure Package
 11. Remove geohash package if not required
-12. modify core tool-bar height according to ios specs
+X12. modify core tool-bar height according to ios specs
 13. Wait button when rider is waiting
 14. edit delete disable after drive started
 15. driver renting

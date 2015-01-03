@@ -2,7 +2,11 @@ Template.layout.created = function(){
     $('body').attr('fullbleed', '');
     $('body').attr('vertical', '');
     $('body').attr('layout', '');
+
 };
+// Template.layout.rendered = function(){
+//     $('#navheader').css('background-image', 'url(profile.jpg)');
+// }
 
 Template.layout.events({
     "click [data-action=toggle-drawer]" : function(){
@@ -16,4 +20,19 @@ Template.layout.events({
         gmap.markers = {};
         Router.go('/');
     },
+});
+
+Template.layout.helpers({
+    userEmail : function(){
+        if(Meteor.user() == null)
+            return null
+        else
+            return Meteor.user().emails[0].address;
+    },
+    profEmail : function(){
+        if(Meteor.user() == null)
+            return null
+        else
+            return Meteor.user().profile.pic;
+    }
 });

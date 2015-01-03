@@ -79,7 +79,7 @@ getSearchBoxdata = function (){
 	var placesDest = gmap.searchBoxDest.getPlaces();
 	var toCoord = [placesDest[0].geometry.location.lng(),placesDest[0].geometry.location.lat()];
 
-	var selectedDate = $('#select').val();
+	var selectedDate = $('#polyDateSel').prop('selected');
 	var selectedTime = $('#timeInput').val();
 
 	var inputTime = new Date();
