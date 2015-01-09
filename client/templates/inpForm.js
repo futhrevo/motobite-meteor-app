@@ -7,9 +7,9 @@ Template.inpForm.rendered = function() {
   window.ParsleyValidator.addValidator('tomoValidator',
       function(value, requirement) {
         // console.log($('#select option:selected').val()+ "value = "+value);
-        if ($('#select option:selected').val() == "tomorrow" && value == "")
+        if ($('#polyDateSel').prop('selected') == "tomorrow" && value == "")
           return false;
-        if ($('#select option:selected').val() == "today" && value == "")
+        if ($('#polyDateSel').prop('selected') == "today" && value == "")
           return true;
 
         var patterN = /^((2[0-3])|[01][0-9]):([0-5]\d)$/;
@@ -21,7 +21,7 @@ Template.inpForm.rendered = function() {
         var partHour = parseInt(parts[1], 10);
         var time = new Date();
 
-        if ($('#select option:selected').val() == "today" && partHour <= time.getHours())
+        if ($('#polyDateSel').prop('selected') == "today" && partHour <= time.getHours())
           if (parseInt(parts[2], 10) <= time.getMinutes())
             return false;
 

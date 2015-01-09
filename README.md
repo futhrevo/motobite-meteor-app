@@ -80,3 +80,27 @@ db.drives.find({"nodes.locs": {$near: {$geometry : {type : "Point", coordinates:
  db.drivers.ensureIndex({"locs":"2dsphere"})
 
  "s}`nA{agyMF_CLAFC\{KJ?@_CuDNuCXUDaD|B_DxBaAp@KlCCp@Cr@EnBEdAG`BOvCEv@Ar@HpBZzCfAnKj@pGtAzMbBzO|@lKpBra@JpGErAKz@eEjLgIzSeBrFWfASzBKzAQdGQbJA`CWdFQtBs@dGaAhH[bCSzBUhCA|@@\Dh@VnCL~@@r@EtBExAShEO`GGjEObLOlIEnBYpEGnAw@zM{AzXOxCAz@GzAY|EKXQNYHU@UEUMMOI]GsAIqBIYOOSKWAmBB_@EGCiBFw@@m@AuPXiOX{@MOC}CDIwBIkGcBFCsAU?"
+
+
+ db.drivers.aggregate([{"$geoNear" : {near:{type : "Point", coordinates:[77.696493,12.942884]},distanceField:"dist.calculated",maxDistance:200,spherical:true}}])
+
+ db.drivers.find({$and : [{locs: {$near: {$geometry : {type : "Point", coordinates:[77.696493,12.942884]},$maxDistance : 10}}},{locs: {$near: {$geometry : {type : "Point", coordinates:[77.696493,12.942884]},$maxDistance : 1}}}]})
+
+
+////////
+a = db.drivers.aggregate([{"$geoNear" : {near:{type : "Point", coordinates:[77.696493,12.942884]},distanceField:"dist.calculated",maxDistance:200,spherical:true}}])
+b = db.drivers.aggregate([{"$geoNear" : {near:{type : "Point", coordinates:[77.696593,12.943884]},distanceField:"dist.calculated",maxDistance:200,spherical:true}}])
+
+aid = a.result.map(function(p){return p._id})
+bid = b.result.map(function(p){return p._id})
+aid.concat(bid)
+/////
+
+a = db.drivers.aggregate([{"$geoNear" : {near:{type : "Point", coordinates:[77.697839,12.951040]},distanceField:"dist.calculated",maxDistance:250,spherical:true}},{$match:{startTime:{$gt:1410529121}}},{$match:{gh6:"tdr1zf"}},{ $project : { gh6 : 1 , dist : 1 } }])
+
+query:{_id:{$in:['Lz3S2GvTuaF9uTsX8']}}
+query:{_id:{$in:['Lz3S2GvTuaF9uTsX8','9CYpdaL3p2aSpmefj']}}
+
+b =a.result.map(function(p){return p._id})
+
+if(this.gh6.indexOf("tdr1xf") < this.gh6.indexOf("tdr1zv"))

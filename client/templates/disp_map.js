@@ -53,7 +53,7 @@ Template.dispMap.events({
 				Meteor.call('rideQuery',getSearchBoxdata(),function(err,data){
 					if(err) console.log(err);
 					console.log(data);
-					_.each(data,function(poly){
+					_.each(data[1],function(poly){
 						gmap.polyDraw(poly);
 					});
 					// gmap.polyDraw(data[0].overview);

@@ -48,9 +48,39 @@ Meteor.methods({
 	rideQuery: function(post){
 		//TODO use $and to query from and to which is not working in current mongodb < 2.55
 		//TODO mongo aggregation http://joshowens.me/using-mongodb-aggregations-to-power-a-meteor-js-publication/
-		var result = DriversAdvtColl.find({"locs": {$near: {$geometry : {type : "Point", coordinates:post[0]},$maxDistance : 200}}},{fields: {"locs":0}});
-		console.log("found "+ result.count()+" drivers");
-		return result.fetch();
+		// var result = DriversAdvtColl.find({"locs": {$near: {$geometry : {type : "Point", coordinates:post[0]},$maxDistance : 200}}},{fields: {"locs":0}});
+		var ids = [];
+		var a = DriversAdvtColl.aggregate([{
+			"$geoNear" : {near:{type : "Point", coordinates:[77.697839,12.951040]},
+			distanceField:"dist.calculated",
+			maxDistance:250,
+			spherical:true}},{
+				$match:{startTime:{$gt:1410529121}}},{
+					$match:{gh6:"tdr1zf"}}])
+					.map( function(u) {
+						if(u.gh6.indexOf("tdr1zv") < u.gh6.indexOf("tdr1xf"))
+							return {_id : u._id, dist : u.dist.calculated};
+						else
+							return null;
+							} );
+
+		var a = a.filter(function(element){return element != null});
+		for(var i=0;i < a.length;i++){
+			ids[i] = a[i]._id;
+		}
+
+
+		console.log(a);
+		console.log("TODO limit the number of results for performance");
+		console.log(ids);
+		var driverpool = DriversAdvtColl.find({_id:{$in:ids}},{fields: {"locs":0,"origin":0,"originCoord" : 0}}).fetch();
+
+		// var result = a;
+
+		// console.log("found "+ result.count()+" drivers");
+		// return result.fetch();
+		return [a,driverpool];
+
 	},
 
 	postDriveAdvt : function(postAttributes){

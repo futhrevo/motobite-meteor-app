@@ -94,5 +94,7 @@ getSearchBoxdata = function (){
 
 	}
 	console.log(inputTime.getTime() / 1000);
-	return [fromCoord,toCoord,inputTime.getTime() / 1000,$('#polyMapSrcSearch').val().split(", "),$('#polyMapDesSearch').val().split(", ")];
+	var fromHash = geohash.encode(fromCoord[1],fromCoord[0],6);
+	var toHash = geohash.encode(toCoord[1],toCoord[0],6);
+	return [fromCoord,toCoord,inputTime.getTime() / 1000,$('#polyMapSrcSearch').val().split(", "),$('#polyMapDesSearch').val().split(", "),fromHash,toHash];
 }

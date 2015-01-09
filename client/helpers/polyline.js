@@ -178,9 +178,7 @@ polyline.hashdecode = function(str, precision) {
                 //coordinates.push([lat / factor, lng / factor]);
                 coordinates.push([lng / factor , lat / factor]);
                 var temp = geohash.encode(lat / factor,lng / factor,6);
-                if(dup == temp){
-                    gh6.push(null);
-                }else{
+                if(dup != temp){
                     dup = temp;
                     gh6.push(temp);
                 }
@@ -193,9 +191,7 @@ polyline.hashdecode = function(str, precision) {
             coordinates.push([lng / factor , lat / factor]);
             //coordinates.push([lat / factor, lng / factor]);
             var temp = geohash.encode(lat / factor,lng / factor,6);
-            if(dup == temp){
-                gh6.push(null);
-            }else{
+            if(dup != temp){
                 dup = temp;
                 gh6.push(temp);
             }
