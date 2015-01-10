@@ -106,3 +106,18 @@ query:{_id:{$in:['Lz3S2GvTuaF9uTsX8','9CYpdaL3p2aSpmefj']}}
 b =a.result.map(function(p){return p._id})
 
 if(this.gh6.indexOf("tdr1xf") < this.gh6.indexOf("tdr1zv"))
+
+
+var a = DriversAdvtColl.aggregate([{
+    "$geoNear" : {near:{type : "Point", coordinates:post[0]},
+    distanceField:"dist.calculated",
+    maxDistance:250,
+    spherical:true}},{
+        $match:{startTime:{$gt:1410529121}}},{
+            $match:{gh6:post[6]}}])
+            .map( function(u) {
+                if(u.gh6.indexOf(post[5]) < u.gh6.indexOf(post[6]))
+                return {_id : u._id, dist : u.dist.calculated};
+                else
+                return null;
+                } );

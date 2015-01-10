@@ -62,7 +62,6 @@ Template.inpForm.helpers({
 Template.inpForm.events({
     'click #fabInpCancel':function(event){
         event.preventDefault();
-        $('#directions-panel').hide();
         $('.inputForm').hide(200);
         $('.fabdiv').show(200);
     }

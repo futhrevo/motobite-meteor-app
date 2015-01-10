@@ -45,43 +45,115 @@ Meteor.methods({
 
 	},
 
-	rideQuery: function(post){
-		//TODO use $and to query from and to which is not working in current mongodb < 2.55
-		//TODO mongo aggregation http://joshowens.me/using-mongodb-aggregations-to-power-a-meteor-js-publication/
-		// var result = DriversAdvtColl.find({"locs": {$near: {$geometry : {type : "Point", coordinates:post[0]},$maxDistance : 200}}},{fields: {"locs":0}});
-		var ids = [];
-		var a = DriversAdvtColl.aggregate([{
-			"$geoNear" : {near:{type : "Point", coordinates:post[0]},
-			distanceField:"dist.calculated",
-			maxDistance:250,
-			spherical:true}},{
-				$match:{startTime:{$gt:1410529121}}},{
-					$match:{gh6:post[6]}}])
-					.map( function(u) {
-						if(u.gh6.indexOf(post[5]) < u.gh6.indexOf(post[6]))
-							return {_id : u._id, dist : u.dist.calculated};
-						else
-							return null;
-							} );
+	rideQuery: function(post) {
+    //TODO use $and to query from and to which is not working in current mongodb < 2.55
+    //TODO mongo aggregation http://joshowens.me/using-mongodb-aggregations-to-power-a-meteor-js-publication/
+    // var result = DriversAdvtColl.find({"locs": {$near: {$geometry : {type : "Point", coordinates:post[0]},$maxDistance : 200}}},{fields: {"locs":0}});
+    var ids = [];
+	//all keys present as neighbours for a geohash
+	var dKeys = ["c","e","w","n","s","se","sw","ne","nw"];
+	// Find all the _ids near to source cordinates
+	var nearSrc = DriversAdvtColl.aggregate([{
+        "$geoNear": {
+            near: {
+                type: "Point",
+                coordinates: post[0]
+            },
+            distanceField: "srcDist",
+            maxDistance: 250,
+            spherical: true
+        }
+    }, {$match: {
+            startTime: {
+                $gt: 1410529121
+            }
+        }
+    }, {$project: {
+		srcDist: 1
+        }
+    }]);
 
-		var a = a.filter(function(element){return element != null});
-		for(var i=0;i < a.length;i++){
-			ids[i] = a[i]._id;
+	// get the list of _ids from the cursor
+	for (var i = 0; i < nearSrc.length; i++) {
+		ids[i] = nearSrc[i]._id;
+	}
+	console.log(nearSrc);
+	// take the list of _ids and search those for destination proximity
+	var nearDst = DriversAdvtColl.aggregate([{
+		"$geoNear": {
+			near: {
+				type: "Point",
+				coordinates: post[1]
+			},
+			distanceField: "dstDist",
+			maxDistance: 250,
+			spherical: true,
+			query:{_id:{$in:ids}}
 		}
+	}]).map( function(u) {
+		var srcIndex = u.gh6.indexOf(post[5].c);
+		var dstIndex = u.gh6.indexOf(post[6].c);
+
+		var i = 1;
+		while(srcIndex == -1 && i < 9){
+			srcIndex = u.gh6.indexOf(post[5][dKeys[i]]);
+			console.log(i);
+			i++;
+		}
+		i=1;
+		while(dstIndex == -1 && i < 9){
+			dstIndex = u.gh6.indexOf(post[6][dKeys[i]]);
+			console.log(i);
+			i++;
+		}
+		console.log("srcIndex "+srcIndex);
+		console.log("dstIndex "+dstIndex);
+		if(srcIndex < dstIndex)
+			for (var i = 0; i < nearSrc.length; i++) {
+				if(u._id == nearSrc[i]._id)
+					var ret = {_id : u._id, srcDist : nearSrc[i].srcDist,dstDist : u.dstDist};
+					nearSrc.splice(i, 1);
+					return ret;
+			}
+		else
+			return null;
+	} );
+
+	//Filter nulls inserted after map function
+
+    var nearDst = nearDst.filter(function(element) {
+        return element != null;
+    });
+
+	// get the list of _ids from the cursor
+	ids=[];
+	for (var i = 0; i < nearDst.length; i++) {
+		ids[i] = nearDst[i]._id;
+	}
 
 
-		console.log(a);
-		console.log("TODO limit the number of results for performance");
-		console.log(ids);
-		var driverpool = DriversAdvtColl.find({_id:{$in:ids}},{fields: {"locs":0,"origin":0,"originCoord" : 0}}).fetch();
+    console.log(nearDst);
+    console.log("TODO limit the number of results for performance");
+    console.log(ids);
+    var driverpool = DriversAdvtColl.find({
+        _id: {
+            $in: ids
+        }
+    }, {
+        fields: {
+            "locs": 0,
+            "origin": 0,
+            "originCoord": 0
+        }
+    }).fetch();
 
-		// var result = a;
+    // var result = a;
 
-		// console.log("found "+ result.count()+" drivers");
-		// return result.fetch();
-		return [a,driverpool];
+    // console.log("found "+ result.count()+" drivers");
+    // return result.fetch();
+    return [nearDst, driverpool];
 
-	},
+},
 
 	postDriveAdvt : function(postAttributes){
 		check(this.userId, String);

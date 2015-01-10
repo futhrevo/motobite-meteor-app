@@ -74,7 +74,7 @@ getSearchBoxdata = function (){
 		var fromCoord = [Session.get('lng'),Session.get('lat')];
 	}else{
 		var placesSrc = gmap.searchBoxSrc.getPlaces();
-		var fromCoord = [placesSrc[0].geometry.location.lng(),placesSrc[0].geometry.location.lat()]
+		var fromCoord = [placesSrc[0].geometry.location.lng(),placesSrc[0].geometry.location.lat()];
 	}
 	var placesDest = gmap.searchBoxDest.getPlaces();
 	var toCoord = [placesDest[0].geometry.location.lng(),placesDest[0].geometry.location.lat()];
@@ -96,5 +96,8 @@ getSearchBoxdata = function (){
 	console.log(inputTime.getTime() / 1000);
 	var fromHash = geohash.encode(fromCoord[1],fromCoord[0],6);
 	var toHash = geohash.encode(toCoord[1],toCoord[0],6);
-	return [fromCoord,toCoord,inputTime.getTime() / 1000,$('#polyMapSrcSearch').val().split(", "),$('#polyMapDesSearch').val().split(", "),fromHash,toHash];
+	var fromHashObj = geohash.neighbors(fromHash);
+	var toHashObj = geohash.neighbors(toHash);
+
+	return [fromCoord,toCoord,inputTime.getTime() / 1000,$('#polyMapSrcSearch').val().split(", "),$('#polyMapDesSearch').val().split(", "),fromHashObj,toHashObj];
 }
