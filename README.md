@@ -1,28 +1,30 @@
-TODO
-X1. Accounts pages
-2. Schedule tabs
-3. Server side filtering
-4. input panel Today/tomorrow
-5. better timepicker preferably polymer
-6. map heigth adjustement according to view port
-    6.1 map terms and conditions minimize
-    6.2 remove zoom icons and support pinching
-    6.3 limit map to india/bangalore
-    6.4 hide map type on top of map
-7. User profile page
-8. Fuel points management, billing and charging
-9. User input validation - remove or implement parsely for paper elements
-10. Remove Insecure Package
-11. Remove geohash package if not required
-X12. modify core tool-bar height according to ios specs
-13. Wait button when rider is waiting
-14. edit delete disable after drive started
-15. driver renting
+# README #
+
+##TODO
+* [x] Accounts pages
+* [ ] Schedule tabs
+* [ ] Server side filtering
+* [ ] input panel Today/tomorrow
+* [ ] better timepicker preferably polymer
+* [ ] map heigth adjustement according to view port
+    * [ ] map terms and conditions minimize
+    * [ ] remove zoom icons and support pinching
+    * [ ] limit map to india/bangalore
+    * [ ] hide map type on top of map
+* [ ] User profile page
+* [ ] Fuel points management, billing and charging
+* [ ] User input validation - remove or implement parsely for paper elements
+* [ ] Remove Insecure Package
+* [ ] Remove geohash package if not required
+* [x] modify core tool-bar height according to ios specs
+* [ ] Wait button when rider is waiting
+* [ ] edit delete disable after drive started
+* [ ] driver renting
 
 TODO SERVER
-1. Remove 1 day old records to archives
+* [ ] Remove 1 day old records to archives
 
-# README #
+
 
 Created using meteor in Mac
 Authors:

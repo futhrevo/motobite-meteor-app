@@ -51,14 +51,14 @@ Meteor.methods({
 		// var result = DriversAdvtColl.find({"locs": {$near: {$geometry : {type : "Point", coordinates:post[0]},$maxDistance : 200}}},{fields: {"locs":0}});
 		var ids = [];
 		var a = DriversAdvtColl.aggregate([{
-			"$geoNear" : {near:{type : "Point", coordinates:[77.697839,12.951040]},
+			"$geoNear" : {near:{type : "Point", coordinates:post[0]},
 			distanceField:"dist.calculated",
 			maxDistance:250,
 			spherical:true}},{
 				$match:{startTime:{$gt:1410529121}}},{
-					$match:{gh6:"tdr1zf"}}])
+					$match:{gh6:post[6]}}])
 					.map( function(u) {
-						if(u.gh6.indexOf("tdr1zv") < u.gh6.indexOf("tdr1xf"))
+						if(u.gh6.indexOf(post[5]) < u.gh6.indexOf(post[6]))
 							return {_id : u._id, dist : u.dist.calculated};
 						else
 							return null;
