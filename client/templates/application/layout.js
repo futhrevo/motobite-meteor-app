@@ -30,6 +30,7 @@ Template.layout.helpers({
             return Meteor.user().emails[0].address;
     },
     profEmail : function(){
+      //TODO add interface to add profile pic property to each user
         if(Meteor.user() == null)
             return null
         else
