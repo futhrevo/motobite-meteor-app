@@ -9,7 +9,6 @@ underscore
 mrt:geohash
 accounts-password
 jquery
-ian:bootstrap-3
 accounts-base
 manuel:reactivearray
 matb33:collection-hooks
@@ -20,3 +19,4 @@ ecwyne:polymer-elements
 less
 differential:vulcanize
 meteorhacks:aggregate
+nemo64:bootstrap

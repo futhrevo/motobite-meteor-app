@@ -41,7 +41,15 @@
         <paper-icon-button icon="menu" data-action="toggle-drawer"></paper-icon-button>
         <span flex>Team Polo</span>
         <paper-icon-button icon="room"></paper-icon-button>
-        <paper-icon-button icon="more-vert"></paper-icon-button>
+        <paper-menu-button>
+            <paper-icon-button icon="more-vert"></paper-icon-button>
+            <paper-dropdown class="dropdown" halign="right">
+                <core-menu class="menu">
+                    <paper-item>Logout</paper-item>
+                    <paper-item>Help !</paper-item>
+                </core-menu>
+            </paper-dropdown>
+        </paper-menu-button>
       </core-toolbar>
       {{!--
       <header>

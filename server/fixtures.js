@@ -110,10 +110,11 @@ Meteor.methods({
 		console.log("dstIndex "+dstIndex);
 		if(srcIndex < dstIndex)
 			for (var i = 0; i < nearSrc.length; i++) {
-				if(u._id == nearSrc[i]._id)
+				if(u._id == nearSrc[i]._id){
 					var ret = {_id : u._id, srcDist : nearSrc[i].srcDist,dstDist : u.dstDist};
 					nearSrc.splice(i, 1);
 					return ret;
+				}
 			}
 		else
 			return null;
