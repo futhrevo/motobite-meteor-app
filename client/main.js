@@ -18,7 +18,7 @@
 	  	console.info("geolocation is available");
 	} else {
 	  	/* geolocation IS NOT available */
-	  	console.log("geolocation is not available");
+	  	console.info("geolocation is not available");
 	}
 
 	function supports_html5_storage() {

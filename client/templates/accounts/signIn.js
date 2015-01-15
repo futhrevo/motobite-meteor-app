@@ -1,5 +1,6 @@
 Template.signIn.events({
     "click #signinSubmit": function(e) {
+      event.preventDefault();
         var $form, email, pass;
         $form = $('#signinForm');
             email = $form.find("#signinEmail").val();
