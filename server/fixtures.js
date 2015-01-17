@@ -1,22 +1,27 @@
-Meteor.startup(function () {
+Meteor.startup(function() {
 
-if (MarkerColl.find().count() === 0){
-	MarkerColl.insert({
-		gh: 'tdr38juym8ns',
-		_id: 'tEsTdAtA',
-		type: "taxi",
-		at: new Date(),
-		valid: true
-	});
-}
-// to enable indexing based on 2d sphere for DrivesAdvtColl
-DrivesAdvtColl._ensureIndex({"nodes.locs":"2dsphere"});
+  if (MarkerColl.find().count() === 0) {
+    MarkerColl.insert({
+      gh: 'tdr38juym8ns',
+      _id: 'tEsTdAtA',
+      type: "taxi",
+      at: new Date(),
+      valid: true
+    });
+  }
+  // to enable indexing based on 2d sphere for DrivesAdvtColl
+  DrivesAdvtColl._ensureIndex({
+    "nodes.locs": "2dsphere"
+  });
 
-DriversAdvtColl._ensureIndex({"locs":"2dsphere"});
+  DriversAdvtColl._ensureIndex({
+    "locs": "2dsphere"
+  });
 });
 
 
 Meteor.methods({
+	//Entry for location
 	postLocation: function(postAttributes){
 		check(this.userId, String);
 		check(postAttributes,{
@@ -45,15 +50,18 @@ Meteor.methods({
 
 	},
 
+
+	//Query for drivers for a rider
 	rideQuery: function(post) {
     //TODO use $and to query from and to which is not working in current mongodb < 2.55
     //TODO mongo aggregation http://joshowens.me/using-mongodb-aggregations-to-power-a-meteor-js-publication/
-    // var result = DriversAdvtColl.find({"locs": {$near: {$geometry : {type : "Point", coordinates:post[0]},$maxDistance : 200}}},{fields: {"locs":0}});
+    //TODO if DriversAdvtColl is empty, bypass the procedure to escape server error
+		// var result = DriversAdvtColl.find({"locs": {$near: {$geometry : {type : "Point", coordinates:post[0]},$maxDistance : 200}}},{fields: {"locs":0}});
     var ids = [];
-	//all keys present as neighbours for a geohash
-	var dKeys = ["c","e","w","n","s","se","sw","ne","nw"];
-	// Find all the _ids near to source cordinates
-	var nearSrc = DriversAdvtColl.aggregate([{
+		//all keys present as neighbours for a geohash
+		var dKeys = ["c","e","w","n","s","se","sw","ne","nw"];
+		// Find all the _ids near to source cordinates
+		var nearSrc = DriversAdvtColl.aggregate([{
         "$geoNear": {
             near: {
                 type: "Point",
@@ -73,64 +81,64 @@ Meteor.methods({
         }
     }]);
 
-	// get the list of _ids from the cursor
-	for (var i = 0; i < nearSrc.length; i++) {
-		ids[i] = nearSrc[i]._id;
-	}
-	console.log(nearSrc);
-	// take the list of _ids and search those for destination proximity
-	var nearDst = DriversAdvtColl.aggregate([{
-		"$geoNear": {
-			near: {
-				type: "Point",
-				coordinates: post[1]
-			},
-			distanceField: "dstDist",
-			maxDistance: 250,
-			spherical: true,
-			query:{_id:{$in:ids}}
+		// get the list of _ids from the cursor
+		for (var i = 0; i < nearSrc.length; i++) {
+			ids[i] = nearSrc[i]._id;
 		}
-	}]).map( function(u) {
-		var srcIndex = u.gh6.indexOf(post[5].c);
-		var dstIndex = u.gh6.indexOf(post[6].c);
-
-		var i = 1;
-		while(srcIndex == -1 && i < 9){
-			srcIndex = u.gh6.indexOf(post[5][dKeys[i]]);
-			console.log(i);
-			i++;
-		}
-		i=1;
-		while(dstIndex == -1 && i < 9){
-			dstIndex = u.gh6.indexOf(post[6][dKeys[i]]);
-			console.log(i);
-			i++;
-		}
-		console.log("srcIndex "+srcIndex);
-		console.log("dstIndex "+dstIndex);
-		if(srcIndex < dstIndex)
-			for (var i = 0; i < nearSrc.length; i++) {
-				if(u._id == nearSrc[i]._id){
-					var ret = {_id : u._id, srcDist : nearSrc[i].srcDist,dstDist : u.dstDist};
-					nearSrc.splice(i, 1);
-					return ret;
-				}
+		console.log(nearSrc);
+		// take the list of _ids and search those for destination proximity
+		var nearDst = DriversAdvtColl.aggregate([{
+			"$geoNear": {
+				near: {
+					type: "Point",
+					coordinates: post[1]
+				},
+				distanceField: "dstDist",
+				maxDistance: 250,
+				spherical: true,
+				query:{_id:{$in:ids}}
 			}
-		else
-			return null;
-	} );
+		}]).map( function(u) {
+			var srcIndex = u.gh6.indexOf(post[5].c);
+			var dstIndex = u.gh6.indexOf(post[6].c);
 
-	//Filter nulls inserted after map function
+			var i = 1;
+			while(srcIndex == -1 && i < 9){
+				srcIndex = u.gh6.indexOf(post[5][dKeys[i]]);
+				console.log(i);
+				i++;
+			}
+			i=1;
+			while(dstIndex == -1 && i < 9){
+				dstIndex = u.gh6.indexOf(post[6][dKeys[i]]);
+				console.log(i);
+				i++;
+			}
+			console.log("srcIndex "+srcIndex);
+			console.log("dstIndex "+dstIndex);
+			if(srcIndex < dstIndex)
+				for (var i = 0; i < nearSrc.length; i++) {
+					if(u._id == nearSrc[i]._id){
+						var ret = {_id : u._id, srcDist : nearSrc[i].srcDist,dstDist : u.dstDist};
+						nearSrc.splice(i, 1);
+						return ret;
+					}
+				}
+			else
+				return null;
+		} );
 
-    var nearDst = nearDst.filter(function(element) {
-        return element != null;
-    });
+		//Filter nulls inserted after map function
 
-	// get the list of _ids from the cursor
-	ids=[];
-	for (var i = 0; i < nearDst.length; i++) {
-		ids[i] = nearDst[i]._id;
-	}
+	    var nearDst = nearDst.filter(function(element) {
+	        return element != null;
+	    });
+
+		// get the list of _ids from the cursor
+		ids=[];
+		for (var i = 0; i < nearDst.length; i++) {
+			ids[i] = nearDst[i]._id;
+		}
 
 
     console.log(nearDst);
@@ -154,8 +162,14 @@ Meteor.methods({
     // return result.fetch();
     return [nearDst, driverpool];
 
-},
+	},
 
+	//Query for riders for a ride
+	riderQuery : function(post){
+    return "rider Query returned";
+	},
+
+	//Entry for drive advertisement
 	postDriveAdvt : function(postAttributes){
 		check(this.userId, String);
 		//TODO find a better way to check for array of numbers
@@ -170,6 +184,8 @@ Meteor.methods({
 				origin 	: postAttributes[3],
 				destination : postAttributes[4],
 				startTime : postAttributes[2],
+				bearingInitial : postAttributes[7],
+				bearingFinal : postAttributes[8],
 				nodes	: [{
 						addr:"from",
 						locs:{
@@ -185,6 +201,8 @@ Meteor.methods({
 					}]
 			};
 		DrivesAdvtColl.insert(post);
+    return "Inserted drive advertisement";
+  },
+  //postDriverAdvt implemented at client side
 
-	}
 });

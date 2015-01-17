@@ -32,6 +32,7 @@ Template.rideDiv.events({
 				// display the error to the user and abort
 				if (error)
 					return alert(error.reason);
+				console.log(result);
 
 				});
 		}else{
@@ -45,7 +46,7 @@ Template.rideDiv.events({
 
 		}
 
-		console.log("TODO update user status into collection");
+		//console.log("TODO update user status into collection");
 	},
 	'click .cancel':function(event){
 		event.preventDefault();
@@ -99,5 +100,9 @@ getSearchBoxdata = function (){
 	var fromHashObj = geohash.neighbors(fromHash);
 	var toHashObj = geohash.neighbors(toHash);
 
-	return [fromCoord,toCoord,inputTime.getTime() / 1000,$('#polyMapSrcSearch').val().split(", "),$('#polyMapDesSearch').val().split(", "),fromHashObj,toHashObj];
+	//Bearing calculations
+	var initialBearing = bearingInitial(fromCoord[1],fromCoord[0],toCoord[1],toCoord[0]);
+	var finalBearing = bearingFinal(fromCoord[1],fromCoord[0],toCoord[1],toCoord[0]);
+
+	return [fromCoord,toCoord,inputTime.getTime() / 1000,$('#polyMapSrcSearch').val().split(", "),$('#polyMapDesSearch').val().split(", "),fromHashObj,toHashObj,initialBearing,finalBearing];
 }

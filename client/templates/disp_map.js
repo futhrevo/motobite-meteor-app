@@ -46,6 +46,11 @@ Template.dispMap.events({
 				}
 				// gmap.calcRoute(placesSrc[0].geometry.location,placesDest[0].geometry.location);
 				gmap.calcRoute();
+        Meteor.call('riderQuery',getSearchBoxdata(),function(err,data){
+          if(err) console.log(err);
+          console.log(data);
+        });
+        console.log('TODO show markers of rides from surrounding areas to destination');
 
 			}else{
 				Session.set('mode', 'ride');
