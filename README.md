@@ -15,7 +15,7 @@
 * [ ] Fuel points management, billing and charging
 * [ ] User input validation - remove or implement parsely for paper elements
 * [ ] Remove Insecure Package
-* [x] Not Required - Remove geohash package 
+* [x] Not Required - Remove geohash package
 * [x] modify core tool-bar height according to ios specs
 * [ ] Wait button when rider is waiting
 * [ ] edit delete disable after drive started
@@ -121,3 +121,5 @@ var a = DriversAdvtColl.aggregate([{
                 else
                 return null;
                 } );
+
+db.drives.find({"nodes.locs":{$geoWithin:{$box:[[77.676246,12.926031],[100,100]]}}});

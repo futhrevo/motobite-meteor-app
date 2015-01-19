@@ -23,7 +23,7 @@ gmap = {
 		var myLatlng;
 		var title;
 		if(type == "origin"){
-			icon = '/origin.png';
+			icon = '/marker.svg';
 			title = 'Origin';
 		}else if(type == "dest"){
 			icon = '/destination.png';
@@ -152,11 +152,12 @@ gmap = {
 
 	//distance calculation using Haversine formula
 	//http://andrew.hedges.name/experiments/haversine/
-/*	dlon = lon2 - lon1
-	dlat = lat2 - lat1
-	a = (sin(dlat/2))^2 + cos(lat1) * cos(lat2) * (sin(dlon/2))^2
-	c = 2 * atan2( sqrt(a), sqrt(1-a) )
-	d = R * c (where R is the radius of the Earth)*/
+	/*	dlon = lon2 - lon1
+		dlat = lat2 - lat1
+		a = (sin(dlat/2))^2 + cos(lat1) * cos(lat2) * (sin(dlon/2))^2
+		c = 2 * atan2( sqrt(a), sqrt(1-a) )
+		d = R * c (where R is the radius of the Earth)*/
+
 	haversine: function(src,dest,unit,type){
 		if(type == 'hash'){
 			var srcMarker = geohash.decode(src);
@@ -259,7 +260,7 @@ function dMcallback(response, status) {
 		var outputDiv = document.getElementById('outputDiv');
 		outputDiv.innerHTML = '';
 
-//			deleteOverlays();
+		//			deleteOverlays();
 
 		for (var i = 0; i < origins.length; i++) {
 			var results = response.rows[i].elements;
@@ -308,9 +309,20 @@ gmap.polyDraw = function(poly){
 		distance:poly.distance,
 		duration:poly.duration,
 		polydraw:polydraw
-	}
+	};
 	polyArray.push(polyObject);
-}
+};
+
+//function to draw markers on map
+gmap.markDraw = function(mark){
+	console.log(mark._id);
+	var rideMarker = {
+		lat:mark.nodes[0].locs.coordinates[1],
+		lng:mark.nodes[0].locs.coordinates[0],
+		id: mark._id
+	};
+	gmap.addMarker(rideMarker,"origin",'gmapMarker');
+};
 
 Template.dispMap.rendered = function(){
 	console.log("display map rendered");

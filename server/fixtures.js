@@ -145,10 +145,8 @@ Meteor.methods({
     console.log("TODO limit the number of results for performance");
     console.log(ids);
     var driverpool = DriversAdvtColl.find({
-        _id: {
-            $in: ids
-        }
-    }, {
+        _id: {$in: ids}
+        }, {
         fields: {
             "locs": 0,
             "origin": 0,
@@ -166,7 +164,8 @@ Meteor.methods({
 
 	//Query for riders for a ride
 	riderQuery : function(post){
-    return "rider Query returned";
+    var drivepool = DrivesAdvtColl.find({"nodes.locs":{$geoWithin:{$box:[[77.676245,12.926030],[100,100]]}}});
+    return drivepool.fetch();
 	},
 
 	//Entry for drive advertisement

@@ -1,0 +1,1 @@
+db.drives.find({"nodes.locs":{$geoWithin:{$box:[[77.676245,12.926030],[100,100]]}}});

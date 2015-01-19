@@ -47,8 +47,14 @@ Template.dispMap.events({
 				// gmap.calcRoute(placesSrc[0].geometry.location,placesDest[0].geometry.location);
 				gmap.calcRoute();
         Meteor.call('riderQuery',getSearchBoxdata(),function(err,data){
-          if(err) console.log(err);
-          console.log(data);
+          if(err){
+            console.log(err);
+          }else{
+            console.log(data);
+            _.each(data,function(mark){
+                gmap.markDraw(mark);
+              });
+            }
         });
         console.log('TODO show markers of rides from surrounding areas to destination');
 
@@ -56,11 +62,14 @@ Template.dispMap.events({
 				Session.set('mode', 'ride');
 				polyArray.clear();
 				Meteor.call('rideQuery',getSearchBoxdata(),function(err,data){
-					if(err) console.log(err);
-					console.log(data);
-					_.each(data[1],function(poly){
-						gmap.polyDraw(poly);
-					});
+					if(err){
+            console.log(err);
+          }else{
+            console.log(data);
+            _.each(data[1],function(poly){
+              gmap.polyDraw(poly);
+            });
+          }
 					// gmap.polyDraw(data[0].overview);
 				});
 				console.log('TODO show markers of riders from surrounding areas to destination');
