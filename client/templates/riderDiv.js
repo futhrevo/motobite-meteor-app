@@ -68,4 +68,4 @@ gmap.parseRoute = function() {
 		$('.alert-danger').css('display','inline-block');
     }
 
-}
+};

@@ -8,7 +8,7 @@ Template.dispMap.helpers({
   mapState: function(){
 	var currentRoute = Router.current();
 	var route = currentRoute.lookupTemplate();
-	if(route ==""){
+	if(route ===""){
 		$('.mapState').show();
 	}else{
 		$('.mapState').hide("slow");
@@ -138,8 +138,8 @@ Template.dispMap.events({
 Template.dispMap.destroyed = function(){
     console.log("display map destroyed");
 	Session.set('map', false);
-}
+};
 
 Template.dispMap.created = function(){
     console.log("display map created");
-}
+};

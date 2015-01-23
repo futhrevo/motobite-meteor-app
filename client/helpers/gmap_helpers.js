@@ -159,28 +159,29 @@ gmap = {
 		d = R * c (where R is the radius of the Earth)*/
 
 	haversine: function(src,dest,unit,type){
+		var srclat,srclng,destlat,destlng,R;
 		if(type == 'hash'){
 			var srcMarker = geohash.decode(src);
 			var destMarker = geohash.decode(dest);
-			var srclat = srcMarker[0];
-			var srclng = srcMarker[1];
-			var destlat = destMarker[0];
-			var destlng = destMarker[1];
+			srclat = srcMarker[0];
+			srclng = srcMarker[1];
+			destlat = destMarker[0];
+			destlng = destMarker[1];
 		}else if(type == "geo"){
-			var srclat = src[1];
-			var srclng = src[0];
-			var destlat = dest[1];
-			var destlng = dest[0];
+			srclat = src[1];
+			srclng = src[0];
+			destlat = dest[1];
+			destlng = dest[0];
 		}else{
-			var srclat = src.lat();
-			var srclng = src.lng();
-			var destlat = dest.lat();
-			var destlng = dest.lng();
+			srclat = src.lat();
+			srclng = src.lng();
+			destlat = dest.lat();
+			destlng = dest.lng();
 		}
 		if(unit == "km"){
-			var R = 6373;
+			R = 6373;
 		}else{
-			var R = 3961;
+			R = 3961;
 		}
 		var dLat = (Math.PI/180) * (destlat - srclat);
 		var dLon = (Math.PI/180) * (destlng - srclng);
@@ -248,7 +249,7 @@ gmap = {
 		  });
 	},
 
-}
+};
 
 //callback to get distance matrix response
 function dMcallback(response, status) {
@@ -268,9 +269,9 @@ function dMcallback(response, status) {
 			gmap.addMarker(origins[i], "origin",'geoLatLng');
 				for (var j = 0; j < results.length; j++) {
 					gmap.addMarker(destinations[j], "dest",'geoLatLng');
-					outputDiv.innerHTML += origins[i] + ' to ' + destinations[j]
-					+ ': ' + results[j].distance.text + ' in '
-				+ results[j].duration.text + '<br>';
+					outputDiv.innerHTML += origins[i] + ' to ' + destinations[j]+
+					': ' + results[j].distance.text + ' in '+
+					results[j].duration.text + '<br>';
 			}
 		}
 	}
@@ -288,7 +289,7 @@ gmap.geocode = function(lat,lng){
 		}
 		$('#polyMapSrcSearch').val(result);
 	});
-}
+};
 
 //function to draw polyline on map
 gmap.polyDraw = function(poly){
@@ -377,12 +378,12 @@ Template.dispMap.rendered = function(){
 	// 	});
 	// });
 
-}
+};
 
 asBounds = function (bound){
 	return new google.maps.LatLngBounds(asLatLng(bound.Ea.j,bound.wa.j),
 	asLatLng(bound.Ea.k,bound.wa.k));
-}
+};
 
 function asLatLng(lat,lng){
 	return new google.maps.LatLng(lat, lng);
