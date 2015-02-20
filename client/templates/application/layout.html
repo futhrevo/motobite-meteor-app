@@ -1,4 +1,5 @@
 <template name="layout">
+<div>
   <core-drawer-panel id="drawerPanel" responsiveWidth="1700px">
     <core-header-panel  drawer>
       <core-toolbar id="navheader" class="tall" style="background-image: url({{profEmail}})">
@@ -8,37 +9,44 @@
       </core-toolbar>
       <core-menu class="nav">
         <a href="/" >
+            <div>
             <paper-item>
             <core-icon icon="home"></core-icon>
-            Home
+            <div>Home</div>
+
             </paper-item>
+        </div>
         </a>
 
         <a href="{{pathFor 'schedules'}}" >
             <paper-item>
             <core-icon icon="schedule"></core-icon>
-            Schedule
+            <div>Schedule</div>
+
             </paper-item>
         </a>
 
         <a href="{{pathFor 'about'}}" >
             <paper-item>
             <core-icon icon="info"></core-icon>
-            About
+            <div>About</div>
         </paper-item>
         </a>
-
-        <paper-item data-action="sign-out">
-            <core-icon icon="exit-to-app"></core-icon>
-            Sign out
-        </paper-item>
+        <div>
+            <paper-item data-action="sign-out">
+                <core-icon icon="exit-to-app"></core-icon>
+                <div>Sign out</div>
+            </paper-item>
+        </div>
 
       </core-menu>
     </core-header-panel>
     <core-header-panel main>
       <core-toolbar id="mainheader">
+        <div>
+            <paper-icon-button icon="menu" data-action="toggle-drawer"></paper-icon-button>
+        </div>
 
-        <paper-icon-button icon="menu" data-action="toggle-drawer"></paper-icon-button>
         <span flex>Team Polo</span>
         <paper-icon-button icon="room"></paper-icon-button>
         <paper-menu-button>
@@ -65,4 +73,5 @@
       {{/if}}
     </core-header-panel>
   </core-drawer-panel>
+</div>
 </template>

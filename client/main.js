@@ -22,11 +22,16 @@
 	}
 
 	function supports_html5_storage() {
-	  	try {
-	  		return 'localStorage' in window && window['localStorage'] !== null;
-	  	} catch (e) {
-	  		return false;
-	  	}
+		if (Meteor.isCordova) {
+			console.log("cordova running");
+			return true;
+		}else{
+			try {
+				return 'localStorage' in window && window['localStorage'] !== null;
+			} catch (e) {
+				return false;
+			}
+		}
 	}
 	//Subscriptions goes here
 	Meteor.subscribe('theMarkers');
