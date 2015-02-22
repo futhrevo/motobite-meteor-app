@@ -1,47 +1,10 @@
 <template name="publicHome">
 
-    <div fit layout vertical center center-justified>
-        <header>
+    <div >
+        {{#ionContent}}
             <h1>Ride with Convinence..</h1>
-            <div id="header-slider" style="position: relative; overflow: hidden; display: block;">
-                <div style="position: absolute; top: 0%; left: 0%;  z-index: 4; background: url(http://ruyadorno.github.io/SimpleSlider/img/sprinkles.png);"></div>
-                <div style="position: absolute; top: 0%; left: 0%;  z-index: 1; background: url(http://ruyadorno.github.io/SimpleSlider/img/sos.png);"></div>
-                <div style="position: absolute; top: 0%; left: 0%;  z-index: 2; background: url(http://ruyadorno.github.io/SimpleSlider/img/random_grey_variations.png);"></div>
-            </div>
-        </header>
-        <div horizontal layout style="padding-top: 10px;">
+            <a href="{{pathFor 'userAccountsIonic'}}" class="enterClass button button-outline icon-right ion-chevron-right button-calm ">Enter  </a>
+        {{/ionContent}}
 
-                <a href="{{pathFor 'signIn'}}">
-                    <div>
-                    <paper-button raised>
-                        Sign In
-                    </paper-button>
-                </div>
-                </a>
-
-
-                <a href="{{pathFor 'signUp'}}">
-                    <div>
-                    <paper-button raised>
-                        Sign Up
-                    </paper-button>
-                </div>
-                </a>
-
-        </div>
     </div>
-
-    <script src="SimpleSlider.js"></script>
-    <script>
-        new SimpleSlider(
-            document.getElementById('header-slider'), {
-                transitionProperty: 'width',
-                transitionDuration: 1,
-                transitionDelay: 3,
-                startValue: '0%',
-                visibleValue: '100%',
-                endValue: '100%'
-            }
-        );
-    </script>
 </template>

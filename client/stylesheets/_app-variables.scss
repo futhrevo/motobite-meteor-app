@@ -1,0 +1,47 @@
+// Change Ionic's `positive` color to Meteor's red color:
+$positive: #DE4F4F;
+
+$base03: #002b36;  //dark blue
+$base01: #586e75;
+
+$base2 : #F9F6F4;  //for back-ground
+
+$green : #859900;
+$red : #dc322f;
+$orange : #cb4b16;
+
+.publicClass {
+  background: url(random_grey_background.png);
+  height:100%;
+}
+
+html, body {
+  height: 100%;
+}
+
+.ionic-body{
+    height:100%;
+}
+
+.enterClass {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  margin-left: -54.5px;
+}
+
+.sidePic{
+    height: 25%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.popover{
+	height:auto
+}
+
+#map-canvas {
+  display: block;
+  height: 400px;
+  overflow: auto;
+}

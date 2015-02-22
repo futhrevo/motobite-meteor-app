@@ -15,8 +15,10 @@ matb33:collection-hooks
 amr:parsley.js
 iron:router
 sacha:spin
-ecwyne:polymer-elements
 less
-differential:vulcanize
 meteorhacks:aggregate
-nemo64:bootstrap
+meteoric:ionic
+meteoric:ionic-sass
+meteoric:ionicons-sass
+meteoric:autoform-ionic
+useraccounts:ionic

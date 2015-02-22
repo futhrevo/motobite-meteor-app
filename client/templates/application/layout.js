@@ -1,7 +1,7 @@
 Template.layout.created = function(){
-    $('body').attr('fullbleed', '');
-    $('body').attr('vertical', '');
-    $('body').attr('layout', '');
+    // $('body').attr('fullbleed', '');
+    // $('body').attr('vertical', '');
+    // $('body').attr('layout', '');
 
 };
 // Template.layout.rendered = function(){
@@ -9,11 +9,6 @@ Template.layout.created = function(){
 // }
 
 Template.layout.events({
-    "click [data-action=toggle-drawer]" : function(){
-        console.log("menu button clicked");
-        $("#drawerPanel")[0].togglePanel();
-    },
-
     "click [data-action=sign-out]" : function(){
         Meteor.logout();
         navigator.geolocation.clearWatch(wpid);
@@ -24,15 +19,15 @@ Template.layout.events({
 
 Template.layout.helpers({
     userEmail : function(){
-        if(Meteor.user() == null)
-            return null
+        if(Meteor.user() === null)
+            return null;
         else
             return Meteor.user().emails[0].address;
     },
     profEmail : function(){
       //TODO add interface to add profile pic property to each user
-        if(Meteor.user() == null)
-            return null
+        if(Meteor.user() === null)
+            return null;
         else
             return Meteor.user().profile.pic;
     }

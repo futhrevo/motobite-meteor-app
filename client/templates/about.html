@@ -1,7 +1,21 @@
 <template name="about">
-    <div class="jumbotron">
-        <h1>This is simple "about" screen</h1>
-        <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-        <p><a class="btn btn-primary btn-lg">Learn more</a></p>
-    </div>
+    {{#contentFor "headerButtonLeft"}}
+        {{>ionNavBackButton path="index"}}
+    {{/contentFor}}
+
+    {{#contentFor "headerTitle"}}
+        <h1 class="title">About</h1>
+    {{/contentFor}}
+
+    {{#ionView}}
+        {{#ionContent}}
+            <div class="jumbotron">
+                <h1>This is simple "about" screen</h1>
+                <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                <p><a class="button button-positive">Learn more</a>
+                </p>
+            </div>
+        {{/ionContent}}
+    {{/ionView}}
+
 </template>

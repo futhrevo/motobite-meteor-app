@@ -1,0 +1,18 @@
+<template name="inflateDrivers">
+{{#ionView}}
+    {{> _tabsHeader}}
+    {{#ionContent class="padding"}}
+    {{#ionList}}
+            {{#each driver}}
+            {{#ionItem buttonRight=true }}
+                <h2>{{tripOrigin}}  &nbsp; to &nbsp; {{tripDest}} </h2>
+                <p>
+                    {{start}}
+                </p>
+                <button class="button button-assertive">{{> ionIcon icon="ion-trash-b"}}</button>
+                {{/ionItem}}
+            {{/each}}
+        {{/ionList}}
+    {{/ionContent}}
+{{/ionView}}
+</template>

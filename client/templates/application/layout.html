@@ -1,77 +1,42 @@
 <template name="layout">
-<div>
-  <core-drawer-panel id="drawerPanel" responsiveWidth="1700px">
-    <core-header-panel  drawer>
-      <core-toolbar id="navheader" class="tall" style="background-image: url({{profEmail}})">
-        <div  class = "bottom" >
-            <div>{{userEmail}}</div>
-        </div>
-      </core-toolbar>
-      <core-menu class="nav">
-        <a href="/" >
-            <div>
-            <paper-item>
-            <core-icon icon="home"></core-icon>
-            <div>Home</div>
+{{#ionBody}}
 
-            </paper-item>
-        </div>
-        </a>
+    {{#ionSideMenuContainer}}
 
-        <a href="{{pathFor 'schedules'}}" >
-            <paper-item>
-            <core-icon icon="schedule"></core-icon>
-            <div>Schedule</div>
+        {{#ionSideMenus}}
 
-            </paper-item>
-        </a>
+            {{#ionSideMenu}}
+                <div class="sidePic" style="background-image: url({{profEmail}})">
+                    <div>{{userEmail}}</div>
+                </div>
+                <div class="">
+                    <div class="list">
+                        <a class="item item-icon-left" href="/">
+                            <i class="icon ion-home"></i> Home
+                        </a>
+                        <a class="item item-icon-left" href="{{pathFor route='inflate.drivers'}}">
+                            <i class="icon ion-calendar"></i> Schedule
+                        </a>
+                        <a class="item item-icon-left" href="{{pathFor 'about'}}">
+                            <i class="icon ion-heart"></i> About
+                        </a>
+                        <a class="item item-icon-left" data-action="sign-out">
+                            <i class="icon ion-log-out"></i> Sign Out
+                        </a>
+                    </div>
+                </div>
+            {{/ionSideMenu}}
 
-        <a href="{{pathFor 'about'}}" >
-            <paper-item>
-            <core-icon icon="info"></core-icon>
-            <div>About</div>
-        </paper-item>
-        </a>
-        <div>
-            <paper-item data-action="sign-out">
-                <core-icon icon="exit-to-app"></core-icon>
-                <div>Sign out</div>
-            </paper-item>
-        </div>
+        {{/ionSideMenus}}
+        {{#ionSideMenuContent}}
 
-      </core-menu>
-    </core-header-panel>
-    <core-header-panel main>
-      <core-toolbar id="mainheader">
-        <div>
-            <paper-icon-button icon="menu" data-action="toggle-drawer"></paper-icon-button>
-        </div>
-
-        <span flex>Team Polo</span>
-        <paper-icon-button icon="room"></paper-icon-button>
-        <paper-menu-button>
-            <paper-icon-button icon="more-vert"></paper-icon-button>
-            <paper-dropdown class="dropdown" halign="right">
-                <core-menu class="menu">
-                    <paper-item>Logout</paper-item>
-                    <paper-item>Help !</paper-item>
-                </core-menu>
-            </paper-dropdown>
-        </paper-menu-button>
-      </core-toolbar>
-      {{!--
-      <header>
-        {{> navs}}
-      </header> --}} {{#if currentUser}}
-      <div class="container-fluid">
-        {{> yield}}
-        <div class="row mapState">
-          {{> dispMap}}
-        </div>
-        {{> deleteMarker}} {{> functionsDiv}}
-      </div>
-      {{/if}}
-    </core-header-panel>
-  </core-drawer-panel>
-</div>
+            {{> ionNavBar class="bar-positive"}}
+            {{#ionNavView}}
+                {{> yield}}
+            {{/ionNavView}}
+            {{> deleteMarker}}
+            {{> functionsDiv}}
+        {{/ionSideMenuContent}}
+    {{/ionSideMenuContainer}}
+{{/ionBody}}
 </template>
