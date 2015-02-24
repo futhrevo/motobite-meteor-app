@@ -42,6 +42,10 @@ html, body {
 
 #map-canvas {
   display: block;
-  height: 400px;
+  height: 100%;
   overflow: auto;
+  position:absolute;
+}
+.mapState {
+    height:100%;
 }

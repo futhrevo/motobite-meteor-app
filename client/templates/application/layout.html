@@ -32,7 +32,16 @@
 
             {{> ionNavBar class="bar-positive"}}
             {{#ionNavView}}
+            {{#ionView}}
+                {{#ionContent}}
+                <div class="row mapState">
+                  {{> dispMap}}
+                </div>
+
+
                 {{> yield}}
+                {{/ionContent}}
+                {{/ionView}}
             {{/ionNavView}}
             {{> deleteMarker}}
             {{> functionsDiv}}
