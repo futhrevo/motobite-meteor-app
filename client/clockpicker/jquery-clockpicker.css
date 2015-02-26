@@ -12,7 +12,7 @@
 
 .pickerPopover {
   position: absolute;
-  top: 20px;
+  top: 50px;
   left: calc(~'50% - 110px');
   z-index: 1010;
   display: none;
@@ -38,7 +38,7 @@
   margin-top: 10px;
 }
 .pickerPopover.left {
-  /*margin-left: -10px;*/
+  margin-left: 500px;
 }
 .pickerPopover-title {
   padding: 8px 14px;
