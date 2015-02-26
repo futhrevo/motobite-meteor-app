@@ -10,7 +10,7 @@
 
 /* Picked from bootstrap: .popover, .btn, .text-primary */
 
-.popover {
+.pickerPopover {
   position: absolute;
   top: 20px;
   left: calc(~'50% - 110px');
@@ -28,19 +28,19 @@
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
           box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
-.popover.top {
+.pickerPopover.top {
   margin-top: -10px;
 }
-.popover.right {
+.pickerPopover.right {
   margin-left: 10px;
 }
-.popover.bottom {
+.pickerPopover.bottom {
   margin-top: 10px;
 }
-.popover.left {
+.pickerPopover.left {
   /*margin-left: -10px;*/
 }
-.popover-title {
+.pickerPopover-title {
   padding: 8px 14px;
   margin: 0;
   font-size: 14px;
@@ -50,11 +50,11 @@
   border-bottom: 1px solid #ebebeb;
   border-radius: 5px 5px 0 0;
 }
-.popover-content {
+.pickerPopover-content {
   padding: 9px 14px;
 }
-.popover > .arrow,
-.popover > .arrow:after {
+.pickerPopover > .arrow,
+.pickerPopover > .arrow:after {
   position: absolute;
   display: block;
   width: 0;
@@ -77,14 +77,14 @@
   -ms-transform:none;
   transform:none;
 }
-.popover > .arrow {
+.pickerPopover > .arrow {
   border-width: 11px;
 }
-.popover > .arrow:after {
+.pickerPopover > .arrow:after {
   content: "";
   border-width: 10px;
 }
-.popover.top > .arrow {
+.pickerPopover.top > .arrow {
   bottom: -11px;
   left: 50%;
   margin-left: -11px;
@@ -92,14 +92,14 @@
   border-top-color: rgba(0, 0, 0, .25);
   border-bottom-width: 0;
 }
-.popover.top > .arrow:after {
+.pickerPopover.top > .arrow:after {
   bottom: 1px;
   margin-left: -10px;
   content: " ";
   border-top-color: #fff;
   border-bottom-width: 0;
 }
-.popover.right > .arrow {
+.pickerPopover.right > .arrow {
   top: 50%;
   left: -11px;
   margin-top: -11px;
@@ -107,14 +107,14 @@
   border-right-color: rgba(0, 0, 0, .25);
   border-left-width: 0;
 }
-.popover.right > .arrow:after {
+.pickerPopover.right > .arrow:after {
   bottom: -10px;
   left: 1px;
   content: " ";
   border-right-color: #fff;
   border-left-width: 0;
 }
-.popover.bottom > .arrow {
+.pickerPopover.bottom > .arrow {
   top: -11px;
   left: 50%;
   margin-left: -11px;
@@ -122,14 +122,14 @@
   border-bottom-color: #999;
   border-bottom-color: rgba(0, 0, 0, .25);
 }
-.popover.bottom > .arrow:after {
+.pickerPopover.bottom > .arrow:after {
   top: 1px;
   margin-left: -10px;
   content: " ";
   border-top-width: 0;
   border-bottom-color: #fff;
 }
-.popover.left > .arrow {
+.pickerPopover.left > .arrow {
   top: 50%;
   right: -11px;
   margin-top: -11px;
@@ -137,7 +137,7 @@
   border-left-color: #999;
   border-left-color: rgba(0, 0, 0, .25);
 }
-.popover.left > .arrow:after {
+.pickerPopover.left > .arrow:after {
   right: 1px;
   bottom: -10px;
   content: " ";
@@ -212,21 +212,21 @@
 .clockpicker-moving {
 	cursor: move;
 }
-.clockpicker-align-left.popover > .arrow {
+.clockpicker-align-left.pickerPopover > .arrow {
 	left: 25px;
 }
-.clockpicker-align-top.popover > .arrow {
+.clockpicker-align-top.pickerPopover > .arrow {
 	top: 17px;
 }
-.clockpicker-align-right.popover > .arrow {
+.clockpicker-align-right.pickerPopover > .arrow {
 	left: auto;
 	right: 25px;
 }
-.clockpicker-align-bottom.popover > .arrow {
+.clockpicker-align-bottom.pickerPopover > .arrow {
 	top: auto;
 	bottom: 6px;
 }
-.clockpicker-popover .popover-title {
+.clockpicker-pickerPopover .pickerPopover-title {
 	background-color: #fff;
 	color: #999;
 	font-size: 24px;
@@ -234,14 +234,14 @@
 	line-height: 30px;
 	text-align: center;
 }
-.clockpicker-popover .popover-title span {
+.clockpicker-pickerPopover .pickerPopover-title span {
 	cursor: pointer;
 }
-.clockpicker-popover .popover-content {
+.clockpicker-pickerPopover .pickerPopover-content {
 	background-color: #f8f8f8;
 	padding: 12px;
 }
-.popover-content:last-child {
+.pickerPopover-content:last-child {
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 }

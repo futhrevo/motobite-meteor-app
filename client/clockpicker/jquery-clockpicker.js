@@ -66,15 +66,15 @@
 
 	// Popover template
 	var tpl = [
-		'<div class="popover clockpicker-popover" vertical layout center>',
+		'<div class="pickerPopover clockpicker-pickerPopover" >',
 			'<div class="arrow"></div>',
-			'<div class="popover-title">',
+			'<div class="pickerPopover-title">',
 				'<span class="clockpicker-span-hours text-primary"></span>',
 				' : ',
 				'<span class="clockpicker-span-minutes"></span>',
 				'<span class="clockpicker-span-am-pm"></span>',
 			'</div>',
-			'<div class="popover-content">',
+			'<div class="pickerPopover-content">',
 				'<div class="clockpicker-plate">',
 					'<div class="clockpicker-canvas"></div>',
 					'<div class="clockpicker-dial clockpicker-hours"></div>',

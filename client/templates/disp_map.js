@@ -137,15 +137,6 @@ Template.dispMap.events({
 		}
 	},
 
-    'change #polycheckboxSrc':function(event){
-        event.preventDefault();
-        if(event.target.checked){
-            $('#polyMapSrcSearch').val("").attr("disabled",true);
-            gmap.geocode(Session.get('lat'),Session.get('lng'));
-        }else{
-            $('#polyMapSrcSearch').attr("disabled",false).val("");
-        }
-    },
 
     'click #fabRider' : function(event){
         event.preventDefault();
