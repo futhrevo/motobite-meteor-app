@@ -1,8 +1,44 @@
 <template name="inpForm">
-	<div class ="inputForm" style="display: none;">
-		<form id="form" class="form-horizontal" data-parsley-validate>
+	<div class ="inputFormOuter" style="display: none;" id="inputFormOuterId">
+		<div class="bar bar-header bar-positive">
+			<button class="button button-icon icon ion-android-close inputCloseBtn"></button>
+			<h1 class="title">{{modeSelect}}</h1>
+		</div>
+	<div class ="inputForm content has-header" >
+		<div class="list">
+			<label class="item item-checkbox">
+				<label class="checkbox">
+				    <input type="checkbox" id="polycheckboxSrc">
+				</label>
+				Use my location as origin
+			</label>
+		    <label class="item item-input">
+		        <input type="text" placeholder="Enter your source location" id="polyMapSrcSearch">
+		    </label>
+
+
+		    <label class="item item-input">
+		        <input type="text" placeholder="Enter your destination location" id="polyMapDesSearch">
+		    </label>
+
+			<label class="item item-input">
+				<select>
+				    <option selected>Today</option>
+				    <option>Tomorrow</option>
+				</select>
+				<div class="input-group clockpicker" data-placement="left" data-align="bottom" data-autoclose="true">
+
+					<input type="text" class="form-control" placeholder="Now"  id="timeInput" data-parsley-tomoValidator data-parsley-validate-if-empty>
+					<span class="input-group-addon ">
+						<span class="glyphicon glyphicon-time"></span>
+					</span>
+				</div>
+			</label>
+
+
+		</div>
+		{{!-- <form id="form" class="form-horizontal" data-parsley-validate>
 			<fieldset>
-				<legend>{{modeSelect}}</legend>
 				<!-- TODO Validation states for showing correct/wrong input from http://getbootstrap.com/css/ -->
 				<div horizontal layout>
 					<div>
@@ -35,8 +71,8 @@
 				</div>
 
 			</fieldset>
-		</form>
+		</form> --}}
 
 	</div>
-
+</div>
 </template>

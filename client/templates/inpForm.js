@@ -64,5 +64,20 @@ Template.inpForm.events({
         event.preventDefault();
         $('.inputForm').hide(200);
         $('.fabdiv').show(200);
-    }
+    },
+
+    'click .inputCloseBtn' : function(event){
+        event.preventDefault();
+        $('#inputFormOuterId').hide(200);
+    },
+
+    'change #polycheckboxSrc':function(event){
+        event.preventDefault();
+        if(event.target.checked){
+            $('#polyMapSrcSearch').val("").attr("disabled",true);
+            gmap.geocode(Session.get('lat'),Session.get('lng'));
+        }else{
+            $('#polyMapSrcSearch').attr("disabled",false).val("");
+        }
+    },
 });

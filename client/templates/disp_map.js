@@ -17,7 +17,41 @@ Template.dispMap.helpers({
 });
 
 Template.dispMap.events({
-	// 'submit form':function(event,template){
+    //show action sheet when fab icon is pressed
+    'click [data-action=showActionSheet]': function(event, template) {
+    IonActionSheet.show({
+        titleText: 'Actions Menu',
+        buttons: [{
+            text: 'I am a rider &nbsp; <i class="icon ion-android-car"></i>'
+        }, {
+            text: 'I need a ride &nbsp; <i class="icon ion-android-walk"></i>'
+        }, ],
+        destructiveText: 'Delete an appointment',
+        cancelText: 'Cancel',
+        cancel: function() {
+            console.log('Cancelled!');
+        },
+        buttonClicked: function(index) {
+            if (index === 0) {
+                console.log('User is a rider!');
+                Session.set('modeSel','rider');
+                $('#inputFormOuterId').show(200);
+            }
+            if (index === 1) {
+                console.log('User needs ride!');
+                Session.set('modeSel','ride');
+                $('#inputFormOuterId').show(200);
+            }
+            return true;
+        },
+        destructiveButtonClicked: function() {
+            console.log('Destructive Action!');
+            return true;
+        }
+    });
+},
+
+    // 'submit form':function(event,template){
     'click #fabInpSubmit':function(event,template){
 		event.preventDefault();
 
@@ -113,11 +147,6 @@ Template.dispMap.events({
         }
     },
 
-    'click #inpIcon' : function(event){
-        event.preventDefault();
-        $('.modSelect').slideToggle(400);
-
-    },
     'click #fabRider' : function(event){
         event.preventDefault();
         $('.inputForm').show(200);
