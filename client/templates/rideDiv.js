@@ -2,7 +2,7 @@ Template.rideDiv.destroyed = function(){
 	console.log("rideDiv destroyed");
 	clearPolylines();
 	polyArray.clear();
-}
+};
 
 Template.rideDiv.helpers({
 	hideInput: function(){
@@ -80,11 +80,11 @@ getSearchBoxdata = function (){
 	var placesDest = gmap.searchBoxDest.getPlaces();
 	var toCoord = [placesDest[0].geometry.location.lng(),placesDest[0].geometry.location.lat()];
 
-	var selectedDate = $('#polyDateSel').prop('selected');
+	var selectedDate = $('#polyDateSel').val();
 	var selectedTime = $('#timeInput').val();
 
 	var inputTime = new Date();
-	if(selectedDate == 'tomorrow'){
+	if(selectedDate == 'Tomorrow'){
 		inputTime.setDate(inputTime.getDate()+1);
 	}
 
