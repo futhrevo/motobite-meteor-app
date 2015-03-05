@@ -17,6 +17,14 @@ gmap = {
 	//formatted marker data objects
 	markerData: [],
 
+	//register serachbox divs
+	regDivs:function(){
+		//remove leftover pac containers
+		$('.pac-container').remove();
+		var searchBounds = new google.maps.LatLngBounds(asLatLng(5.5,66.5),asLatLng(37,97));
+		this.searchBoxSrc = new google.maps.places.SearchBox(document.getElementById("polyMapSrcSearch"),{bounds:searchBounds});
+		this.searchBoxDest = new google.maps.places.SearchBox(document.getElementById("polyMapDesSearch"),{bounds:searchBounds});
+	},
 	//add a marker from the given marker object
 	addMarker: function(marker,type,objType) {
 		var icon;
@@ -117,9 +125,7 @@ gmap = {
 			zoom: 16
 		};
 		this.map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
-		var searchBounds = new google.maps.LatLngBounds(asLatLng(5.5,66.5),asLatLng(37,97));
-		this.searchBoxSrc = new google.maps.places.SearchBox(document.getElementById("polyMapSrcSearch"),{bounds:searchBounds});
-		this.searchBoxDest = new google.maps.places.SearchBox(document.getElementById("polyMapDesSearch"),{bounds:searchBounds});
+		this.regDivs();
 		bounds = new google.maps.LatLngBounds();
 		bounds.extend(loc);
 		// this.map.fitBounds(bounds);
@@ -221,7 +227,7 @@ gmap = {
 		var directionsService = new google.maps.DirectionsService();
 		directionsDisplay.setMap(this.map);
 
-		var outputDiv = document.getElementById('directions-panel');
+		var outputDiv = document.getElementById('directions-select');
 		outputDiv.innerHTML = '';
 		directionsDisplay.setPanel(outputDiv);
 		google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
@@ -336,6 +342,10 @@ Template.dispMap.rendered = function(){
 		console.log("Got location");
 		if(!Session.get('map')){
 			drawCanvas();
+		}else if ($('#map-canvas').html() == ""){
+			console.log("replaced");
+			$('#map-canvas').replaceWith(gmap.map.getDiv());
+			gmap.regDivs();
 		}
 	}
 

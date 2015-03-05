@@ -1,4 +1,8 @@
-
+@mixin shadow-top{
+    box-shadow: 0 -8px 6px -6px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 0 -8px 6px -6px rgba(0,0,0,0.4);
+    -moz-box-shadow: 0 -8px 6px -6px rgba(0,0,0,0.4);
+}
 
 .publicClass {
   background: url(random_grey_background.png);
@@ -83,10 +87,56 @@ html, body {
 .adp{
     display:none;
 }
-
+//styling for direction select
+.adp-list {
+    margin-left: 50px;
+    margin-right: 50px;
+    border: none;
+    font-size: inherit;
+    font-weight: bolder;
+    line-height: 2;
+    max-height: inherit;
+    margin-bottom: 50px;
+}
 #directions-panel {
     position: absolute;
     bottom: 0;
     direction: ltr;
     z-index: 9;
+}
+
+#outputDirectionDiv {
+    display:none;
+    min-height: 200px;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    height: 25%;
+    z-index: 11;
+    background: white;
+
+    @include shadow-top;
+}
+
+.opDiv-button {
+    top: 50%;
+    margin-top: -22.5px;
+    position: absolute;
+}
+
+.opDiv-left{
+    @extend .opDiv-button;
+    left:0;
+}
+
+.opDiv-right{
+    @extend .opDiv-button;
+    right:0;
+}
+
+.opDiv-cancel {
+    bottom: 0;
+    position: absolute;
+    left: 50%;
+    margin-left: -37px;
 }

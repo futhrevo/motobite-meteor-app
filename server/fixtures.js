@@ -164,6 +164,7 @@ Meteor.methods({
 
 	//Query for riders for a ride
 	riderQuery : function(post){
+        console.log("Querying markers for "+this.userId);
     var drivepool = DrivesAdvtColl.find({"nodes.locs":{$geoWithin:{$box:[[77.676245,12.926030],[100,100]]}}});
     return drivepool.fetch();
 	},

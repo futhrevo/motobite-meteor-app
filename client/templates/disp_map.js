@@ -50,13 +50,24 @@ Template.dispMap.events({
         }
     });
 },
+    'click [data-action=quitdirections]': function(event, template) {
+        directionsDisplay.setMap(null);
+        $(".inputForm").show();
+        $("#outputDirectionDiv").hide(50);
+},
 
+'click [data-action=showInput]': function(event, template) {
+    $(".inputForm").show();
+    $("#outputDirectionDiv").hide(50);
+    $('#inputFormOuterId').show(50);
+},
 
 });
 
 Template.dispMap.destroyed = function(){
     console.log("display map destroyed");
-	Session.set('map', false);
+    navigator.geolocation.clearWatch(wpid);
+	//Session.set('map', false);
 };
 
 Template.dispMap.created = function(){

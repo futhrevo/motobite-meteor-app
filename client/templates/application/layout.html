@@ -1,50 +1,42 @@
 <template name="layout">
-{{#ionBody}}
-    {{> inpForm}}
-    {{#ionSideMenuContainer}}
+    {{#ionBody}}
+        {{> inpForm}}
+        {{#ionSideMenuContainer}}
 
-        {{#ionSideMenus}}
+            {{#ionSideMenus}}
 
-            {{#ionSideMenu}}
-                <div class="sidePic" style="background-image: url({{profEmail}})">
-                    <div>{{userEmail}}</div>
-                </div>
-                <div class="">
-                    <div class="list">
-                        <a class="item item-icon-left" href="/">
-                            <i class="icon ion-home"></i> Home
-                        </a>
-                        <a class="item item-icon-left" href="{{pathFor route='inflate.drivers'}}">
-                            <i class="icon ion-calendar"></i> Schedule
-                        </a>
-                        <a class="item item-icon-left" href="{{pathFor 'about'}}">
-                            <i class="icon ion-heart"></i> About
-                        </a>
-                        <a class="item item-icon-left" data-action="sign-out">
-                            <i class="icon ion-log-out"></i> Sign Out
-                        </a>
+                {{#ionSideMenu}}
+                    <div class="sidePic" style="background-image: url(/{{profEmail}})">
+                        <div>{{userEmail}}</div>
                     </div>
-                </div>
-            {{/ionSideMenu}}
+                    <div class="">
+                        <div class="list">
+                            <a class="item item-icon-left" href="/">
+                                <i class="icon ion-home"></i> Home
+                            </a>
+                            <a class="item item-icon-left" href="{{pathFor route='inflate.drivers'}}">
+                                <i class="icon ion-calendar"></i> Schedule
+                            </a>
+                            <a class="item item-icon-left" href="{{pathFor 'about'}}">
+                                <i class="icon ion-heart"></i> About
+                            </a>
+                            <a class="item item-icon-left" data-action="sign-out">
+                                <i class="icon ion-log-out"></i> Sign Out
+                            </a>
+                        </div>
+                    </div>
+                {{/ionSideMenu}}
 
-        {{/ionSideMenus}}
-        {{#ionSideMenuContent}}
+            {{/ionSideMenus}}
+            {{#ionSideMenuContent}}
 
-            {{> ionNavBar class="bar-positive"}}
-            {{#ionNavView}}
-            {{#ionView}}
-                {{#ionContent}}
-                <div class="mapState">
-                  {{> dispMap}}
-                </div>
-
-                {{> yield}}
-                {{/ionContent}}
-                {{/ionView}}
-            {{/ionNavView}}
-            {{> deleteMarker}}
-            {{> functionsDiv}}
-        {{/ionSideMenuContent}}
-    {{/ionSideMenuContainer}}
-{{/ionBody}}
+                {{> ionNavBar class="bar-positive"}}
+                {{#ionNavView}}
+                    {{> yield}}
+                    {{> functionsDiv}}
+                {{/ionNavView}}
+                {{> deleteMarker}}
+            {{/ionSideMenuContent}}
+        {{/ionSideMenuContainer}}
+    {{/ionBody}}
 </template>

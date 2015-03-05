@@ -9,6 +9,12 @@
 			<a class="ion-fab button icon ion-plus-round button-positive" data-action="showActionSheet"></a>
 		</div>
 	</div>
+	<div id="outputDirectionDiv">
+		<button class="button icon button-clear button-dark ion-chevron-left opDiv-left" data-action="showInput"></button>
+		<button class="button icon button-clear button-dark ion-chevron-right opDiv-right"></button>
+		<button class="button icon-left ion-android-cancel button-assertive button-clear opDiv-cancel" data-action="quitdirections">Cancel</button>
+		<div id="directions-select"></div>
+	</div>
 	<div id="outputDiv"></div>
 
 	{{#each marker}}
