@@ -21,6 +21,8 @@ gmap = {
 	regDivs:function(){
 		//remove leftover pac containers
 		$('.pac-container').remove();
+		//remove leftover clockpickers
+		$('.pickerPopover').remove();
 		var searchBounds = new google.maps.LatLngBounds(asLatLng(5.5,66.5),asLatLng(37,97));
 		this.searchBoxSrc = new google.maps.places.SearchBox(document.getElementById("polyMapSrcSearch"),{bounds:searchBounds});
 		this.searchBoxDest = new google.maps.places.SearchBox(document.getElementById("polyMapDesSearch"),{bounds:searchBounds});
@@ -391,8 +393,8 @@ Template.dispMap.rendered = function(){
 };
 
 asBounds = function (bound){
-	return new google.maps.LatLngBounds(asLatLng(bound.Ea.j,bound.wa.j),
-	asLatLng(bound.Ea.k,bound.wa.k));
+	var rKey = Object.keys(bound);
+	return new google.maps.LatLngBounds(asLatLng(bound[rKey[0]].j,bound[rKey[1]].j),asLatLng(bound[rKey[0]].k,bound[rKey[1]].k));
 };
 
 function asLatLng(lat,lng){

@@ -1,6 +1,7 @@
 <template name="layout">
     {{#ionBody}}
         {{> inpForm}}
+        {{!-- {{> functionsDiv}} --}}
         {{#ionSideMenuContainer}}
 
             {{#ionSideMenus}}
@@ -33,7 +34,6 @@
                 {{> ionNavBar class="bar-positive"}}
                 {{#ionNavView}}
                     {{> yield}}
-                    {{> functionsDiv}}
                 {{/ionNavView}}
                 {{> deleteMarker}}
             {{/ionSideMenuContent}}

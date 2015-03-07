@@ -1,10 +1,10 @@
 <template name="publicHome">
-
-    <div >
+    {{#ionView}}
         {{#ionContent}}
+        <div class = "publicClass">
             <h1>Ride with Convinence..</h1>
             <a href="{{pathFor 'userAccountsIonic'}}" class="enterClass button button-outline icon-right ion-chevron-right button-calm ">Enter  </a>
+        </div>
         {{/ionContent}}
-
-    </div>
+    {{/ionView}}
 </template>

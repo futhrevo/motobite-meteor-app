@@ -1,8 +1,7 @@
 <template name="rideDiv">
 			{{hideInput}}
-			<div class = "row ride col-xs-12 col-md-4 col-md-offset-4">
+			<div class = "row ride ridePanel">
 				<div class="alert alert-dismissable alert-success">
-  					<button type="button" class="close" data-dismiss="alert">×</button>
   					<strong>Well done!</strong> Select a rider and click on <strong>start</strong>, to go back click cancel.
 				</div>
 				<form class="form-horizontal">
@@ -17,7 +16,7 @@
 						 </div>
 						 {{selected}}
 						 <div class="form-group">
-						   <div class="col-md-offset-4 col-xs-offset-4">
+						   <div class="">
 						     <button class="btn btn-default cancel">Cancel</button>
 						     <input type="submit" class="btn btn-primary" value="Submit">
 						   </div>

@@ -2,10 +2,10 @@
 
 ##TODO
 * [x] Accounts pages
-* [ ] Schedule tabs
+* [x] Schedule tabs
 * [ ] Server side filtering
-* [ ] input panel Today/tomorrow
-* [ ] better timepicker preferably polymer
+* [x] input panel Today/tomorrow
+* [x] better timepicker preferably polymer
 * [ ] map heigth adjustement according to view port
     * [ ] map terms and conditions minimize
     * [ ] remove zoom icons and support pinching
@@ -13,14 +13,15 @@
     * [ ] hide map type on top of map
 * [ ] User profile page
 * [ ] Fuel points management, billing and charging
-* [ ] User input validation - remove or implement parsely for paper elements
+* [ ] User input validation - remove or implement parsely input panel
 * [ ] Remove Insecure Package
 * [x] Not Required - Remove geohash package
 * [x] modify core tool-bar height according to ios specs
 * [ ] Wait button when rider is waiting
 * [ ] edit delete disable after drive started
 * [ ] driver renting
-
+* [ ] fill outputDirectionDiv if only one route available
+* [ ] clear button to clear input panel
 TODO SERVER
 * [ ] Remove 1 day old records to archives
 

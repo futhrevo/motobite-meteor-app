@@ -1,8 +1,9 @@
 <template name="publicLayout">
     {{#ionBody}}
-    <div class = "publicClass">
-        This is public layout
-        {{> yield}}
-    </div>
+    {{#ionNavView}}
+    {{> yield}}
+
+
+    {{/ionNavView}}
     {{/ionBody}}
 </template>

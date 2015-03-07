@@ -1,19 +1,28 @@
 Template.dispMap.helpers({
-  marker: function() {
-    if (Session.get('map'))
-      return MarkerColl.find({ valid: true });
-    else
-      return null;
-  },
-  mapState: function(){
-	var currentRoute = Router.current();
-	var route = currentRoute.lookupTemplate();
-	if(route ===""){
-		$('.mapState').show();
-	}else{
-		$('.mapState').hide("slow");
-	}
-  }
+    marker: function() {
+        if (Session.get('map'))
+            return MarkerColl.find({
+                valid: true
+            });
+        else
+            return null;
+    },
+    mapState: function() {
+        var currentRoute = Router.current();
+        var route = currentRoute.lookupTemplate();
+        if (route === "") {
+            $('.mapState').show();
+        } else {
+            $('.mapState').hide("slow");
+        }
+    },
+    validRide: function() {
+        if (Session.get('mode') == 'ride')
+            return true;
+        else
+            return false;
+    },
+
 });
 
 Template.dispMap.events({
@@ -52,16 +61,26 @@ Template.dispMap.events({
 },
     'click [data-action=quitdirections]': function(event, template) {
         directionsDisplay.setMap(null);
+        console.info('rider rejected the drive');
         $(".inputForm").show();
         $("#outputDirectionDiv").hide(50);
+        Session.set('mode', null);
 },
 
-'click [data-action=showInput]': function(event, template) {
-    $(".inputForm").show();
-    $("#outputDirectionDiv").hide(50);
-    $('#inputFormOuterId').show(50);
-},
+    'click [data-action=showInput]': function(event, template) {
+        $(".inputForm").show();
+        $("#outputDirectionDiv").hide(50);
+        $('#inputFormOuterId').show(50);
+    },
 
+    'click [data-action=submitDriver]': function(event, template) {
+        $(".inputForm").show();
+        $("#outputDirectionDiv").hide(50);
+        console.info('rider accepted the drive');
+		gmap.parseRoute();
+		console.log("TODO update overview polyline to collection");
+
+    },
 });
 
 Template.dispMap.destroyed = function(){

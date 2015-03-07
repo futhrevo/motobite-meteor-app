@@ -63,11 +63,15 @@ Template.inpForm.events({
     'click #fabInpCancel':function(event){
         event.preventDefault();
         $('#inputFormOuterId').hide(200);
+        Session.set('mode', null);
+        directionsDisplay.setMap(null);
     },
 
     'click .inputCloseBtn' : function(event){
         event.preventDefault();
         $('#inputFormOuterId').hide(200);
+        Session.set('mode', null);
+        directionsDisplay.setMap(null);
     },
 
     'change #polycheckboxSrc':function(event){
@@ -97,11 +101,12 @@ Template.inpForm.events({
 		// console.log("google calculated without distancematrix : "+gmap.sphericalD(placesSrc[0].geometry.location, placesDest[0].geometry.location));
 		var search = getSearchBoxdata();
         //close for once submitted
-        $('#inputFormOuterId').hide(200);
+
 		var distance = gmap.haversine(search[0],search[1],"km","geo");
 		var duration = 15 + (distance * 6);
 		var validTime = validateTime(search[2], duration);
 		if(validTime[0]){
+            $('#inputFormOuterId').hide(200);
 			if(selectedOption == 'rider'){
 				Session.set('mode', 'rider');
 				if(!$('#directions-panel').length){
@@ -146,7 +151,7 @@ Template.inpForm.events({
 			}else{
 				result = DriversAdvtColl.find({_id:validTime[2]});
 			}
-			if (confirm("Duplicate ride already exists. Do you want to edit it?")) {
+			if (confirm("Duplicate ride already exists. Do you want to cancel it?")) {
 				console.log("TODO go to edit page for the conflict ride");
 			} else {
 				// Do nothing!

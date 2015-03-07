@@ -137,6 +137,25 @@ html, body {
 .opDiv-cancel {
     bottom: 0;
     position: absolute;
-    left: 50%;
+    left: 33.3%;
     margin-left: -37px;
+}
+
+.opDiv-submit {
+    bottom: 0;
+    position: absolute;
+    left: 66.7%;
+    margin-left: -37px;
+}
+
+.ridePanel{
+    min-height: 200px;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    height: 25%;
+    z-index: 11;
+    background: white;
+
+    @include shadow-top;
 }

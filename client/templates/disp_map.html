@@ -13,8 +13,16 @@
 		<button class="button icon button-clear button-dark ion-chevron-left opDiv-left" data-action="showInput"></button>
 		<button class="button icon button-clear button-dark ion-chevron-right opDiv-right"></button>
 		<button class="button icon-left ion-android-cancel button-assertive button-clear opDiv-cancel" data-action="quitdirections">Cancel</button>
+		<button class="button icon-left ion-ios-checkmark button-balanced button-clear opDiv-submit" data-action="submitDriver">Submit</button>
 		<div id="directions-select"></div>
 	</div>
+
+		{{#if validRide}}
+		<div id="outputDrivesDiv">
+			{{> rideDiv}}
+		</div>
+		{{/if}}
+
 	<div id="outputDiv"></div>
 
 	{{#each marker}}

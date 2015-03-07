@@ -31,6 +31,10 @@ gmap.parseRoute = function() {
     var duration = 0;
     var startTime = directionsDisplay.time;
 
+	//temp hack to get coordinates from directions renderer
+	var resultKey = Object.keys(directions)[2];
+	var resultCoord = directions[resultKey];
+
     for (var i = 0; i < response.legs.length; i++) {
       distance += response.legs[i].distance.value;
       duration += response.legs[i].duration.value;
@@ -48,8 +52,8 @@ gmap.parseRoute = function() {
         distance: distance,
         duration: duration,
         startTime: startTime,
-		originCoord:directions.kc.origin,
-        destinationCoord: directions.kc.destination,
+		originCoord:resultCoord.origin,
+        destinationCoord: resultCoord.destination,
 		origin: response.legs[0].start_address.split(", "),
 		destination: response.legs[0].end_address.split(", "),
 		gh6 : coord[1],
