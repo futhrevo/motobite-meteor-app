@@ -28,7 +28,10 @@ Template.layout.helpers({
       //TODO add interface to add profile pic property to each user
         if(Meteor.user() === null)
             return null;
-        else
+        else if(Meteor.user().profile.pic)
             return Meteor.user().profile.pic;
+        else
+            return "scgPic.svg";
+
     }
 });
