@@ -1,27 +1,24 @@
 <template name="rideDiv">
-			{{hideInput}}
-			<div class = "row ride ridePanel">
-				<div class="alert alert-dismissable alert-success">
-  					<strong>Well done!</strong> Select a rider and click on <strong>start</strong>, to go back click cancel.
+    {{hideInput}}
+
+    <div class="ride ridePanel">
+        <button class="button icon button-clear button-dark ion-chevron-left opDiv-left" data-action="showdriveInput"></button>
+		<button class="button icon button-clear button-dark ion-chevron-right opDiv-right"></button>
+		<div class="list list-inset ridelist">
+
+                    {{#each names}}
+                                <a class="item list-group-item">
+                                <p>
+                                    {{this.summary}} - {{this.distance}} meters
+                                </p>
+                            </a>
+                    {{/each}}
+
 				</div>
-				<form class="form-horizontal">
-					<fieldset>
-						 <legend>Driver details</legend>
-						 <div class="list-group">
-						 {{#each names}}
-						 	<a href="#" class="list-group-item">
-						 	    {{this._id}}  -  {{this.summary}}  -  {{this.distance}} meters
-						 	</a>
-						 {{/each}}
-						 </div>
-						 {{selected}}
-						 <div class="form-group">
-						   <div class="">
-						     <button class="btn btn-default cancel">Cancel</button>
-						     <input type="submit" class="btn btn-primary" value="Submit">
-						   </div>
-						 </div>
-					</fieldset>
-				</form>
-			</div>
+            {{selected}}
+
+            <button class="button icon-left ion-android-cancel button-assertive button-clear " data-action="quitdrives">Cancel</button>
+			<button class="button icon-left ion-ios-checkmark button-balanced button-clear " data-action="submitDrive">Submit</button>
+
+    </div>
 </template>

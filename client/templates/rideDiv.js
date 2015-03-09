@@ -1,3 +1,8 @@
+Template.rideDiv.created = function(){
+	console.log("rideDiv Created");
+	directionsDisplay.setMap(null);
+};
+
 Template.rideDiv.destroyed = function(){
 	console.log("rideDiv destroyed");
 	clearPolylines();
@@ -17,7 +22,13 @@ Template.rideDiv.helpers({
 });
 
 Template.rideDiv.events({
-	'submit form':function(event){
+	'click [data-action=showdriveInput]': function(event, template) {
+		$(".inputForm").show();
+		Session.set('mode',null);
+		$('#inputFormOuterId').show(50);
+	},
+
+	'click [data-action=submitDrive]':function(event){
 		event.preventDefault();
 		var search = getSearchBoxdata();
 
@@ -48,7 +59,7 @@ Template.rideDiv.events({
 
 		//console.log("TODO update user status into collection");
 	},
-	'click .cancel':function(event){
+	'click [data-action=quitdrives]':function(event){
 		event.preventDefault();
 		console.info('user unable to find ride');
 		$('.inputForm').show();
@@ -57,7 +68,7 @@ Template.rideDiv.events({
 	'click .list-group-item': function(event) {
 		event.preventDefault();
 		clearPolylines();
-    	$(event.target).addClass("active").siblings().removeClass('active');
+    	$(event.currentTarget).addClass("active").siblings().removeClass('active');
     	this.polydraw.setVisible(true);
 		gmap.map.fitBounds(asBounds(this.bounds));
   	}
