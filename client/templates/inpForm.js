@@ -7,9 +7,9 @@ Template.inpForm.rendered = function() {
   window.ParsleyValidator.addValidator('tomoValidator',
       function(value, requirement) {
         // console.log($('#select option:selected').val()+ "value = "+value);
-        if ($('#polyDateSel').val() == "Tomorrow" && value == "")
+        if ($('#polyDateSel').val() === "Tomorrow" && value === "")
           return false;
-        if ($('#polyDateSel').val() === "Today" && value == "")
+        if ($('#polyDateSel').val() === "Today" && value === "")
           return true;
 
         var patterN = /^((2[0-3])|[01][0-9]):([0-5]\d)$/;
@@ -37,7 +37,7 @@ Template.inpForm.rendered = function() {
       multiple: function(value, element) {
         // if requirements[0] value does not meet requirements[1] expectation, field is required
         console.log("multiple " + value);
-        if (value == null || value == "")
+        if (value === null || value === "")
           return false;
 
         return true;
@@ -120,6 +120,7 @@ Template.inpForm.events({
                   if(err){
                     console.log(err);
                   }else{
+
                     console.log(data);
                     _.each(data,function(mark){
                         gmap.markDraw(mark);
@@ -135,8 +136,9 @@ Template.inpForm.events({
 					if(err){
                         console.log(err);
                     }else{
+                        data = wrangleDataDriver(data);
                         console.log(data);
-                        _.each(data[1],function(poly){
+                        _.each(data,function(poly){
                           gmap.polyDraw(poly);
                         });
                      }
@@ -164,3 +166,23 @@ Template.inpForm.events({
 
 
 });
+
+
+wrangleDataDriver = function(data){
+    //combining objects from two arrays for each user
+    var data0 = data[0];
+    var data1 = data[1];
+
+    for(var i=0;i < data1.length;i++){
+        var id = data1[i]._id;
+        for (var j = 0; j < data0.length; j++) {
+            if(id == data0[j]._id){
+                _.extend(data1[i],data0[j]);
+                data0.splice(j,1);
+                break;
+            }
+        }
+    }
+    //removing empty array
+    return data1;
+};

@@ -18,6 +18,9 @@ Template.rideDiv.helpers({
 	},
 	names: function(){
 		return polyArray.list();
+	},
+	starts:function(){
+		return moment.unix(this.startTime).fromNow();
 	}
 });
 

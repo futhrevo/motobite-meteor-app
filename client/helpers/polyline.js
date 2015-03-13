@@ -201,3 +201,54 @@ polyline.hashdecode = function(str, precision) {
 
     return [coordinates,gh6];
 };
+
+polyline.dissect = function(str,srcHash,dstHash) {
+    var index = 0,
+        lat = 0,
+        lng = 0,
+        coordinates = [], hashes = [],
+        shift = 0,
+        result = 0,
+        byte = null,
+        latitude_change,
+        longitude_change,
+        factor = Math.pow(10, 5);
+
+    // Coordinates have variable length when encoded, so just keep
+    // track of whether we've hit the end of the string. In each
+    // loop iteration, a single coordinate is decoded.
+    while (index < str.length) {
+
+        // Reset shift, result, and byte
+        byte = null;
+        shift = 0;
+        result = 0;
+
+        do {
+            byte = str.charCodeAt(index++) - 63;
+            result |= (byte & 0x1f) << shift;
+            shift += 5;
+        } while (byte >= 0x20);
+
+        latitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
+
+        shift = result = 0;
+
+        do {
+            byte = str.charCodeAt(index++) - 63;
+            result |= (byte & 0x1f) << shift;
+            shift += 5;
+        } while (byte >= 0x20);
+
+        longitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
+        lat += latitude_change;
+        lng += longitude_change;
+
+        coordinates.push([lat / factor, lng / factor]);
+        hashes.push(geohash.encode(lat / factor,lng / factor,6));
+    }
+
+    var temp = coordinates.slice(hashes.indexOf(srcHash),hashes.lastIndexOf(dstHash)+1);
+
+    return this.encode(temp);
+};

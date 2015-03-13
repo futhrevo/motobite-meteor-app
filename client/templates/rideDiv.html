@@ -9,8 +9,11 @@
                     {{#each names}}
                                 <a class="item list-group-item">
                                 <p>
-                                    {{this.summary}} - {{this.distance}} meters
+                                    {{this.summary}} - {{this.distance}} m
                                 </p>
+                                <span class="item-note">
+                                    starts : {{starts}}
+                                </span>
                             </a>
                     {{/each}}
 

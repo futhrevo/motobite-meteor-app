@@ -301,6 +301,7 @@ gmap.geocode = function(lat,lng){
 
 //function to draw polyline on map
 gmap.polyDraw = function(poly){
+	poly.overview = polyline.dissect(poly.overview,poly.gh6[poly.srcIndex],poly.gh6[poly.dstIndex]);
 	var path = google.maps.geometry.encoding.decodePath(poly.overview);
 	var polydraw = new google.maps.Polyline({
 		path:path,
@@ -310,13 +311,20 @@ gmap.polyDraw = function(poly){
 		visible : false,
 		map:this.map
 	});
+
+	var distance = Math.round(google.maps.geometry.spherical.computeLength(polydraw.getPath()));
+	//lets say speed is 20kmph = 334m per min
+	var duration =  Math.round(distance / 334);
+	//considering user approaches with avg speed 50kmph and each grid size is 610m
+	var startTime = poly.startTime + (poly.srcIndex * 610 / 14);
 	var polyObject = {
 		_id: poly._id,
 		overview:poly.overview,
 		summary:poly.summary,
 		bounds:poly.bounds,
-		distance:poly.distance,
-		duration:poly.duration,
+		distance:distance,
+		startTime:startTime,
+		duration:duration,
 		polydraw:polydraw
 	};
 	polyArray.push(polyObject);

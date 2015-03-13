@@ -11,7 +11,7 @@
     * [ ] remove zoom icons and support pinching
     * [ ] limit map to india/bangalore
     * [ ] hide map type on top of map
-* [ ] User profile page
+* [x] User profile page
 * [ ] Fuel points management, billing and charging
 * [ ] User input validation - remove or implement parsely input panel
 * [ ] Remove Insecure Package
@@ -59,6 +59,13 @@ Sandeep sandepkumr@gmail.com
 * Other community or team contact
 
 #########trash can
+publications in meteor
+http://matthewfieger.com/posts/me/2014/06/18/pseudo-collections-in-meteor.html
+http://stackoverflow.com/questions/28290523/where-does-meteor-subscribe-belong
+http://stackoverflow.com/questions/28773111/meteor-subscription-not-ready
+http://stackoverflow.com/questions/28505894/how-can-i-make-a-meteor-publish-method-reactive-to-a-server-side-parameter
+http://stackoverflow.com/questions/27771318/in-meteor-how-can-i-publish-processed-results-of-a-find-query-as-a-cursor
+
 Marker.find({ name: "David" }).fetch();
 
 Meteor.user()._id

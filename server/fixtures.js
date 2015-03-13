@@ -29,9 +29,10 @@ Meteor.methods({
 		});
 		var userid = Meteor.user()._id;
 		var qw = MarkerColl.findOne({_id:userid});
+        var post;
 		if(!qw){
 			console.log("new user");
-			var post = _.extend(postAttributes,{
+			post = _.extend(postAttributes,{
 				_id:userid,
 				type: "user",
 				at: new Date(),
@@ -41,7 +42,7 @@ Meteor.methods({
 		}else{
 			console.log('user entry present at '+userid);
 			ULogsColl.update({_id:userid},{$push:{logs : EJSON.stringify(qw)}},{upsert:true});
-			var post = _.extend(postAttributes,{
+			post = _.extend(postAttributes,{
 				at: new Date(),
 				valid : true
 			});
@@ -119,7 +120,7 @@ Meteor.methods({
 			if(srcIndex < dstIndex)
 				for (var i = 0; i < nearSrc.length; i++) {
 					if(u._id == nearSrc[i]._id){
-						var ret = {_id : u._id, srcDist : nearSrc[i].srcDist,dstDist : u.dstDist};
+						var ret = {_id : u._id, srcDist : nearSrc[i].srcDist,dstDist : u.dstDist,srcIndex:srcIndex,dstIndex:dstIndex};
 						nearSrc.splice(i, 1);
 						return ret;
 					}
@@ -150,7 +151,10 @@ Meteor.methods({
         fields: {
             "locs": 0,
             "origin": 0,
-            "originCoord": 0
+            "originCoord": 0,
+            "destination":0,
+            "destinationCoord":0,
+            "distance":0,
         }
     }).fetch();
 
