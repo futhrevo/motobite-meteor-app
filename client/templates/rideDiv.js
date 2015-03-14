@@ -5,6 +5,7 @@ Template.rideDiv.created = function(){
 
 Template.rideDiv.destroyed = function(){
 	console.log("rideDiv destroyed");
+	// TODO: No need to clear if going to schedule screen view
 	clearPolylines();
 	polyArray.clear();
 };
@@ -17,11 +18,9 @@ Template.rideDiv.helpers({
 		return "TODO final rider confirmation before notifying other end : ";
 	},
 	names: function(){
-		return polyArray.list();
+		return polyArray.sort(compare).list();
 	},
-	starts:function(){
-		return moment.unix(this.startTime).fromNow();
-	}
+
 });
 
 Template.rideDiv.events({
@@ -31,36 +30,37 @@ Template.rideDiv.events({
 		$('#inputFormOuterId').show(50);
 	},
 
+	'click [data-action=showApplyScreen]': function(event, template) {
+		var id = $('.ridelist a.active p').attr("_id");
+		if(id === undefined){
+			IonPopup.alert({
+			    title: 'Alert',
+			    template: 'You need to select an item!',
+			    okText: 'Got It.'
+			});
+		}else{
+			var obj = _.findWhere(polyArray,{_id:id});
+
+
+
+			IonPopup.confirm({
+			    title: 'Are you sure?',
+			    template: popupApplyScreen(obj),
+				okText: 'Ask Rider', // String (default: 'OK'). The text of the OK button.
+			    onOk: function() {
+			        console.log('Ask rider clicked');
+					submitDrive();
+			    },
+			    onCancel: function() {
+			        console.log('Cancelled');
+			    }
+			});
+		}
+	},
+
 	'click [data-action=submitDrive]':function(event){
 		event.preventDefault();
-		var search = getSearchBoxdata();
-
-		console.info('user selected a ride from '+search[0]+' to '+search[1]);
-		var distance = gmap.haversine(search[0],search[1],"km","geo");
-		var duration = 15 + (distance * 6);
-		search.push(duration);
-		var validTime = validateTime(search[2], duration);
-		console.log(validTime);
-		if(validTime[0]){
-			Meteor.call('postDriveAdvt',search,function(error,result){
-				// display the error to the user and abort
-				if (error)
-					return alert(error.reason);
-				console.log(result);
-
-				});
-		}else{
-			var result;
-			if(validTime[1] == "drives"){
-				result = DrivesAdvtColl.find({_id:validTime[2]});
-			}else{
-				result = DriversAdvtColl.find({_id:validTime[2]});
-			}
-			$('.alert').addClass("alert-danger").removeClass("alert-success");
-
-		}
-
-		//console.log("TODO update user status into collection");
+		submitDrive();
 	},
 	'click [data-action=quitdrives]':function(event){
 		event.preventDefault();
@@ -82,7 +82,92 @@ function clearPolylines(){
 		poly.polydraw.setVisible(false);
 	});
 }
+//compare function to sort according to time
+function compare(a,b) {
+  if (a.startTime < b.startTime)
+     return 1;
+  if (a.startTime > b.startTime)
+    return -1;
+  return 0;
+}
 
+//function that returns div to be shown in popup for apply screen
+function popupApplyScreen(obj){
+	var myvar = '<div class="list card">'+
+	''+
+	'  <div class="item">'+
+	'    <h2>'+obj.summary+'</h2>'+
+	'    <p>'+ moment.unix(obj.startTime).calendar()+'</p>'+
+	'  </div>'+
+	''+
+		'<div class="item item-icon-left">'+
+	'     <i class="icon ion-android-walk"></i>'+
+	'     pickup'+
+	'     <span class="badge badge-positive">'+ Math.round(obj.srcDist)+'m' +'</span>'+
+	'</div>'+
+	''+
+	'<div class="item item-icon-left">'+
+	'     <i class="icon ion-model-s"></i>'+
+	'     Travel'+
+	'     <span class="badge badge-positive">'+ Math.round(obj.distance)+'m'+'</span>'+
+	'</div>'+
+	''+
+	'<div class="item item-icon-left">'+
+	'     <i class="icon ion-android-walk"></i>'+
+	'     destination'+
+	'     <span class="badge badge-positive">'+ Math.round(obj.dstDist)+'m'+'</span>'+
+	'</div>'+
+
+
+	''+
+	'  <div class="item tabs tabs-secondary tabs-icon-left">'+
+	'    <a class="tab-item" href="#">'+
+	'      <i class="icon ion-thumbsup"></i>'+
+	'      Like'+
+	'    </a>'+
+	'    <a class="tab-item" href="#">'+
+	'      <i class="icon ion-chatbox"></i>'+
+	'      Comment'+
+	'    </a>'+
+	'    <a class="tab-item" href="#">'+
+	'      <i class="icon ion-share"></i>'+
+	'      Share'+
+	'    </a>'+
+	'  </div>'+
+	''+
+	'</div>';
+	return myvar;
+}
+
+//function to submit drive to collection
+function submitDrive(){
+	var search = getSearchBoxdata();
+
+	console.info('user selected a ride from '+search[0]+' to '+search[1]);
+	var distance = gmap.haversine(search[0],search[1],"km","geo");
+	var duration = 15 + (distance * 6);
+	search.push(duration);
+	var validTime = validateTime(search[2], duration);
+	console.log(validTime);
+	if(validTime[0]){
+		Meteor.call('postDriveAdvt',search,function(error,result){
+			// display the error to the user and abort
+			if (error)
+				return alert(error.reason);
+			console.log(result);
+
+			});
+	}else{
+		var result;
+		if(validTime[1] == "drives"){
+			result = DrivesAdvtColl.find({_id:validTime[2]});
+		}else{
+			result = DriversAdvtColl.find({_id:validTime[2]});
+		}
+	}
+
+	//console.log("TODO update user status into collection");
+}
 getSearchBoxdata = function (){
 
 	if($("#polycheckboxSrc").prop( "checked")){
@@ -102,7 +187,7 @@ getSearchBoxdata = function (){
 		inputTime.setDate(inputTime.getDate()+1);
 	}
 
-	if(selectedTime != ""){
+	if(selectedTime !== ""){
 		var parts = selectedTime.match(/(\d+):(\d+)/);
 		inputTime.setHours(parseInt(parts[1],10));
 		inputTime.setMinutes(parseInt(parts[2],10));

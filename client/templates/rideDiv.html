@@ -3,16 +3,16 @@
 
     <div class="ride ridePanel">
         <button class="button icon button-clear button-dark ion-chevron-left opDiv-left" data-action="showdriveInput"></button>
-		<button class="button icon button-clear button-dark ion-chevron-right opDiv-right"></button>
+		<button class="button icon button-clear button-dark ion-chevron-right opDiv-right" data-action="showApplyScreen"></button>
 		<div class="list list-inset ridelist">
 
                     {{#each names}}
                                 <a class="item list-group-item">
-                                <p>
+                                <p _id={{this._id}}>
                                     {{this.summary}} - {{this.distance}} m
                                 </p>
-                                <span class="item-note">
-                                    starts : {{starts}}
+                                <span class="item-note" data-livestamp="{{this.startTime}}"> starts:
+
                                 </span>
                             </a>
                     {{/each}}
@@ -21,7 +21,7 @@
             {{selected}}
 
             <button class="button icon-left ion-android-cancel button-assertive button-clear " data-action="quitdrives">Cancel</button>
-			<button class="button icon-left ion-ios-checkmark button-balanced button-clear " data-action="submitDrive">Submit</button>
+			{{!-- <button class="button icon-left ion-ios-checkmark button-balanced button-clear " data-action="submitDrive">Submit</button> --}}
 
     </div>
 </template>

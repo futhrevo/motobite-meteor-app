@@ -325,7 +325,9 @@ gmap.polyDraw = function(poly){
 		distance:distance,
 		startTime:startTime,
 		duration:duration,
-		polydraw:polydraw
+		polydraw:polydraw,
+		srcDist:poly.srcDist,
+		dstDist:poly.dstDist,
 	};
 	polyArray.push(polyObject);
 };
