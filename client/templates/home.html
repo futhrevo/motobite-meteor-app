@@ -11,7 +11,10 @@
     {{/contentFor}}
 
     {{#contentFor "headerTitle"}}
-        <h1 class="title">Team Polo</h1>
+        <h1 class="title">Team Polo
+            <span class="badge badge-assertive badgeNotif" data-val = {{countNotifications}}>{{countNotifications}}</span>
+        </h1>
+
     {{/contentFor}}
 
     {{#contentFor "headerButtonRight"}}

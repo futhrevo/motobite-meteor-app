@@ -343,6 +343,7 @@ gmap.markDraw = function(mark){
 	gmap.addMarker(rideMarker,"origin",'gmapMarker');
 };
 
+
 Template.dispMap.rendered = function(){
 	console.log("display map rendered");
 	function geo_success(position) {
@@ -376,7 +377,7 @@ Template.dispMap.rendered = function(){
 
 	var geo_options = {
 		enableHighAccuracy: true,
-		maximumAge        : 100,
+		maximumAge        : 5000,
 		timeout           : 27000
 	};
 

@@ -31,6 +31,21 @@
                     </div>
                 {{/ionSideMenu}}
 
+                {{#ionSideMenu side="right" }}
+                    <div class="row">
+                        <button class="button button-clear col col-10" data-ion-menu-close>
+                            <i class="icon ion-android-arrow-back"></i>
+                        </button>
+                        <h4 class="title col">Requests</h4>
+                    </div>
+                    <div class="content ">
+                        {{> inflateReq}}
+                    </div>
+                    <div class="bar bar-footer bar-balanced">
+                        <div class="title">Footer</div>
+                    </div>
+                {{/ionSideMenu}}
+
             {{/ionSideMenus}}
             {{#ionSideMenuContent}}
 

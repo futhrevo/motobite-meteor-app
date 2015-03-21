@@ -14,9 +14,12 @@ Meteor.startup(function() {
     "nodes.locs": "2dsphere"
   });
 
+
+
   DriversAdvtColl._ensureIndex({
     "locs": "2dsphere"
   });
+
 });
 
 
@@ -63,25 +66,27 @@ Meteor.methods({
 		var dKeys = ["c","e","w","n","s","se","sw","ne","nw"];
 		// Find all the _ids near to source cordinates
 		var nearSrc = DriversAdvtColl.aggregate([{
-        "$geoNear": {
-            near: {
-                type: "Point",
-                coordinates: post[0]
-            },
-            distanceField: "srcDist",
-            maxDistance: 250,
-            spherical: true
+                        "$geoNear": {
+                            near: {
+                                type: "Point",
+                                coordinates: post[0]
+                            },
+                            distanceField: "srcDist",
+                            maxDistance: 250,
+                            spherical: true
+                        }
+                    }, {$match: {
+                            startTime: {
+                                $gt: 1410529121
+                            }
+                        }
+                    }, {$project: {
+                		srcDist: 1
+                        }
+                    }]);
+        if(nearSrc.length < 1){
+            return null;
         }
-    }, {$match: {
-            startTime: {
-                $gt: 1410529121
-            }
-        }
-    }, {$project: {
-		srcDist: 1
-        }
-    }]);
-
 		// get the list of _ids from the cursor
 		for (var i = 0; i < nearSrc.length; i++) {
 			ids[i] = nearSrc[i]._id;
@@ -149,12 +154,12 @@ Meteor.methods({
         _id: {$in: ids}
         }, {
         fields: {
-            "locs": 0,
-            "origin": 0,
-            "originCoord": 0,
-            "destination":0,
-            "destinationCoord":0,
-            "distance":0,
+            "bounds":1,
+            "overview":1,
+            "gh6":1,
+            "startTime":1,
+            "summary":1
+
         }
     }).fetch();
 
@@ -209,4 +214,20 @@ Meteor.methods({
   },
   //postDriverAdvt implemented at client side
 
+  //function to let communication between clients to ask for ride
+  AskRider:function(id){
+      check(this.userId, String);
+      check(id,String);
+      var requestee = DriversAdvtColl.findOne({_id:id},{id:1});
+      var requester = this.userId;
+      console.log("rider " + requestee.id + " is being requested by "+requester);
+      var post = {
+        requester:{id:requester,at:new Date()},
+        requestee : requestee.id,
+        advtRequest: id,
+        status:null,
+
+      };
+      TransactColl.insert(post);
+  }
 });

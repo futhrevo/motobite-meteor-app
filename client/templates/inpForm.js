@@ -92,7 +92,7 @@ Template.inpForm.events({
 		//using local storage to store more permanently
 		//TODO: add interface to clear/delete local storage data from above link
 
-		localStorage["checked"] = selectedOption;
+		localStorage.checked = selectedOption;
 		console.info("selected element is : " + selectedOption);
 
 		console.log("TODO input validation");
@@ -103,6 +103,11 @@ Template.inpForm.events({
         //close for once submitted
 
 		var distance = gmap.haversine(search[0],search[1],"km","geo");
+        console.log(distance);
+        if(distance < 0.1){
+            // Display an error toast, with a title
+            toastr.error("Please select a farther destination", "Input Error");
+        }
 		var duration = 15 + (distance * 6);
 		var validTime = validateTime(search[2], duration);
 		if(validTime[0]){
@@ -135,6 +140,8 @@ Template.inpForm.events({
 				Meteor.call('rideQuery',getSearchBoxdata(),function(err,data){
 					if(err){
                         console.log(err);
+                    }else if(data === null){
+                        console.log("no data to return");
                     }else{
                         data = wrangleDataDriver(data);
                         console.log(data);

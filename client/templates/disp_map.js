@@ -37,6 +37,7 @@ Template.dispMap.events({
         }, ],
         destructiveText: 'Delete an appointment',
         cancelText: 'Cancel',
+        cancelOnStateChange:false,
         cancel: function() {
             console.log('Cancelled!');
         },
@@ -55,6 +56,7 @@ Template.dispMap.events({
         },
         destructiveButtonClicked: function() {
             console.log('Destructive Action!');
+            Router.go('/inflate/drivers');
             return true;
         }
     });

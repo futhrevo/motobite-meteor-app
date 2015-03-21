@@ -1,7 +1,8 @@
 //Publications from the server after removal of autopublish
 
 Meteor.publish('theMarkers',function(){
-	return MarkerColl.find();
+	var userid = this.userId;
+	return MarkerColl.find({_id:userid});
 });
 
 Meteor.publish('theDrivers',function(){
@@ -18,6 +19,10 @@ Meteor.publish('theLogs',function(){
 	return ULogsColl.find();
 });
 
+Meteor.publish('theRiderReqs',function(){
+	var userid = this.userId;
+	return TransactColl.find({requestee:userid});
+});
 DriversAdvtColl.before.insert(function (userId, doc) {
 	doc.at = new Date();
 	doc.id = userId;

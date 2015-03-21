@@ -1,12 +1,19 @@
 Template.layout.created = function(){
+
     // $('body').attr('fullbleed', '');
     // $('body').attr('vertical', '');
     // $('body').attr('layout', '');
 
 };
-// Template.layout.rendered = function(){
-//     $('#navheader').css('background-image', 'url(profile.jpg)');
-// }
+Template.layout.rendered = function(){
+    IonSideMenu.snapper.disable();
+    IonSideMenu.snapper.settings({
+        tapToClose: true, // If true, tapping an open pane will close it
+        flickThreshold: 150, // Number of pixels the user needs to swiftly travel to activate a "flick" open
+        hyperextensible:true
+    });
+    // $('#navheader').css('background-image', 'url(profile.jpg)');
+};
 
 Template.layout.events({
     "click [data-action=sign-out]" : function(){
@@ -15,6 +22,10 @@ Template.layout.events({
         gmap.markers = {};
         Router.go('/');
     },
+
+    "click .snap-drawer-left" : function(){
+        IonSideMenu.snapper.close();
+    }
 });
 
 Template.layout.helpers({

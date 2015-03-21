@@ -1,3 +1,8 @@
+Template.profileTemplate.rendered = function(){
+    // IonSideMenu.snapper.close();
+};
+
+
 Template.profileTemplate.helpers({
     profEmail : function(){
       //TODO add interface to add profile pic property to each user

@@ -38,7 +38,7 @@
 	Meteor.subscribe('theDrivers');
 	Meteor.subscribe('theDrives');
 	Meteor.subscribe('theLogs');
-
+	Meteor.subscribe('theRiderReqs');
 	//TODO implement Routeboxer into functions http://google-maps-utility-library-v3.googlecode.com/svn/tags/routeboxer/1.0/docs/examples.html
 	//TODO create packed client codes
 	//Use NoScript, a limited user account and a virtual machine and be safe(r)!
@@ -48,4 +48,13 @@
 	polyArray =  new ReactiveArray();
 	markArray = new ReactiveArray();
 
+		var query = TransactColl.find({status:null});
+		var handle = query.observeChanges({
+		    added: function(id, user) {
+		        console.log(user.requester.id +" requested at "+user.requester.at);
+		    },
+		    removed: function(id) {
+		        console.log(id +" status changed");
+		    }
+		});
 	}());

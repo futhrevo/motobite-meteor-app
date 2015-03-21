@@ -49,7 +49,9 @@ Template.rideDiv.events({
 				okText: 'Ask Rider', // String (default: 'OK'). The text of the OK button.
 			    onOk: function() {
 			        console.log('Ask rider clicked');
-					submitDrive();
+					//function to let the other side alert about the drive
+					Meteor.call('AskRider',id);
+					//submitDrive();
 			    },
 			    onCancel: function() {
 			        console.log('Cancelled');
@@ -178,6 +180,7 @@ getSearchBoxdata = function (){
 	}
 	var placesDest = gmap.searchBoxDest.getPlaces();
 	var toCoord = [placesDest[0].geometry.location.lng(),placesDest[0].geometry.location.lat()];
+
 
 	var selectedDate = $('#polyDateSel').val();
 	var selectedTime = $('#timeInput').val();
