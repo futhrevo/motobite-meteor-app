@@ -15,3 +15,13 @@ Template.home.rendered = function(){
       }
     });
 };
+
+Template.ionBody.events({
+    "click [data-action=centerBounds]" : function(){
+        console.log("Center Map");
+        var clat = Session.get('lat');
+		var clng = Session.get('lng');
+		var loc = new google.maps.LatLng(clat,clng);
+        gmap.map.setCenter(loc);
+    }
+});

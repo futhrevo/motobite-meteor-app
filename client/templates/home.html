@@ -12,12 +12,16 @@
 
     {{#contentFor "headerTitle"}}
         <h1 class="title">Team Polo
-            <span class="badge badge-assertive badgeNotif" data-val = {{countNotifications}}>{{countNotifications}}</span>
+            <span class="badge badge-assertive badgeNotif" data-val= {{countNotifications}}>{{countNotifications}}</span>
         </h1>
 
     {{/contentFor}}
 
     {{#contentFor "headerButtonRight"}}
+    <div class="buttons">
+        <button class="button button-clear" style="margin-right: 10px;" data-action="centerBounds">
+            <i class="icon ion-location"></i>
+        </button>
         <button class="button button-clear" data-ion-popover="_myPopover">
             {{#if isAndroid}}
                 {{> ionIcon icon='android-more-vertical'}}
@@ -25,6 +29,7 @@
                 {{> ionIcon icon='more'}}
             {{/if}}
         </button>
+    </div>
     {{/contentFor}}
 
     {{#ionView}}

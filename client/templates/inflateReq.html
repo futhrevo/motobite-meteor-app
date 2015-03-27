@@ -1,18 +1,15 @@
 <template name="inflateReq">
     {{#ionList}}
         {{#each req}}
-            {{#ionItem }}
-                <a class="btnInfo">
-                    <h2>{{this.requestee}} &nbsp; requesting for &nbsp; {{this.advtRequest}} </h2>
+
+                <a class="item btnInfo list-group-item item-icon-right" >
+                    <h2 _id={{this._id}}>{{this.requestee}} &nbsp; requesting for &nbsp; {{this.advtRequest}} </h2>
                     <p>
                         Show some details
                     </p>
+                    <i class="icon ion-ios-arrow-right"></i>
                 </a>
-                <div class="button-bar">
-                <button class="button icon ion-ios-checkmark button-balanced button-clear btnAccept"></button>
-                <button class="button icon ion-android-cancel button-assertive button-clear btnReject"></button>
-            </div>
-            {{/ionItem}}
+
 
         {{/each}}
     {{/ionList}}

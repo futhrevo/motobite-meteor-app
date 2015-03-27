@@ -22,9 +22,10 @@
 * [ ] driver renting
 * [ ] fill outputDirectionDiv if only one route available
 * [ ] clear button to clear input panel
+* [ ] checkin function
 TODO SERVER
 * [ ] Remove 1 day old records to archives
-
+* [ ] Need ways to request clients to checkin in seamless way
 
 
 Created using meteor in Mac
