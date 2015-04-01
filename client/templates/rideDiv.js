@@ -40,7 +40,7 @@ Template.rideDiv.events({
 			});
 		}else{
 			var obj = _.findWhere(polyArray,{_id:id});
-
+			var subset = _.pick(obj,'_id','srcloc','dstloc');
 
 
 			IonPopup.confirm({
@@ -50,8 +50,15 @@ Template.rideDiv.events({
 			    onOk: function() {
 			        console.log('Ask rider clicked');
 					//function to let the other side alert about the drive
-					Meteor.call('AskRider',id);
-					//submitDrive();
+					Meteor.call('AskRider',subset,function(err){
+						if(err){
+							toastr.error("Server error", "Oops..!");
+						}else{
+							$(".inputForm").show();
+							Session.set('mode', null);
+							toastr.success("Request Sent", "Success");
+						}
+					});
 			    },
 			    onCancel: function() {
 			        console.log('Cancelled');

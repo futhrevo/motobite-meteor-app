@@ -34,6 +34,8 @@ Template.dispMap.events({
             text: 'I am a rider &nbsp; <i class="icon ion-android-car"></i>'
         }, {
             text: 'I need a ride &nbsp; <i class="icon ion-android-walk"></i>'
+        }, {
+            text: 'Check-in &nbsp; <i class="icon ion-ios-timer-outline"></i>'
         }, ],
         destructiveText: 'Delete an appointment',
         cancelText: 'Cancel',
@@ -51,6 +53,9 @@ Template.dispMap.events({
                 console.log('User needs ride!');
                 Session.set('modeSel','ride');
                 $('#inputFormOuterId').show(200);
+            }
+            if (index === 2) {
+                console.log('User needs to checkin');
             }
             return true;
         },

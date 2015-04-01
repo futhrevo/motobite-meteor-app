@@ -311,7 +311,6 @@ gmap.polyDraw = function(poly){
 		visible : false,
 		map:this.map
 	});
-
 	var distance = Math.round(google.maps.geometry.spherical.computeLength(polydraw.getPath()));
 	//lets say speed is 20kmph = 334m per min
 	var duration =  Math.round(distance / 334);
@@ -328,6 +327,8 @@ gmap.polyDraw = function(poly){
 		polydraw:polydraw,
 		srcDist:poly.srcDist,
 		dstDist:poly.dstDist,
+		srcloc : path[0],
+		dstloc : path[path.length -1],
 	};
 	polyArray.push(polyObject);
 };

@@ -215,16 +215,16 @@ Meteor.methods({
   //postDriverAdvt implemented at client side
 
   //function to let communication between clients to ask for ride
-  AskRider:function(id){
+  AskRider:function(obj){
       check(this.userId, String);
-      check(id,String);
-      var requestee = DriversAdvtColl.findOne({_id:id},{id:1});
+      check(obj._id,String);
+      var requestee = DriversAdvtColl.findOne({_id:obj._id},{id:1});
       var requester = this.userId;
       console.log("rider " + requestee.id + " is being requested by "+requester);
       var post = {
-        requester:{id:requester,at:new Date()},
+        requester:{id:requester,at:new Date(),srcloc : obj.srcloc,dstloc:obj.dstloc},
         requestee : requestee.id,
-        advtRequest: id,
+        advtRequest: obj._id,
         status:null,
 
       };

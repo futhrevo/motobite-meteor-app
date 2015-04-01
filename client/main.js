@@ -48,13 +48,4 @@
 	polyArray =  new ReactiveArray();
 	markArray = new ReactiveArray();
 
-		var query = TransactColl.find({status:null});
-		var handle = query.observeChanges({
-		    added: function(id, user) {
-		        console.log(user.requester.id +" requested at "+user.requester.at);
-		    },
-		    removed: function(id) {
-		        console.log(id +" status changed");
-		    }
-		});
 	}());
