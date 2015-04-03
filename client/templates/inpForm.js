@@ -1,4 +1,7 @@
-Template.inpForm.rendered = function() {
+
+
+Template.inpForm.onRendered(function () {
+
   //http://weareoutman.github.io/clockpicker/
   $('.clockpicker').clockpicker({
     'default': 'now',
@@ -47,7 +50,7 @@ Template.inpForm.rendered = function() {
     }
 
   });
-};
+});
 
 Template.inpForm.helpers({
     modeSelect : function(){

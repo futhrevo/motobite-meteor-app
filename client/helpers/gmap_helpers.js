@@ -262,7 +262,7 @@ gmap = {
 //callback to get distance matrix response
 function dMcallback(response, status) {
 	if (status != google.maps.DistanceMatrixStatus.OK) {
-		alert('Error was: ' + status);
+		alert('DistanceMatrix returned Error at: ' + status);
 	} else {
 		var origins = response.originAddresses;
 		var destinations = response.destinationAddresses;
