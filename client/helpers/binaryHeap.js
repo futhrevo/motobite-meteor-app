@@ -112,3 +112,8 @@ BinaryHeap.prototype = {
     }
   }
 };
+
+//using binary heap to find next checkin location
+checkinHeap = new BinaryHeap(function(x) {
+    return x.request.starts;
+});

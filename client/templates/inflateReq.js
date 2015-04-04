@@ -32,12 +32,13 @@ Template.inflateReq.events({
             okType: 'button-assertive', // String (default: 'button-positive'). The type of the OK button.
             cancelText: 'Cancel', // String (default: 'Cancel'). The text of the Cancel button.
             onOk: function() {
+                var unixTime = moment().format('X');
                 if($("#decisionVal").is(':checked')){
                     console.log('Request Accepted');
-                    TransactColl.update(_id,{$set:{status:true}});
+                    TransactColl.update(_id,{$set:{status:true,accepted:unixTime}});
                 }else{
                     console.log('Request Rejected');
-                    TransactColl.update(_id,{$set:{status:false}});
+                    TransactColl.update(_id,{$set:{status:false,rejected:unixTime}});
                 }
 
             },

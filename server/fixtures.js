@@ -222,10 +222,16 @@ Meteor.methods({
       var requester = this.userId;
       console.log("rider " + requestee.id + " is being requested by "+requester);
       var post = {
-        requester:{id:requester,at:new Date(),srcloc : obj.srcloc,dstloc:obj.dstloc},
-        requestee : requestee.id,
-        advtRequest: obj._id,
-        status:null,
+          requester: requester,
+          requestee: requestee.id,
+          advtRequest: obj._id,
+          request: {
+              at: new Date(),
+              srcloc: obj.srcloc,
+              dstloc: obj.dstloc,
+              starts: obj.startTime
+          },
+          status: null,
 
       };
       TransactColl.insert(post);

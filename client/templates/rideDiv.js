@@ -40,7 +40,7 @@ Template.rideDiv.events({
 			});
 		}else{
 			var obj = _.findWhere(polyArray,{_id:id});
-			var subset = _.pick(obj,'_id','srcloc','dstloc');
+			var subset = _.pick(obj,'_id','srcloc','dstloc','startTime');
 
 
 			IonPopup.confirm({

@@ -21,7 +21,7 @@ Meteor.publish('theLogs',function(){
 
 Meteor.publish('theRiderReqs',function(){
 	var userid = this.userId;
-	return TransactColl.find({requestee:userid});
+	return TransactColl.find({ $or: [ {requestee:userid },{requester:userid} ] });
 });
 DriversAdvtColl.before.insert(function (userId, doc) {
 	doc.at = new Date();

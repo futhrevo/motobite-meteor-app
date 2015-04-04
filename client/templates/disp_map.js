@@ -56,6 +56,7 @@ Template.dispMap.events({
             }
             if (index === 2) {
                 console.log('User needs to checkin');
+                checkin();
             }
             return true;
         },
