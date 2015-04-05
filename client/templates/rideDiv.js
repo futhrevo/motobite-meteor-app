@@ -15,7 +15,7 @@ Template.rideDiv.helpers({
 		$('.inputForm').hide();
 	},
 	selected:function(){
-		return "TODO final rider confirmation before notifying other end : ";
+
 	},
 	names: function(){
 		return polyArray.sort(compare).list();

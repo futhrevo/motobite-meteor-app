@@ -13,6 +13,7 @@ BinaryHeap.prototype = {
     this.bubbleUp(this.content.length - 1);
   },
 
+
   pop: function() {
     // Store the first element so we can return it later.
     var result = this.content[0];
