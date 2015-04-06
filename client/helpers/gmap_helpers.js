@@ -156,6 +156,10 @@ gmap = {
 		  google.maps.event.trigger(gmap.map, "resize");
 		  gmap.map.setCenter(center);
 		});
+
+		//create MarkerManager object to control Markers
+		markerManager = new MarkerManager(this.map);
+		checkinTrackerInt();
 		},
 
 	//distance calculation using Haversine formula
@@ -165,7 +169,6 @@ gmap = {
 		a = (sin(dlat/2))^2 + cos(lat1) * cos(lat2) * (sin(dlon/2))^2
 		c = 2 * atan2( sqrt(a), sqrt(1-a) )
 		d = R * c (where R is the radius of the Earth)*/
-
 	haversine: function(src,dest,unit,type){
 		var srclat,srclng,destlat,destlng,R;
 		if(type == 'hash'){
@@ -412,3 +415,20 @@ asBounds = function (bound){
 function asLatLng(lat,lng){
 	return new google.maps.LatLng(lat, lng);
 }
+
+var checkinTrackerInt = function(){
+	var query = TransactColl.find({
+		$and: [{ status: true},
+			{requester: Meteor.userId() }]
+	});
+
+	var handle = query.observeChanges({
+		added: function(id, user) {
+			console.log(user.requestee + " accepted " + moment.unix(user.accepted).calendar());
+			checkinHeap.push(user);
+		},
+		removed: function(id) {
+			console.log(id + " status changed");
+		}
+	});
+};

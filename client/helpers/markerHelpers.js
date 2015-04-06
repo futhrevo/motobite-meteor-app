@@ -1,6 +1,7 @@
 // MarkerManager inspired from original MarkerManager
 drivesMarkers = {};
 driversMarkers = {};
+checkinMarkers = {};
 
 MarkerManager = function (map, opt_opts) {
   var me = this;
@@ -14,21 +15,29 @@ MarkerManager.prototype.initialize = function (opt_opts) {
 };
 
 //Prototype to add markers to manager
-MarkerManager.prototype.addMarker = function(loc,options){
-  var me = this;
-  options = options || {};
-  var opts = {};
-  opts.icon = '/marker.svg';
-  opts.position = new google.maps.LatLng(loc.lat,loc.lng);
-  opts.title = loc.title || "TODO";
-  var mymarker = me.Marker_(opts);
-  if(options.hasOwnProperty("type")){
-    if(options["type"] === "driver"){
-      driversMarkers[loc.id] = mymarker;
-    }else{
-      drivesMarkers[loc.id] = mymarker;
+//loc object contains {title,id,lat,lng} as keys
+//options contains {type,markerIcon} as keys
+MarkerManager.prototype.addMarker = function(loc, options) {
+    var me = this;
+    options = options || {};
+    var opts = {};
+    opts.icon = options.markerIcon ||'/marker.svg';
+    opts.position = new google.maps.LatLng(loc.lat, loc.lng);
+    opts.title = loc.title || "TODO";
+    var mymarker = me.Marker_(opts);
+    if (options.hasOwnProperty("type")) {
+        if (options.type === "driver") {
+            driversMarkers[loc.id] = mymarker;
+        } else if (options.type === "drive") {
+            drivesMarkers[loc.id] = mymarker;
+        } else if (options.type === "checkin") {
+            //no need to save as it is already saved in checkinHeap array
+            //checkinMarkers[loc.id] = mymarker;
+        } else{
+            consol.log("cannot get type to add marker in MarkerManager");
+        }
     }
-  }
+    return mymarker;
 
 };
 
@@ -58,6 +67,11 @@ MarkerManager.prototype.clearMarkers = function(){
     driversMarkers[id]["setMap"](null);
     delete drivesMarkers[id];
   }
+
+  for(var id in checkinMarkers){
+      checkinMarkers[id]["setMap"](null);
+    delete checkinMarkers[id];
+  }
 };
 
 //Prototype to remove one marker
@@ -70,6 +84,10 @@ MarkerManager.prototype.delMarker = function(id){
     driversMarkers[id]["setMap"](null);
     delete driversMarkers[id];
   }
+  if (checkinMarkers.hasOwnProperty(id)) {
+      checkinMarkers[id]["setMap"](null);
+    delete checkinMarkers[id];
+  }
 };
 
 //Protype to query a user to get marker
@@ -80,6 +98,9 @@ MarkerManager.prototype.queryUser = function(id){
   }
   if (driversMarkers.hasOwnProperty(id)) {
     retMarker.drivers = driversMarkers[id];
+  }
+  if (checkinMarkers.hasOwnProperty(id)) {
+    retMarker.checkins = checkinMarkers[id];
   }
   return retMarker;
 };
