@@ -1,6 +1,6 @@
 Template.home.helpers({
     countNotifications: function(){
-        return TransactColl.find({status:null}).count();
+        return TransactColl.find({ $and: [ {requestee:Meteor.userId() },{status:null} ] }).count();
     },
 });
 

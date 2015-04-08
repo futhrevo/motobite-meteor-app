@@ -52,7 +52,7 @@ checkin = function(){
             return false;
         }else{
             //add a marker at the extraction point
-            var options = {type:"checkin",markerIcon:'/marker.svg'};
+            var options = {type:"checkin",markerIcon:'/splice.png'};
             var marker = markerManager.addMarker(loc,options);
             checkinHeap.content[0].marker = marker;
             checkinHeap.content[0].circle.setMap(null);

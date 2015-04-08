@@ -359,7 +359,7 @@ Template.dispMap.rendered = function(){
 		console.log("Got location");
 		if(!Session.get('map')){
 			drawCanvas();
-		}else if ($('#map-canvas').html() == ""){
+		}else if ($('#map-canvas').html() === ""){
 			console.log("replaced");
 			$('#map-canvas').replaceWith(gmap.map.getDiv());
 			gmap.regDivs();

@@ -1,6 +1,6 @@
 Template.inflateReq.helpers({
     req:function(){
-        return TransactColl.find({status:null});
+        return TransactColl.find({ $and: [ {requestee:Meteor.userId() },{status:null} ] });
     },
 });
 
@@ -36,9 +36,11 @@ Template.inflateReq.events({
                 if($("#decisionVal").is(':checked')){
                     console.log('Request Accepted');
                     TransactColl.update(_id,{$set:{status:true,accepted:unixTime}});
+                    IonSideMenu.snapper.close();
                 }else{
                     console.log('Request Rejected');
                     TransactColl.update(_id,{$set:{status:false,rejected:unixTime}});
+                    IonSideMenu.snapper.close();
                 }
 
             },
