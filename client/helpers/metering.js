@@ -5,18 +5,22 @@ MeterOn = function (){
     this.total = '';
     this.distance = 0;
     this.status = null;
-}
+};
 
 MeterOn.prototype = {
     push:function(lat,lng){
         //only run if the meter already started
         if(this.status === true){
-            this.loc.push([lng,lat]);
+            this.loc.push([lat,lng]);
             if(this.loc.length >1){
                 //need to do run length polyline coding to store the coordinates as string
+                // b contains old and a contains new coordinates, this.loc length is maintained at length of 2
                 var a = this.loc[1], b= this.loc[0], factor = Math.pow(10, 5);
                 this.total += encode(a[0] - b[0], factor);
                 this.total += encode(a[1] - b[1], factor);
+                this.distance += gmap.haversine(b.reverse(),a.reverse(),"km","geo");
+                //reverse the reversing done for distance
+                a.reverse();
                 this.loc.shift();
             }
         }
@@ -34,7 +38,7 @@ MeterOn.prototype = {
     },
     stop:function(){
         this.status = false;
-        return this.total;
+        return [this.total,this.distance];
     }
 };
 

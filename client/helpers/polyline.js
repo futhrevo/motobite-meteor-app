@@ -92,7 +92,7 @@ polyline.decode = function(str, precision) {
         } while (byte >= 0x20);
 
         longitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
-        console.log(latitude_change,longitude_change);
+        //console.log(latitude_change,longitude_change);
         lat += latitude_change;
         lng += longitude_change;
 
