@@ -72,7 +72,7 @@
  */
 var pole = 20037508.34;
 //function to convert coordinates to cartesian system
-function forwardMercator(xy) {
+function forwardMercator (xy) {
     xy.x = xy.x * pole / 180;
     var y = Math.log(Math.tan((90 + xy.y) * Math.PI / 360)) / Math.PI * pole;
     xy.y = Math.max(-20037508.34, Math.min(y, 20037508.34));
@@ -89,9 +89,31 @@ function segmentedLine(str){
     }
     return output;
 }
+
+function segmentLineCoord(arr){
+    var output =[];
+    for(var i=0;i < arr.length;i++){
+        output.push(forwardMercator({x:arr[i][0],y:arr[i][1]}));
+    }
+    return output;
+}
 //function to calculate distance and nearest point to the line Segments
-function distanceToLine(point,str){
-    var segment = segmentedLine(str);
+distanceToLine = function(point,str){
+    //check for input argument type for line and point type
+    //if point is in lat and lng convert to xy and continue
+    console.log(point);
+    point = point.constructor === Array ? forwardMercator({x: point[1], y: point[0]}) : point;
+    console.log(point);
+    //if input is a string call segmentedLine
+    if(typeof str === 'string'){
+        var segment;
+        segment = segmentedLine(str);
+    }else if(typeof str === 'object'){
+        //if input is an array call segmentLineCoord
+        segment = segmentLineCoord(str);
+    }else{
+        return false;
+    }
     var min = null;
     for(var i=0;i<segment.length -1;i++){
         var result = distanceToSegment(point,segment[i],segment[i+1]);
@@ -106,7 +128,8 @@ function distanceToLine(point,str){
         }
     }
     //calculate square root only when to display to optimise for performance
-    min.distance = Math.sqrt(min.distance);
+    min.distance = Math.ceil(Math.sqrt(min.distance));
+    min = inverseMercator(min);
     return min;
 }
 
@@ -135,7 +158,7 @@ function distanceToSegment(point,pointA,pointB){
     }
     return {
         distance: Math.pow(x - x0, 2) + Math.pow(y - y0, 2),
-        x: x, y: y,
+        x: x, y: y
     };
 }
 //function to convert XYZ to lat lng

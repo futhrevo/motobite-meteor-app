@@ -303,8 +303,9 @@ gmap.geocode = function(lat,lng){
 };
 
 //function to draw polyline on map
-gmap.polyDraw = function(poly){
-	poly.overview = polyline.dissect(poly.overview,poly.gh6[poly.srcIndex],poly.gh6[poly.dstIndex]);
+gmap.polyDraw = function(poly,post){
+	var polyInfo = polyline.dissect(poly.overview,poly.gh6[poly.srcIndex],poly.gh6[poly.dstIndex],post[0],post[1]);
+	poly.overview = polyInfo.overview;
 	var path = google.maps.geometry.encoding.decodePath(poly.overview);
 	var polydraw = new google.maps.Polyline({
 		path:path,
@@ -328,10 +329,10 @@ gmap.polyDraw = function(poly){
 		startTime:startTime,
 		duration:duration,
 		polydraw:polydraw,
-		srcDist:poly.srcDist,
-		dstDist:poly.dstDist,
-		srcloc : path[0],
-		dstloc : path[path.length -1],
+		srcDist:polyInfo.srcDistance,
+		dstDist:polyInfo.destDistance,
+		srcloc : post[0],
+		dstloc : post[1],
 	};
 	polyArray.push(polyObject);
 };

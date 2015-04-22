@@ -119,6 +119,7 @@ Template.inpForm.events({
 		var validTime = validateTime(search[2], duration);
 		if(validTime[0]){
             $('#inputFormOuterId').hide(200);
+            var post = getSearchBoxdata();
 			if(selectedOption == 'rider'){
 				Session.set('mode', 'rider');
 				if(!$('#directions-panel').length){
@@ -128,14 +129,14 @@ Template.inpForm.events({
 				}
 				// gmap.calcRoute(placesSrc[0].geometry.location,placesDest[0].geometry.location);
 				gmap.calcRoute();
-                Meteor.call('riderQuery',getSearchBoxdata(),function(err,data){
+                Meteor.call('riderQuery',post,function(err,data){
                   if(err){
                     console.log(err);
                   }else{
 
                     console.log(data);
                     _.each(data,function(mark){
-                        gmap.markDraw(mark);
+                        gmap.markDraw(mark,post);
                       });
                     }
                 });
@@ -144,7 +145,7 @@ Template.inpForm.events({
 			}else{
 				Session.set('mode', 'ride');
 				polyArray.clear();
-				Meteor.call('rideQuery',getSearchBoxdata(),function(err,data){
+				Meteor.call('rideQuery',post,function(err,data){
 					if(err){
                         console.log(err);
                     }else if(data === null){
@@ -153,7 +154,7 @@ Template.inpForm.events({
                         data = wrangleDataDriver(data);
                         console.log(data);
                         _.each(data,function(poly){
-                          gmap.polyDraw(poly);
+                          gmap.polyDraw(poly,post);
                         });
                      }
 					// gmap.polyDraw(data[0].overview);
@@ -181,7 +182,7 @@ Template.inpForm.events({
 
 });
 
-
+//adding aggregation distance and other info to output array of objects
 wrangleDataDriver = function(data){
     //combining objects from two arrays for each user
     var data0 = data[0];

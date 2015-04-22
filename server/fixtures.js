@@ -54,6 +54,29 @@ Meteor.methods({
 
 	},
 
+	rideQueryBeta: function(post) {
+		var docs = DriversAdvtColl.find(
+			{
+				$and:[
+					{locs:
+						{$near:
+							{
+								$geometry:{type:"Point", coordinates:post[0]},
+								$geometry:{type:"Point", coordinates:post[1]},
+								$maxDistance:250
+							}
+						}
+					},
+					{startTime:
+						{
+							$gt: 1410529121
+						}
+					}
+				]
+
+			}
+		);
+	},
 
 	//Query for drivers for a rider
 	rideQuery: function(post) {
@@ -64,7 +87,7 @@ Meteor.methods({
     var ids = [];
 		//all keys present as neighbours for a geohash
 		var dKeys = ["c","e","w","n","s","se","sw","ne","nw"];
-		// Find all the _ids near to source cordinates
+		// Find all the _ids near to source coordinates
 		var nearSrc = DriversAdvtColl.aggregate([{
                         "$geoNear": {
                             near: {
@@ -213,7 +236,7 @@ Meteor.methods({
     return "Inserted drive advertisement";
   },
   //postDriverAdvt implemented at client side
-
+//
   //function to let communication between clients to ask for ride
   AskRider:function(obj){
       check(this.userId, String);
@@ -229,7 +252,8 @@ Meteor.methods({
               at: new Date(),
               srcloc: obj.srcloc,
               dstloc: obj.dstloc,
-              starts: obj.startTime
+              starts: obj.startTime,
+			  overview: obj.overview
           },
           status: null,
 

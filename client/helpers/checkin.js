@@ -35,7 +35,7 @@ checkin = function(){
                     checkinHeap.content[0].marker.setMap(null);
                 }
                 checkinHeap.pop();
-                console.log("popped first entry and going to next checkin location")
+                console.log("popped first entry and going to next checkin location");
                 toastr.info("going to next checkin location");
                 checkin();
             },
@@ -67,7 +67,7 @@ checkin = function(){
 var drawCircle = function(index){
     var src = checkinHeap.content[index].request.srcloc;
     var rKey = Object.keys(src);
-    var center = new google.maps.LatLng(src[rKey[0]], src[rKey[1]]);
+    var center = new google.maps.LatLng(src[rKey[1]], src[rKey[0]]);
     //assuming distance near to pickup location
     var radius = 100;
     var circle = new google.maps.Circle({
@@ -81,7 +81,7 @@ var drawCircle = function(index){
         radius: radius,
         strokeColor: '#004de8',
         strokeOpacity: 0.62,
-        strokeWeight: 1,
+        strokeWeight: 1
     });
     checkinHeap.content[index].circle = circle;
     gmap.map.panTo(center);
@@ -90,14 +90,16 @@ var drawCircle = function(index){
 };
 
 var checkDistance = function(index){
-    var src = checkinHeap.content[index].request.srcloc;
-    var rKey = Object.keys(src);
-    var center = [src[rKey[1]],src[rKey[0]]];
-    var dest = [Session.get('lng'),Session.get('lat')];
+    var overview = checkinHeap.content[index].request.overview;
+    //var rKey = Object.keys(src);
+    //var center = [src[rKey[1]],src[rKey[0]]];
+    var dest = [Session.get('lat'),Session.get('lng')];
 
-    var distance = gmap.haversine(dest,center,'km','geo');
+    var distance = distanceToLine(dest,overview);
+    console.log("you are still "+distance+" away");
+
     //return in meters
-    return distance * 1000;
+    return distance ;
 
 };
 

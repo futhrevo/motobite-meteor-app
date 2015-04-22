@@ -136,3 +136,31 @@ db.drives.find({"nodes.locs":{$geoWithin:{$box:[[77.676246,12.926031],[100,100]]
 
 ### citations
 http://mattbradley.github.io/livestampjs/
+
+db.getCollection('drivers').find(
+ {$and:[   {locs:
+        {$near:
+            {
+                $geometry:{type:"Point", coordinates:[77.696686,12.942224]},
+                $geometry:{type:"Point", coordinates:[77.797696,12.942224]},
+                $maxDistance:250
+            }
+         }
+     },{startTime: {
+                                $gt: 1410529121
+                            }}]
+
+ }
+)
+
+db.getCollection('drivers').find(
+    {locs:
+        {$near:
+            {
+                $geometry:{type:"Point", coordinates:[77.70147599999996,12.968542]},
+                $geometry:{type:"Point", coordinates:[77.64358960000004,12.9681318]},
+                $maxDistance:250
+            }
+         }
+     }
+   )

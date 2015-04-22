@@ -202,7 +202,7 @@ polyline.hashdecode = function(str, precision) {
     return [coordinates,gh6];
 };
 
-polyline.dissect = function(str,srcHash,dstHash) {
+polyline.dissect = function(str,srcHash,dstHash,src,dest) {
     var index = 0,
         lat = 0,
         lng = 0,
@@ -213,7 +213,8 @@ polyline.dissect = function(str,srcHash,dstHash) {
         latitude_change,
         longitude_change,
         factor = Math.pow(10, 5);
-
+    //src = forwardMercator({x:src[0],y:src[1]});
+    //dest = forwardMercator({x:dest[0],y:dest[1]});
     // Coordinates have variable length when encoded, so just keep
     // track of whether we've hit the end of the string. In each
     // loop iteration, a single coordinate is decoded.
@@ -248,7 +249,15 @@ polyline.dissect = function(str,srcHash,dstHash) {
         hashes.push(geohash.encode(lat / factor,lng / factor,6));
     }
 
-    var temp = coordinates.slice(hashes.indexOf(srcHash),hashes.lastIndexOf(dstHash)+1);
 
-    return this.encode(temp);
+    var srcInfo = distanceToLine(src,coordinates);
+    var destInfo = distanceToLine(dest,coordinates);
+    var srcIndex = srcInfo.i;
+    var destIndex = destInfo.i;
+    var temp = coordinates.slice(srcIndex,destIndex);
+    //add the start point and destination point to new array
+    temp[0] = [srcInfo.x,srcInfo.y];
+    temp.push([destInfo.x,destInfo.y]);
+
+    return {overview:this.encode(temp),srcDistance:srcInfo.distance,destDistance:destInfo.distance};
 };
