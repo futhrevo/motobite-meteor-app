@@ -15,10 +15,27 @@ Meteor.startup(function() {
   });
 
 
-
   DriversAdvtColl._ensureIndex({
     "locs": "2dsphere"
   });
+
+	//start process in later to handle old records deletions
+	var Later = Meteor.npmRequire('later');
+	var wrapLater = Later;
+	// will fire every 5 minutes
+	var textSched = wrapLater.parse.text('every 1 min');
+
+	// execute logTime one time on the next occurrence of the text schedule
+	var timer = wrapLater.setInterval(Meteor.bindEnvironment(logTime), textSched);
+	// function to execute
+	function logTime() {
+		console.log(new Date());
+		//3 hour old time stamp
+		var epochTime = (Date.now() / 1000 | 0) - (3600 * 3);
+
+		DriversAdvtColl.remove({startTime:{$lt:epochTime}});
+		DrivesAdvtColl.remove({startTime:{$lt:epochTime}});
+	}
 
 });
 
@@ -235,7 +252,7 @@ Meteor.methods({
 		DrivesAdvtColl.insert(post);
     return "Inserted drive advertisement";
   },
-  //postDriverAdvt implemented at client side
+  //postDriverAdvt implemented at client side in riderDiv.js
 //
   //function to let communication between clients to ask for ride
   AskRider:function(obj){
@@ -261,3 +278,7 @@ Meteor.methods({
       TransactColl.insert(post);
   }
 });
+
+
+
+

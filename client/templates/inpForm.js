@@ -8,7 +8,7 @@ Template.inpForm.onRendered(function () {
 
   //http://weareoutman.github.io/clockpicker/
   $('.clockpicker').clockpicker({
-    'default': 'now',
+    'default': 'now'
   });
 
   window.ParsleyValidator.addValidator('tomoValidator',
@@ -44,11 +44,10 @@ Template.inpForm.onRendered(function () {
       multiple: function(value, element) {
         // if requirements[0] value does not meet requirements[1] expectation, field is required
         console.log("multiple " + value);
-        if (value === null || value === "")
-          return false;
+        return !(value === null || value === "");
 
-        return true;
-      },
+
+      }
 
 
     }
@@ -67,6 +66,12 @@ Template.inpForm.helpers({
 });
 
 Template.inpForm.events({
+    'click [data-action=clearFields]':function(event){
+        event.preventDefault();
+        Session.set('mode', null);
+        clearFields();
+
+    },
     'click #fabInpCancel':function(event){
         event.preventDefault();
         $('#inputFormOuterId').hide(200);
@@ -177,7 +182,7 @@ Template.inpForm.events({
 
 		}
 
-	},
+	}
 
 
 });
@@ -200,4 +205,12 @@ wrangleDataDriver = function(data){
     }
     //removing empty array
     return data1;
+};
+
+var clearFields = function(){
+    document.getElementById('polycheckboxSrc').checked = false;
+    $('#polyMapSrcSearch').attr("disabled",false).val("");
+    $('#polyMapDesSearch').attr("disabled",false).val("");
+    $('#polyDateSel').val('Today');
+    $('#timeInput').val('');
 };
