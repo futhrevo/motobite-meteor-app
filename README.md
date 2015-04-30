@@ -7,10 +7,10 @@
 * [x] input panel Today/tomorrow
 * [x] better timepicker preferably polymer
 * [ ] map heigth adjustement according to view port
-    * [ ] map terms and conditions minimize
-    * [ ] remove zoom icons and support pinching
+    * [x] map terms and conditions minimize
+    * [x] remove zoom icons and support pinching
     * [ ] limit map to india/bangalore
-    * [ ] hide map type on top of map
+    * [x] hide map type on top of map
 * [x] User profile page
 * [ ] Fuel points management, billing and charging
 * [ ] User input validation - remove or implement parsely input panel
@@ -21,10 +21,10 @@
 * [ ] edit delete disable after drive started
 * [ ] driver renting
 * [ ] fill outputDirectionDiv if only one route available
-* [ ] clear button to clear input panel
-* [ ] checkin function
+* [x] clear button to clear input panel
+* [x] checkin function
 TODO SERVER
-* [ ] Remove 1 day old records to archives
+* [x] Remove 1 day old records to archives
 * [ ] Need ways to request clients to checkin in seamless way
 
 

@@ -12,7 +12,9 @@
 
     {{#contentFor "headerTitle"}}
         <h1 class="title">Team Polo
+            {{#if countNotifications}}
             <span class="badge badge-assertive badgeNotif" data-val= {{countNotifications}}>{{countNotifications}}</span>
+            {{/if}}
         </h1>
 
     {{/contentFor}}

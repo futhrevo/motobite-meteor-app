@@ -26,10 +26,16 @@ html, body {
 
 .sidePic{
     height: 25%;
-    background-size: cover;
-    background-repeat: no-repeat;
+    background: green;
 }
-
+.sideEmail{
+    position: relative;
+    z-index: 12;
+    bottom: 20px;
+    text-align: center;
+    background-color: green;
+    word-wrap: normal;
+}
 .popover{
 	height:auto
 }
@@ -47,17 +53,15 @@ html, body {
     height:100%;
 }
 
-.fab-start-outer {
+.fab-start {
     right: 16px;
-    height: 110%;
-    bottom: -100%;
-    z-index: 6;
+    bottom:20px;
+    z-index: 11111;
     position: absolute;
 }
 
 .ion-fab {
     position: relative;
-    bottom: 30px;
     height: 60px;
     width: 60px;
     padding-top: 6px;
@@ -167,4 +171,13 @@ html, body {
 
 .snap-drawer-right{
     background-color: floralwhite;
+}
+
+.snap-drawer-left{
+    color: #fff;
+    background-color: $positive;
+}
+.drawer-left-menu-item{
+    border-color: $positive;
+    background-color: $positive;
 }

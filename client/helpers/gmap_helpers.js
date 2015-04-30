@@ -122,11 +122,16 @@ gmap = {
 		var clat = Session.get('lat');
 		var clng = Session.get('lng');
 		var loc = new google.maps.LatLng(clat,clng);
+		// Create a new StyledMapType object
+		var mapType = new google.maps.StyledMapType(MAP_STYLE, styleOptions);
 		var mapOptions ={
 			center: loc,
-			zoom: 16
+			zoom: 16,
+			disableDefaultUI: true
 		};
 		this.map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
+		this.map.mapTypes.set("First Style", mapType);
+		this.map.setMapTypeId("First Style");
 		this.regDivs();
 		bounds = new google.maps.LatLngBounds();
 		bounds.extend(loc);
@@ -258,7 +263,7 @@ gmap = {
 			  directionsDisplay.time = search[2];
 		    }
 		  });
-	},
+	}
 
 };
 
@@ -332,7 +337,7 @@ gmap.polyDraw = function(poly,post){
 		srcDist:polyInfo.srcDistance,
 		dstDist:polyInfo.destDistance,
 		srcloc : post[0],
-		dstloc : post[1],
+		dstloc : post[1]
 	};
 	polyArray.push(polyObject);
 };
@@ -432,4 +437,148 @@ var checkinTrackerInt = function(){
 			console.log(id + " status changed");
 		}
 	});
+};
+
+// Create an array of styles
+//https://snazzymaps.com/style/42/apple-maps-esque
+var MAP_STYLE = [
+	{
+		"featureType": "landscape.man_made",
+		"elementType": "geometry",
+		"stylers": [
+			{
+				"color": "#f7f1df"
+			}
+		]
+	},
+	{
+		"featureType": "landscape.natural",
+		"elementType": "geometry",
+		"stylers": [
+			{
+				"color": "#d0e3b4"
+			}
+		]
+	},
+	{
+		"featureType": "landscape.natural.terrain",
+		"elementType": "geometry",
+		"stylers": [
+			{
+				"visibility": "on"
+			}
+		]
+	},
+	{
+		"featureType": "poi",
+		"elementType": "labels",
+		"stylers": [
+			{
+				"visibility": "on"
+			}
+		]
+	},
+	{
+		"featureType": "poi.business",
+		"elementType": "all",
+		"stylers": [
+			{
+				"visibility": "on"
+			}
+		]
+	},
+	{
+		"featureType": "poi.medical",
+		"elementType": "geometry",
+		"stylers": [
+			{
+				"color": "#fbd3da"
+			}
+		]
+	},
+	{
+		"featureType": "poi.park",
+		"elementType": "geometry",
+		"stylers": [
+			{
+				"color": "#bde6ab"
+			}
+		]
+	},
+	{
+		"featureType": "road",
+		"elementType": "geometry.stroke",
+		"stylers": [
+			{
+				"visibility": "off"
+			}
+		]
+	},
+	{
+		"featureType": "road",
+		"elementType": "labels",
+		"stylers": [
+			{
+				"visibility": "on"
+			}
+		]
+	},
+	{
+		"featureType": "road.highway",
+		"elementType": "geometry.fill",
+		"stylers": [
+			{
+				"color": "#ffe15f"
+			}
+		]
+	},
+	{
+		"featureType": "road.highway",
+		"elementType": "geometry.stroke",
+		"stylers": [
+			{
+				"color": "#efd151"
+			}
+		]
+	},
+	{
+		"featureType": "road.arterial",
+		"elementType": "geometry.fill",
+		"stylers": [
+			{
+				"color": "#ffffff"
+			}
+		]
+	},
+	{
+		"featureType": "road.local",
+		"elementType": "geometry.fill",
+		"stylers": [
+			{
+				"color": "black"
+			}
+		]
+	},
+	{
+		"featureType": "transit.station.airport",
+		"elementType": "geometry.fill",
+		"stylers": [
+			{
+				"color": "#cfb2db"
+			}
+		]
+	},
+	{
+		"featureType": "water",
+		"elementType": "geometry",
+		"stylers": [
+			{
+				"color": "#a2daf2"
+			}
+		]
+	}
+];
+//the name to be displayed on the map type control
+var styleOptions = {
+	name: "First Style"
 };

@@ -7,25 +7,48 @@
             {{#ionSideMenus}}
 
                 {{#ionSideMenu}}
-                    <div class="sidePic" style="background-image: url(/{{profEmail}});">
-                        <div>{{userEmail}}</div>
+                    <!--<div class="list card">-->
+                        <!--<div class="item item-image">-->
+                            <!--<img src="{{profEmail}}">-->
+                        <!--</div>-->
+                        <!--<div class="item item-text-wrap">-->
+                            <!--{{userEmail}}-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="sidePic">
+                        <div class="row" style="height: 100%; width: 100%;">
+                            <img class="col" src="{{profEmail}}">
+                        </div>
+                        <div class="sideEmail row">
+                            <div class="col">{{userEmail}}</div>
+                        </div>
                     </div>
                     <div class="">
                         <div class="list">
-                            <a class="item item-icon-left" href="/">
-                                <i class="icon ion-home"></i> Home
+                            <a class="drawer-left-menu-item item item-icon-left item-icon-right" href="/">
+                                <i class="icon ion-home"></i>
+                                Home
+                                <i class="icon ion-ios-arrow-thin-right"></i>
                             </a>
-                            <a class="item item-icon-left" href="{{pathFor 'profileTemplate'}}">
-                                <i class="icon ion-person"></i> My Profile
+                            <a class="drawer-left-menu-item item item-icon-left item-icon-right" href="{{pathFor 'profileTemplate'}}">
+                                <i class="icon ion-person"></i>
+                                My Profile
+                                <i class="icon ion-ios-arrow-thin-right"></i>
                             </a>
-                            <a class="item item-icon-left" href="{{pathFor route='inflate.drivers'}}">
-                                <i class="icon ion-calendar"></i> Schedule
+                            <a class="drawer-left-menu-item item item-icon-left item-icon-right" href="{{pathFor route='inflate.drivers'}}">
+                                <i class="icon ion-calendar"></i>
+                                Schedule
+                                <i class="icon ion-ios-arrow-thin-right"></i>
                             </a>
-                            <a class="item item-icon-left" href="{{pathFor 'about'}}">
-                                <i class="icon ion-heart"></i> About
+                            <a class="drawer-left-menu-item item item-icon-left item-icon-right" href="{{pathFor 'about'}}">
+                                <i class="icon ion-heart"></i>
+                                About
+                                <i class="icon ion-ios-arrow-thin-right"></i>
                             </a>
-                            <a class="item item-icon-left" data-action="sign-out">
-                                <i class="icon ion-log-out"></i> Sign Out
+                            <a class="drawer-left-menu-item item item-icon-left item-icon-right" data-action="sign-out">
+                                <i class="icon ion-log-out"></i>
+                                Sign Out
+                                <i class="icon ion-ios-arrow-thin-right"></i>
                             </a>
                         </div>
                     </div>
