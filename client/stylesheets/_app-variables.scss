@@ -181,3 +181,8 @@ html, body {
     border-color: $positive;
     background-color: $positive;
 }
+//this should solve whiteband for input fields
+//https://github.com/meteoric/meteor-ionic/issues/89
+.content.overflow-scroll {
+    bottom: 0px !important;
+}
