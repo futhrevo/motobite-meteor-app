@@ -2,6 +2,11 @@
 	console.info("Immediate function fired up");
 	Session.set('map', false);
 	Session.set('mode', null);
+	
+	//check for cordova and register for events
+	if (Meteor.isCordova) { 
+		document.addEventListener("deviceready", onDeviceReady, false);
+	}
 	if (supports_html5_storage()) {
 	  // window.localStorage is available!
 	  	console.info("window.localStorage is available!");
@@ -21,18 +26,7 @@
 	  	console.info("geolocation is not available");
 	}
 
-	function supports_html5_storage() {
-		if (Meteor.isCordova) {
-			console.log("cordova running");
-			return true;
-		}else{
-			try {
-				return 'localStorage' in window && window['localStorage'] !== null;
-			} catch (e) {
-				return false;
-			}
-		}
-	}
+	
 	//Subscriptions goes here
 	Meteor.subscribe('theMarkers');
 	Meteor.subscribe('theDrivers');
@@ -48,4 +42,30 @@
 	polyArray =  new ReactiveArray();
 	markArray = new ReactiveArray();
 
-	}());
+} ());
+	
+function onDeviceReady() { 
+	//add back button event
+	//http://stackoverflow.com/questions/28055836/back-button-in-cordova-phongap-meteor-build-for-android-wont-close-application
+	   document.addEventListener("backbutton", function () {
+		if (history.state && history.state.initial === true) {
+			navigator.app.exitApp();
+		} else {
+			history.go(-1);
+		}
+	   });
+	   console.log("Cordova is running");
+};
+
+function supports_html5_storage() {
+		if (Meteor.isCordova) {
+			
+			return true;
+		}else{
+			try {
+				return 'localStorage' in window && window['localStorage'] !== null;
+			} catch (e) {
+				return false;
+			}
+		}
+	}

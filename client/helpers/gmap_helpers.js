@@ -70,7 +70,7 @@ gmap = {
 					gmap.latLngs.push(myLatlng);
 					return myLatlng;
 				} else{
-					alert('Geocode was not successful for the following reason: '+ status);
+					console.log('Geocode was not successful for the following reason: '+ status);
 					myLatlng = null;
 				}
 			});
@@ -152,7 +152,7 @@ gmap = {
 		Meteor.call('postLocation', post, function(error, result) {
 		  // display the error to the user and abort
 		  if (error)
-		    return alert(error.reason);
+		    return console.log(error.reason);
 
 		});
 		// ported insert into server
@@ -270,7 +270,7 @@ gmap = {
 //callback to get distance matrix response
 function dMcallback(response, status) {
 	if (status != google.maps.DistanceMatrixStatus.OK) {
-		alert('DistanceMatrix returned Error at: ' + status);
+		console.log('DistanceMatrix returned Error at: ' + status);
 	} else {
 		var origins = response.originAddresses;
 		var destinations = response.destinationAddresses;
@@ -373,25 +373,39 @@ Template.dispMap.rendered = function(){
 	}
 
 	function geo_error(poserr) {
-		if(poserr == 'PERMISSION_DENIED'){
-			alert("Please accept permission and try again");
-		}else if(poserr == 'POSITION_UNAVAILABLE'){
-			alert("The acquisition of the geolocation failed because one or several internal source of position returned an internal error");
-		}else if(poserr == 'TIMEOUT'){
-			alert("The time allowed to aquire the geolocation was reached before the information was obtained");
+		console.log(poserr);
+		if(poserr.code == 1){
+			console.log("PERMISSION_DENIED - Please accept permission and try again");
+		}else if(poserr.code == 2){
+			console.log("POSITION_UNAVAILABLE - The acquisition of the geolocation failed because one or several internal source of position returned an internal error");
+		}else if(poserr.code == 3){
+			console.log("TIMEOUT - The time allowed to aquire the geolocation was reached before the information was obtained");
 		}
 		else{
-			alert("Position error");
+			console.log("Position error");
 		}
 	}
 
 	var geo_options = {
 		enableHighAccuracy: true,
-		maximumAge        : 5000,
+		maximumAge        : 0,
 		timeout           : 27000
 	};
-
-	wpid = navigator.geolocation.watchPosition(geo_success, geo_error, geo_options);
+	
+	function onDeviceReady() {
+		console.log("device is ready");
+        // Now safe to use device APIs
+		wpid = navigator.geolocation.getCurrentPosition(geo_success, geo_error, geo_options);
+    }
+	
+	if(Meteor.isCordova){
+		console.log("Meteor is running as cordova");
+		document.addEventListener("deviceready", onDeviceReady, false);
+		
+	}else{
+		onDeviceReady();
+	}
+	
 	function drawCanvas(){
 		if($('#map-canvas').length){
 			console.info("map-canvas added to the dom");

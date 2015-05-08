@@ -53,6 +53,8 @@ meteoric:autoform-ionic@0.1.5
 meteoric:ionic@0.1.17
 meteoric:ionic-sass@0.1.9
 meteoric:ionicons-sass@0.1.6
+meteortypescript:compiler@2.0.8
+meteortypescript:typescript-libs@1.1.0
 minifiers@1.1.5
 minimongo@1.0.8
 mobile-status-bar@1.0.3

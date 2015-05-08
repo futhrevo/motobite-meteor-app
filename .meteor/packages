@@ -29,3 +29,6 @@ meteorhacks:npm
 
 
 npm-container
+meteortypescript:typescript-libs
+meteortypescript:compiler
+launch-screen
