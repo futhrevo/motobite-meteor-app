@@ -9,10 +9,14 @@ Template.layout.rendered = function(){
     IonSideMenu.snapper.disable();
     IonSideMenu.snapper.settings({
         tapToClose: true, // If true, tapping an open pane will close it
-        flickThreshold: 150, // Number of pixels the user needs to swiftly travel to activate a "flick" open
+        flickThreshold: 300, // Number of pixels the user needs to swiftly travel to activate a "flick" open
         hyperextensible:true
     });
     // $('#navheader').css('background-image', 'url(profile.jpg)');
+    IonSideMenu.snapper.on('open', menuOpenBody);
+
+    IonSideMenu.snapper.on('close', menuCloseBody);
+    
 };
 
 Template.layout.events({
@@ -24,7 +28,7 @@ Template.layout.events({
     },
 
     "click .snap-drawer-left" : function(){
-        IonSideMenu.snapper.close();
+        menuClose();
     }
 });
 
@@ -46,3 +50,18 @@ Template.layout.helpers({
 
     }
 });
+
+function menuOpenBody() {
+    console.log("Side Menu Open");
+    $(document.body).on("click", menuClose);
+    
+}
+
+function menuCloseBody() {
+    console.log("Side Menu closed");
+     $(document.body).off("click", menuClose);
+}
+
+function menuClose() {
+    IonSideMenu.snapper.close();
+}
