@@ -59,6 +59,18 @@ Sandeep sandepkumr@gmail.com
 * Repo owner or admin
 * Other community or team contact
 
+### how to Install Cordova plugin? ###
+http://stackoverflow.com/questions/26624649/how-to-add-cordova-plug-that-havent-registration-on-plugins-cordova-io
+
+meteor add cordova:com.plugin.datepicker@https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/tarball/0f8ea19848008afc38f856a15aeb238d3c469d58
+
+meteor add cordova:cordova-plugin-vibration@https://github.com/apache/cordova-plugin-vibration/tarball/ef4af1e8a670456e54c1fcf4fc07f82dd84898f5
+
+meteor add cordova:cordova-plugin-statusbar@https://github.com/apache/cordova-plugin-statusbar/tarball/aa07a30c3c93ce09b5ea470f4fcb9927fa2e4d27
+
+### Cordova plugins ###
+https://github.com/Initsogar/cordova-webintent
+
 #########trash can
 publications in meteor
 http://matthewfieger.com/posts/me/2014/06/18/pseudo-collections-in-meteor.html

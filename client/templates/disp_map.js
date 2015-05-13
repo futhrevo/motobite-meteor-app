@@ -21,7 +21,7 @@ Template.dispMap.helpers({
             return true;
         else
             return false;
-    },
+    }
 
 });
 
@@ -47,12 +47,12 @@ Template.dispMap.events({
             if (index === 0) {
                 console.log('User is a rider!');
                 Session.set('modeSel','rider');
-                $('#inputFormOuterId').show(200);
+                $('#inputFormOuterId').show(100);
             }
             if (index === 1) {
                 console.log('User needs ride!');
                 Session.set('modeSel','ride');
-                $('#inputFormOuterId').show(200);
+                $('#inputFormOuterId').show(100);
             }
             if (index === 2) {
                 console.log('User needs to checkin');
@@ -88,7 +88,7 @@ Template.dispMap.events({
 		gmap.parseRoute();
 		console.log("TODO update overview polyline to collection");
 
-    },
+    }
 });
 
 Template.dispMap.destroyed = function(){

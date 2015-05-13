@@ -7,14 +7,7 @@
             {{#ionSideMenus}}
 
                 {{#ionSideMenu}}
-                    <!--<div class="list card">-->
-                        <!--<div class="item item-image">-->
-                            <!--<img src="{{profEmail}}">-->
-                        <!--</div>-->
-                        <!--<div class="item item-text-wrap">-->
-                            <!--{{userEmail}}-->
-                        <!--</div>-->
-                    <!--</div>-->
+                <div id="leftMenuId">
                     <div class="sidePic">
                         <div class="row" style="height: 100%; width: 100%;">
                             <img class="col" src="{{profEmail}}">
@@ -52,9 +45,11 @@
                             </a>
                         </div>
                     </div>
+                    </div>
                 {{/ionSideMenu}}
 
                 {{#ionSideMenu side="right" }}
+                <div id="rightMenuId">
                     <div class="row">
                         <button class="button button-clear col col-10" data-ion-menu-close>
                             <i class="icon ion-android-arrow-back"></i>
@@ -66,6 +61,7 @@
                     </div>
                     <div class="bar bar-footer bar-balanced">
                         <div class="title">Footer</div>
+                    </div>
                     </div>
                 {{/ionSideMenu}}
 

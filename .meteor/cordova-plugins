@@ -1,2 +1,4 @@
+com.borismus.webintent@https://github.com/Initsogar/cordova-webintent/tarball/3d12378de9f38be900761a0ad06ab697cf6d9add
+cordova-plugin-vibration@https://github.com/apache/cordova-plugin-vibration/tarball/ef4af1e8a670456e54c1fcf4fc07f82dd84898f5
+de.fastr.phonegap.plugins.checkgps@0.9.8
 org.apache.cordova.geolocation@0.3.10
-

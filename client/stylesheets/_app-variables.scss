@@ -1,20 +1,20 @@
-@mixin shadow-top{
-    box-shadow: 0 -8px 6px -6px rgba(0,0,0,0.4);
-    -webkit-box-shadow: 0 -8px 6px -6px rgba(0,0,0,0.4);
-    -moz-box-shadow: 0 -8px 6px -6px rgba(0,0,0,0.4);
+@mixin shadow-top {
+  box-shadow: 0 -8px 6px -6px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 -8px 6px -6px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 -8px 6px -6px rgba(0, 0, 0, 0.4);
 }
 
 .publicClass {
   background: url(random_grey_background.png);
-  height:100%;
+  height: 100%;
 }
 
 html, body {
   height: 100%;
 }
 
-.ionic-body{
-    height:100%;
+.ionic-body {
+  height: 100%;
 }
 
 .enterClass {
@@ -24,169 +24,184 @@ html, body {
   margin-left: -54.5px;
 }
 
-.sidePic{
-    height: 25%;
-    background: green;
+.sidePic {
+  height: 25%;
+  background: green;
 }
-.sideEmail{
-    position: relative;
-    z-index: 12;
-    bottom: 20px;
-    text-align: center;
-    background-color: green;
-    word-wrap: normal;
+
+.sideEmail {
+  position: relative;
+  z-index: 12;
+  bottom: 20px;
+  text-align: center;
+  background-color: green;
+  word-wrap: normal;
 }
-.popover{
-	height:auto
+
+.popover {
+  height: auto
 }
 
 #map-canvas {
   display: block;
   height: 100%;
   overflow: auto;
-  position:absolute;
-  #directions-panel{
-      height:80%;
+  position: absolute;
+  #directions-panel {
+    height: 80%;
   }
 }
+
 .mapState {
-    height:100%;
+  height: 100%;
 }
 
 .fab-start {
-    right: 16px;
-    bottom:20px;
-    z-index: 11;
-    position: fixed;
+  right: 16px;
+  bottom: 20px;
+  z-index: 11;
+  position: fixed;
 }
 
 .ion-fab {
-    position: relative;
-    height: 60px;
-    width: 60px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    border-radius: 60px;
-    box-shadow: 1px 1px 1px rgba(0,0,0,0.6);
-    .icon:before,
-    &.icon:before {
-        font-size: $button-large-icon-size;
-    }
+  position: relative;
+  height: 60px;
+  width: 60px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  border-radius: 60px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  .icon:before,
+  &.icon:before {
+    font-size: $button-large-icon-size;
+  }
 }
 
 .inputFormOuter {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255,255,255,0.9);
-    z-index: 8;
-    top:0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 8;
+  top: 0;
 }
 
-.inputFormHeader{
-    background:$positive;
+.inputFormHeader {
+  background: $positive;
 }
 
 // To hide step by step directions display
-.adp{
-    display:none;
+.adp {
+  display: none;
 }
+
 //styling for direction select
 .adp-list {
-    margin-left: 50px;
-    margin-right: 50px;
-    border: none;
-    font-size: inherit;
-    font-weight: bolder;
-    line-height: 2;
-    max-height: inherit;
-    margin-bottom: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  border: none;
+  font-size: inherit;
+  font-weight: bolder;
+  line-height: 2;
+  max-height: inherit;
+  margin-bottom: 50px;
 }
+
 #directions-panel {
-    position: absolute;
-    bottom: 0;
-    direction: ltr;
-    z-index: 9;
+  position: absolute;
+  bottom: 0;
+  direction: ltr;
+  z-index: 9;
 }
 
 #outputDirectionDiv {
-    display:none;
-    min-height: 200px;
-    width: 100%;
-    bottom: 0;
-    position: absolute;
-    height: 25%;
-    z-index: 11;
-    background: white;
+  display: none;
+  min-height: 200px;
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+  height: 25%;
+  z-index: 11;
+  background: white;
 
-    @include shadow-top;
+  @include shadow-top;
 }
 
 .opDiv-button {
-    top: 50%;
-    margin-top: -22.5px;
-    position: absolute;
+  top: 50%;
+  margin-top: -22.5px;
+  position: absolute;
 }
 
-.opDiv-left{
-    @extend .opDiv-button;
-    left:0;
+.opDiv-left {
+  @extend .opDiv-button;
+  left: 0;
 }
 
-.opDiv-right{
-    @extend .opDiv-button;
-    right:0;
+.opDiv-right {
+  @extend .opDiv-button;
+  right: 0;
 }
 
 .opDiv-cancel {
-    bottom: 0;
-    position: absolute;
-    left: 33.3%;
-    margin-left: -37px;
+  bottom: 0;
+  position: absolute;
+  left: 33.3%;
+  margin-left: -37px;
 }
 
 .opDiv-submit {
-    bottom: 0;
-    position: absolute;
-    left: 66.7%;
-    margin-left: -37px;
+  bottom: 0;
+  position: absolute;
+  left: 66.7%;
+  margin-left: -37px;
 }
 
-.ridePanel{
-    min-height: 200px;
-    width: 100%;
-    bottom: 0;
-    position: absolute;
-    height: 25%;
-    z-index: 11;
-    background: white;
+.ridePanel {
+  min-height: 200px;
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+  height: 25%;
+  z-index: 11;
+  background: white;
 
-    @include shadow-top;
-}
-
-.ridelist{
-    margin-right: 50px;
-    margin-left: 50px;
+  @include shadow-top;
 }
 
-.snap-drawers{
-    background-color: $positive;
+.ridelist {
+  margin-right: 50px;
+  margin-left: 50px;
 }
 
-.snap-drawer-right{
-    background-color: floralwhite;
+.snap-drawers {
+  background-color: $positive;
 }
 
-.snap-drawer-left{
-    color: #fff;
-    background-color: $positive;
+.snap-drawer-right {
+  background-color: floralwhite;
 }
-.drawer-left-menu-item{
-    border-color: $positive;
-    background-color: $positive;
+
+.snap-drawer-left {
+  color: #fff;
+  background-color: $positive;
 }
+
+.drawer-left-menu-item {
+  border-color: $positive;
+  background-color: $positive;
+}
+
 //this should solve whiteband for input fields
 //https://github.com/meteoric/meteor-ionic/issues/89
 .content.overflow-scroll {
-    bottom: 0px !important;
+  bottom: 0px !important;
+}
+
+#leftMenuId {
+  height: 100%;
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
