@@ -12,3 +12,5 @@ App.info({
 //https://github.com/dburles/meteor-google-maps/issues/27
 App.accessRule('https://*.googleapis.com/*');
 App.accessRule('https://*.gstatic.com/*');
+
+App.setPreference("StatusBarBackgroundColor", "#002b36");

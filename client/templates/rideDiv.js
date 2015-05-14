@@ -19,7 +19,7 @@ Template.rideDiv.helpers({
 	},
 	names: function(){
 		return polyArray.sort(compare).list();
-	},
+	}
 
 });
 

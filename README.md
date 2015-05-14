@@ -66,7 +66,7 @@ meteor add cordova:com.plugin.datepicker@https://github.com/VitaliiBlagodir/cord
 
 meteor add cordova:cordova-plugin-vibration@https://github.com/apache/cordova-plugin-vibration/tarball/ef4af1e8a670456e54c1fcf4fc07f82dd84898f5
 
-meteor add cordova:cordova-plugin-statusbar@https://github.com/apache/cordova-plugin-statusbar/tarball/aa07a30c3c93ce09b5ea470f4fcb9927fa2e4d27
+meteor add cordova:cordova-plugin-statusbar@https://github.com/futhrevo/cordova-plugin-statusbar/tarball/ed1734e06a7724cc9a3912315cca04eedf494886
 
 ### Cordova plugins ###
 https://github.com/Initsogar/cordova-webintent

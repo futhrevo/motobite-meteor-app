@@ -312,6 +312,7 @@ gmap.polyDraw = function (poly, post) {
     var polyInfo = polyline.dissect(poly.overview, poly.gh6[poly.srcIndex], poly.gh6[poly.dstIndex], post[0], post[1]);
     poly.overview = polyInfo.overview;
     var path = google.maps.geometry.encoding.decodePath(poly.overview);
+    console.log("before polylinw");
     var polydraw = new google.maps.Polyline({
         path: path,
         strokeColor: '#00acc1',
@@ -320,6 +321,7 @@ gmap.polyDraw = function (poly, post) {
         visible: false,
         map: this.map
     });
+    console.log("after polylinw");
     var distance = Math.round(google.maps.geometry.spherical.computeLength(polydraw.getPath()));
     //lets say speed is 20kmph = 334m per min
     var duration = Math.round(distance / 334);
@@ -465,10 +467,12 @@ Template.dispMap.rendered = function () {
 
 asBounds = function (bound) {
     var rKey = Object.keys(bound);
-    return new google.maps.LatLngBounds(asLatLng(bound[rKey[0]].j, bound[rKey[1]].j), asLatLng(bound[rKey[0]].k, bound[rKey[1]].k));
+    var lKey = Object.keys(bound[rKey[0]]);
+    return new google.maps.LatLngBounds(asLatLng(bound[rKey[0]][lKey[0]], bound[rKey[1]][lKey[1]]), asLatLng(bound[rKey[0]][lKey[1]], bound[rKey[1]][lKey[0]]));
 };
 
 function asLatLng(lat, lng) {
+    console.log(lat,lng);
     return new google.maps.LatLng(lat, lng);
 }
 
