@@ -145,16 +145,8 @@ gmap = {
         Session.set('map', true);
 
         console.info('[+] map initialized');
-        var chash = geohash.encode(clat, clng);
-        var post = {
-            gh: chash
-        };
-        Meteor.call('postLocation', post, function (error, result) {
-            // display the error to the user and abort
-            if (error)
-                return console.log(error.reason);
+        updateLocation();
 
-        });
         // ported insert into server
         google.maps.event.addDomListener(window, "resize", function () {
             var center = gmap.map.getCenter();
@@ -358,47 +350,13 @@ gmap.markDraw = function (mark) {
 
 Template.dispMap.rendered = function () {
     console.log("display map rendered");
-    function geo_success(position) {
-        Session.set('lat', position.coords.latitude);
-        Session.set('lng', position.coords.longitude);
-        Session.set('accuracy', position.coords.accuracy);
-        Session.set('speed', position.coords.speed);
-        Session.set('atTime', position.timestamp);
-        console.log("Got location");
-        if (!Session.get('map')) {
-            drawCanvas();
-        } else if ($('#map-canvas').html() === "") {
-            console.log("replaced");
-            $('#map-canvas').replaceWith(gmap.map.getDiv());
-            gmap.regDivs();
-        }
+    //if map is initialized and map dom is empty then replace the dom with map divs
+    if (Session.get('map') && $('#map-canvas').html() === "") {
+        console.log("replaced");
+        $('#map-canvas').replaceWith(gmap.map.getDiv());
+        gmap.regDivs();
     }
 
-    function geo_error(poserr) {
-        console.log(poserr);
-        if (poserr.code == 1) {
-            console.log("PERMISSION_DENIED - Please accept permission and try again");
-        } else if (poserr.code == 2) {
-            console.log("POSITION_UNAVAILABLE - The acquisition of the geolocation failed because one or several internal source of position returned an internal error");
-        } else if (poserr.code == 3) {
-            console.log("TIMEOUT - The time allowed to aquire the geolocation was reached before the information was obtained");
-        }
-        else {
-            console.log("Position error");
-        }
-    }
-
-    var geo_options = {
-        enableHighAccuracy: true,
-        maximumAge: 1000,
-        timeout: 10 * 1000
-    };
-
-    function onDeviceReady() {
-        console.log("device is ready");
-        // Now safe to use device APIs
-        wpid = navigator.geolocation.getCurrentPosition(geo_success, geo_error, geo_options);
-    }
 
     function waitForGPS() {
         CheckGPS.check(function () {
@@ -453,15 +411,6 @@ Template.dispMap.rendered = function () {
         onDeviceReady();
     }
 
-    function drawCanvas() {
-        if ($('#map-canvas').length) {
-            console.info("map-canvas added to the dom");
-            $('#map-canvas').ready(gmap.initialize());
-        } else {
-            console.info("wait for map-canvas to be ready");
-            setTimeout(drawCanvas, 500);
-        }
-    }
 
 };
 
@@ -472,7 +421,7 @@ asBounds = function (bound) {
 };
 
 function asLatLng(lat, lng) {
-    console.log(lat,lng);
+    console.log(lat, lng);
     return new google.maps.LatLng(lat, lng);
 }
 
@@ -636,3 +585,130 @@ var MAP_STYLE = [
 var styleOptions = {
     name: "First Style"
 };
+
+
+function onDeviceReady() {
+    console.log("device is ready");
+    getPosition(mapDom);
+}
+
+function getPosition(funct) {
+    console.log("-->  get position");
+    var actionfunct;
+    if (funct !== undefined && typeof funct === 'function') {
+        actionfunct = funct;
+    } else {
+        actionfunct = function () {
+        };
+    }
+    //success callback for geolocation
+    function geo_success(position) {
+        Session.set('lat', position.coords.latitude);
+        Session.set('lng', position.coords.longitude);
+        Session.set('accuracy', position.coords.accuracy);
+        Session.set('speed', position.coords.speed);
+        Session.set('atTime', position.timestamp);
+        console.log("Got location  <--");
+        actionfunct();
+    }
+
+    //failure callback for geolocation
+    function geo_error(poserr) {
+        console.log(poserr);
+        if (poserr.code == 1) {
+            console.log(poserr.message + " - Please accept permission and try again");
+        } else if (poserr.code == 2) {
+            console.log(poserr.message + " - The acquisition of the geolocation failed because one or several internal source of position returned an internal error");
+        } else if (poserr.code == 3) {
+            console.log(poserr.message + " - The time allowed to aquire the geolocation was reached before the information was obtained");
+        }
+        else {
+            console.log("Position error");
+        }
+    }
+
+    //options for geolocation
+    var geo_options = {
+        enableHighAccuracy: true,
+        maximumAge: 2000,
+        timeout: 10 * 1000
+    };
+    // Now safe to use device APIs
+    wpid = navigator.geolocation.getCurrentPosition(geo_success, geo_error, geo_options);
+}
+
+//function to update map dom
+function mapDom() {
+    console.log("map Dom is getting fixed");
+    if (!Session.get('map')) {
+        drawCanvas();
+    } else if ($('#map-canvas').html() === "") {
+        updateLocation();
+    }
+}
+
+function drawCanvas() {
+    if ($('#map-canvas').length) {
+        console.info("map-canvas added to the dom");
+        $('#map-canvas').ready(gmap.initialize());
+    } else {
+        console.info("wait for map-canvas to be ready");
+        setTimeout(drawCanvas, 500);
+    }
+}
+
+
+//sample callback hell to get heading, location and then post it to mongo
+updateLocation = function () {
+    console.log("updating user location");
+    getPosition(beforePostLoc);
+    getHeading();
+
+};
+
+//calculate heading and save it to session variable
+function getHeading(funct) {
+    console.log("get Heading");
+    var actionfunct;
+    if (funct !== undefined && typeof funct === 'function') {
+        actionfunct = funct;
+    } else {
+        actionfunct = function () {
+        };
+    }
+    if (Meteor.isCordova) {
+        function onSuccess(heading) {
+            console.log('Heading: ' + heading.magneticHeading);
+            Session.set('heading', heading.magneticHeading);
+            actionfunct();
+        }
+
+        function onError(error) {
+            console.log('CompassError: ' + error.code);
+        }
+
+        navigator.compass.getCurrentHeading(onSuccess, onError);
+    } else {
+        console.log("Meteor is not cordova");
+        Session.set('heading', null);
+        actionfunct();
+    }
+}
+
+function beforePostLoc(){
+    var clat = Session.get('lat');
+    var clng = Session.get('lng');
+    var heading = Session.get('heading');
+    var chash = geohash.encode(clat, clng);
+    var post = {
+        gh: chash,
+        heading: heading || null
+    };
+    console.log("posting updates to mongo ");
+    Meteor.call('postLocation', post, function (error, result) {
+        // display the error to the user and abort
+        if (error)
+            return console.log("Cannot update user location to collection due to " + error.reason);
+
+    });
+}

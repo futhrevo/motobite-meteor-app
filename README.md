@@ -68,6 +68,8 @@ meteor add cordova:cordova-plugin-vibration@https://github.com/apache/cordova-pl
 
 meteor add cordova:cordova-plugin-statusbar@https://github.com/futhrevo/cordova-plugin-statusbar/tarball/ed1734e06a7724cc9a3912315cca04eedf494886
 
+meteor add cordova:cordova-plugin-device-orientation@https://github.com/apache/cordova-plugin-device-orientation/tarball/d0c83f2cde672a77567195437db02d113438f3a6
+
 ### Cordova plugins ###
 https://github.com/Initsogar/cordova-webintent
 
