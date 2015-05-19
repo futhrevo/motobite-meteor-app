@@ -59,6 +59,9 @@ Sandeep sandepkumr@gmail.com
 * Repo owner or admin
 * Other community or team contact
 
+### update Node ###
+http://theholmesoffice.com/node-js-fundamentals-how-to-upgrade-the-node-js-version/
+
 ### how to Install Cordova plugin? ###
 http://stackoverflow.com/questions/26624649/how-to-add-cordova-plug-that-havent-registration-on-plugins-cordova-io
 
@@ -66,7 +69,7 @@ meteor add cordova:com.plugin.datepicker@https://github.com/VitaliiBlagodir/cord
 
 meteor add cordova:cordova-plugin-vibration@https://github.com/apache/cordova-plugin-vibration/tarball/ef4af1e8a670456e54c1fcf4fc07f82dd84898f5
 
-meteor add cordova:cordova-plugin-statusbar@https://github.com/futhrevo/cordova-plugin-statusbar/tarball/ed1734e06a7724cc9a3912315cca04eedf494886
+meteor add cordova:cordova-plugin-statusbar@https://github.com/futhrevo/cordova-plugin-statusbar/tarball/2cbe12a535e6945978224e43ac6e8c2a416c7b69
 
 meteor add cordova:cordova-plugin-device-orientation@https://github.com/apache/cordova-plugin-device-orientation/tarball/d0c83f2cde672a77567195437db02d113438f3a6
 

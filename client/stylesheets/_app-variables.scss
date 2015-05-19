@@ -26,7 +26,7 @@ html, body {
 
 .sidePic {
   height: 25%;
-  background: green;
+  background: $status;
 }
 
 .sideEmail {
@@ -34,7 +34,7 @@ html, body {
   z-index: 12;
   bottom: 20px;
   text-align: center;
-  background-color: green;
+  background-color: $status;
   word-wrap: normal;
 }
 
@@ -65,6 +65,7 @@ html, body {
 
 .ion-fab {
   position: relative;
+  border-color: $positive !important;
   height: 60px;
   width: 60px;
   padding-top: 6px;

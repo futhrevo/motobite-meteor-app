@@ -13,4 +13,12 @@ App.info({
 App.accessRule('https://*.googleapis.com/*');
 App.accessRule('https://*.gstatic.com/*');
 
-App.setPreference("StatusBarBackgroundColor", "#002b36");
+App.setPreference("StatusBarBackgroundColor", "#00796B");
+
+//<platform name="ios">
+//    <preference name="StatusBarBackgroundColor" value="#002b36" />
+//    </platform>
+//
+//    <platform name="android">
+//    <preference name="StatusBarBackgroundColor" value="#005266" />
+//    </platform>
