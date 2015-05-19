@@ -12,7 +12,6 @@ jquery
 accounts-base
 manuel:reactivearray
 matb33:collection-hooks
-amr:parsley.js
 iron:router
 sacha:spin
 less

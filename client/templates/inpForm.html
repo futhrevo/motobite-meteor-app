@@ -1,59 +1,55 @@
 <template name="inpForm">
-	<div class ="inputFormOuter" style="display: none;" id="inputFormOuterId">
-		<div class="bar bar-header bar-positive">
-			<button class="button button-icon icon ion-android-close inputCloseBtn"></button>
-			<h1 class="title">{{modeSelect}}</h1>
-			<button class="button button-clear button-light" data-action="clearFields">Clear</button>
-		</div>
-	<div class ="inputForm content has-header" >
-		<div class="list">
-			<label class="item item-checkbox">
-				<label class="checkbox">
-				    <input type="checkbox" id="polycheckboxSrc">
-				</label>
-				Use my location as origin
-			</label>
-		    <label class="item item-input">
-		        <input type="text" placeholder="Enter your source location" id="polyMapSrcSearch">
-		    </label>
+    <div class="inputFormOuter" style="display: none;" id="inputFormOuterId">
+        <div class="bar bar-header bar-positive">
+            <button class="button button-icon icon ion-android-close inputCloseBtn"></button>
+            <h1 class="title">{{modeSelect}}</h1>
+            <button class="button button-clear button-light" data-action="clearFields">Clear</button>
+        </div>
+        <div class="inputForm content has-header">
+            <div class="list">
+                <label class="item item-checkbox">
+                    <label class="checkbox">
+                        <input type="checkbox" id="polycheckboxSrc">
+                    </label>
+                    Use my location as origin
+                </label>
+                <label class="item item-input">
+                    <input type="text" placeholder="Enter your source location" id="polyMapSrcSearch">
+                </label>
 
 
-		    <label class="item item-input">
-		        <input type="text" placeholder="Enter your destination location" id="polyMapDesSearch">
-		    </label>
+                <label class="item item-input">
+                    <input type="text" placeholder="Enter your destination location" id="polyMapDesSearch">
+                </label>
 
 
-			<label class="item item-input item-select">
-				<div class="input-label">
-				    On
-				</div>
-				<select id="polyDateSel">
-				    <option selected>Today</option>
-				    <option>Tomorrow</option>
-				</select>
-			</label>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        On
+                    </div>
+                    <select id="polyDateSel">
+                        <option selected>Today</option>
+                        <option>Tomorrow</option>
+                    </select>
+                </label>
 
-			<label class="item item-input">
-				<i class="icon ion-clock placeholder-icon"></i>
-				<div class="input-group clockpicker" data-placement="left" data-align="bottom" data-autoclose="true">
-					<input type="time" readonly class="form-control" placeholder="Now"  id="timeInput" data-parsley-tomoValidator data-parsley-validate-if-empty>
-				</div>
-			</label>
-		</div>
+                <label class="item item-input">
+                    <i class="icon ion-clock placeholder-icon"></i>
 
-		<div class="button-bar">
-		    <a class="button button-outline button-balanced" id="fabInpSubmit">Submit</a>
-		    <a class="button button-outline button-assertive" id="fabInpCancel">Cancel</a>
+                    <div class="input-group clockpicker" data-placement="left" data-align="bottom"
+                         data-autoclose="true">
+                        <input type="time" readonly class="form-control" placeholder="Now" id="timeInput">
+                    </div>
+                </label>
+            </div>
 
-		</div>
+            <div class="button-bar">
+                <a class="button button-outline button-balanced" id="fabInpSubmit">Submit</a>
+                <a class="button button-outline button-assertive" id="fabInpCancel">Cancel</a>
 
-		{{!-- <form id="form" class="form-horizontal" data-parsley-validate>
-			<fieldset>
-				<!-- TODO Validation states for showing correct/wrong input from http://getbootstrap.com/css/ -->
+            </div>
 
-			</fieldset>
-		</form> --}}
 
-	</div>
-</div>
+        </div>
+    </div>
 </template>

@@ -1,5 +1,5 @@
 (function () {
-    console.info("Immediate function fired up");
+    console.info("Immediate function fired up at "+ new Date().toTimeString());
     Session.set('map', false);
     Session.set('mode', null);
 
@@ -33,6 +33,9 @@
     Meteor.subscribe('theDrives');
     Meteor.subscribe('theLogs');
     Meteor.subscribe('theRiderReqs');
+
+    //initialize toastr
+    toasterInit();
     //TODO implement Routeboxer into functions http://google-maps-utility-library-v3.googlecode.com/svn/tags/routeboxer/1.0/docs/examples.html
     //TODO create packed client codes
     //Use NoScript, a limited user account and a virtual machine and be safe(r)!
@@ -71,3 +74,22 @@ function supports_html5_storage() {
     }
 }
 
+function toasterInit(){
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": false,
+        "positionClass": "toast-bottom-center",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "100",
+        "hideDuration": "1000",
+        "timeOut": "2500",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+}
