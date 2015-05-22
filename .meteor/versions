@@ -82,7 +82,8 @@ tracker@1.0.7
 ui@1.0.6
 underscore@1.0.3
 url@1.0.4
-useraccounts:core@1.9.1
-useraccounts:ionic@1.9.1
+useraccounts:core@1.10.0
+useraccounts:ionic@1.10.0
 webapp@1.2.0
 webapp-hashing@1.0.3
+zeroasterisk:cordova-geolocation-background@0.0.7

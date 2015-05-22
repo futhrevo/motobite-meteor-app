@@ -10,15 +10,9 @@ App.info({
 });
 
 //https://github.com/dburles/meteor-google-maps/issues/27
+App.accessRule('http://192.168.2.6:3000/*');
 App.accessRule('https://*.googleapis.com/*');
 App.accessRule('https://*.gstatic.com/*');
 
 App.setPreference("StatusBarBackgroundColor", "#00796B");
 
-//<platform name="ios">
-//    <preference name="StatusBarBackgroundColor" value="#002b36" />
-//    </platform>
-//
-//    <platform name="android">
-//    <preference name="StatusBarBackgroundColor" value="#005266" />
-//    </platform>

@@ -77,6 +77,8 @@ meteor add cordova:cordova-plugin-device-orientation@https://github.com/apache/c
 https://github.com/Initsogar/cordova-webintent
 
 #########trash can
+adb logcat | grep -E "cordova|LocationUpdateService" 
+
 publications in meteor
 http://matthewfieger.com/posts/me/2014/06/18/pseudo-collections-in-meteor.html
 http://stackoverflow.com/questions/28290523/where-does-meteor-subscribe-belong
