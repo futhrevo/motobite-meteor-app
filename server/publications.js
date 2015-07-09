@@ -23,6 +23,17 @@ Meteor.publish('theRiderReqs',function(){
 	var userid = this.userId;
 	return TransactColl.find({ $or: [ {requestee:userid },{requester:userid} ] });
 });
+Meteor.publish('thefences',function(){
+	var userid = this.userId;
+	return TransactColl.find({$and:[{ $or: [ {requestee:userid },{requester:userid} ] },{'request.starts':{$gt:1436079608}},{status:true}]});
+});
+
+Meteor.publish(null ,function(){
+	var userid = this.userId;
+	return Meteor.users.find (
+		{_id: this.userId},
+		{fields: { roles: 1}});
+});
 DriversAdvtColl.before.insert(function (userId, doc) {
 	doc.at = new Date();
 	doc.id = userId;

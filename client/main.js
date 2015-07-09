@@ -45,6 +45,19 @@
     polyArray = new ReactiveArray();
     markArray = new ReactiveArray();
 
+    Tracker.autorun(function(){
+        var user;
+        if (!(user = Meteor.user())) {
+            return;
+        }
+        if (!user.roles) {
+            return;
+        }
+        if (user.roles.indexOf('banned') >= 0) {
+            alert("you are banned! Contact adminstrator");
+            return Meteor.logout();
+        }
+    })
 }());
 
 function onDeviceReady() {

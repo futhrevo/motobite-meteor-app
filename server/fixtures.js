@@ -24,6 +24,13 @@ Meteor.startup(function () {
     var wrapLater = Later;
     // will fire every 5 minutes
     var textSched = wrapLater.parse.text('every 1 min');
+    var smtp = {
+        username: 'mailer.motobite@gmail.com',
+        password: 'R@kesh1989',
+        server:   'smtp.gmail.com',
+        port: 465
+    };
+    process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
 
     // execute logTime one time on the next occurrence of the text schedule
     var timer = wrapLater.setInterval(Meteor.bindEnvironment(logTime), textSched);
@@ -36,7 +43,12 @@ Meteor.startup(function () {
         DriversAdvtColl.remove({startTime: {$lt: epochTime}});
         DrivesAdvtColl.remove({startTime: {$lt: epochTime}});
     }
-
+    //Email.send({
+    //    from: "mailer.motobite@gmail.com",
+    //    to: "k.rakeshlal@gmail.com",
+    //    subject: "Meteor Can Send Emails via Gmail",
+    //    text: "Meteors sends emails via gmail."
+    //});
 });
 
 
@@ -281,7 +293,7 @@ Meteor.methods({
                 starts: obj.startTime,
                 overview: obj.overview
             },
-            status: null,
+            status: null
 
         };
         TransactColl.insert(post);

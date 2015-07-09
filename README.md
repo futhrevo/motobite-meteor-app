@@ -183,3 +183,9 @@ db.getCollection('drivers').find(
          }
      }
    )
+
+   db.getCollection('transActs').find({$and:[
+       { $or: [ {requestee:'vfPLxcoWiQyXMaZES' },{requester:'vfPLxcoWiQyXMaZES'} ] },
+       {'request.starts':{$gt:1436079608}},
+       {status:true}
+   ]})
