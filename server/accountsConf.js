@@ -27,7 +27,7 @@ Accounts.onCreateUser(function(options, user) {
 
 // Validate username, sending a specific error message on failure.
 Accounts.validateNewUser(function (user) {
-    if (user.username && user.username.length >= 3)
+    if (user.profile.name && user.profile.name.length >= 3)
         return true;
     throw new Meteor.Error(403, "Username must have at least 3 characters");
 });
@@ -35,26 +35,31 @@ Accounts.validateNewUser(function (user) {
 //TODO: Mechanism for users to report offensive usernames
 Accounts.validateNewUser(function (user) {
     var disallowed = ["root","admin","god","xxx","fuck","sex","slut","bitch"];
-    var name = user.username.toLowerCase();
-    return !(_contains(name,disallowed));
+    var name = user.profile.name.toLowerCase();
+    return !(_.contains(name,disallowed));
 });
 
 // Called whenever a login is attempted (either successful or unsuccessful)
 Accounts.validateLoginAttempt(function(attempt) {
-    var userEmail = attempt.methodArguments[0].user['email'].toLowerCase();
-    // check the reason for failure
-    if(attempt.allowed == false){
-        throw new Meteor.Error(403,"Can not find user " + userEmail);
-        return false;
-    }
-    // check if user is banned
-    if(attempt.user.roles){
-        if(attempt.user.roles.indexOf('banned') >= 0){
-            throw new Meteor.Error(403, "Login suspended, Please contact adminstrator");
+
+    if(attempt.type == 'password'){
+        var userEmail = attempt.methodArguments[0].user['email'].toLowerCase();
+        // check the reason for failure
+        if(attempt.allowed == false){
+            throw new Meteor.Error(403,"Check your email and password");
+            //throw new Meteor.Error(403,"Can not find user " + userEmail);
             return false;
         }
-    }
+        // check if user is banned
+        if(attempt.user.roles){
+            if(attempt.user.roles.indexOf('banned') >= 0){
+                throw new Meteor.Error(403, "Login suspended, Please contact adminstrator");
+                return false;
+            }
+        }
 
+
+    }
     return true;
 });
 

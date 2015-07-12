@@ -41,3 +41,10 @@ Template.profileTemplate.helpers({
             return Meteor.user().profile.mobile;
     }
 });
+
+Template.profileTemplate.events({
+    'click .password-change-class': function (event) {
+        event.stopPropagation();
+        console.log("User needs to change Password");
+    }
+});
