@@ -26,9 +26,9 @@ Meteor.startup(function () {
     var textSched = wrapLater.parse.text('every 1 min');
     var smtp = {
         username: 'mailer.motobite@gmail.com',
-        password: 'R@kesh1989',
-        server:   'smtp.gmail.com',
-        port: 465
+        password: 'I0Hd723TJFq7-u2wKBCyRA',
+        server:   'smtp.mandrillapp.com',
+        port: 587
     };
     process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
 
@@ -44,10 +44,10 @@ Meteor.startup(function () {
         DrivesAdvtColl.remove({startTime: {$lt: epochTime}});
     }
     //Email.send({
-    //    from: "mailer.motobite@gmail.com",
+    //    from: "admin@motobite.com",
     //    to: "k.rakeshlal@gmail.com",
-    //    subject: "Meteor Can Send Emails via Gmail",
-    //    text: "Meteors sends emails via gmail."
+    //    subject: "Meteor Can Send Emails via Mandrill without gmail",
+    //    text: "Meteors sends emails via Mandrill without gmail."
     //});
 });
 

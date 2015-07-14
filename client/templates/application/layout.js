@@ -33,22 +33,7 @@ Template.layout.events({
 });
 
 Template.layout.helpers({
-    userEmail : function(){
-        if(Meteor.user() === null)
-            return null;
-        else
-            return Meteor.user().emails[0].address;
-    },
-    profEmail : function(){
-      //TODO add interface to add profile pic property to each user
-        if(Meteor.user() === null)
-            return null;
-        else if(Meteor.user().profile.pic)
-            return Meteor.user().profile.pic;
-        else
-            return "scgPic.svg";
 
-    }
 });
 
 function menuOpenBody() {

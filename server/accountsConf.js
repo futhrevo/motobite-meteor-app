@@ -4,7 +4,7 @@ Accounts.config({
     sendVerificationEmail:true,
     restrictCreationByEmailDomain: function(email){
         var domain = email.slice(email.lastIndexOf("@")+1); // or regex
-        var allowed = ["gmail.com","tpolo.com"];
+        var allowed = ["gmail.com","motobite.com"];
         return _.contains(allowed, domain);
     },
     loginExpirationInDays:120
@@ -20,6 +20,15 @@ Accounts.onCreateUser(function(options, user) {
     user["roles"] = [];
     user["works"]["emails"] = [{address : options.profile.workEmail,verified:false}];
     delete options.profile.workEmail;
+    options.profile.status = 'I care for planet!';
+    options.profile.updatedAt = new Date();
+    options.profile.avatarUrl = '/no_avatar.png';
+    options.profile.notifications = true;
+    options.profile.language = 'en';
+    options.profile.friends = [];
+    options.profile.city = null;
+    options.profile.country = null;
+    options.profile.points = 0;
     user.profile = options.profile;
     console.log("placeholder for controlling accounts");
   return user;
@@ -43,13 +52,6 @@ Accounts.validateNewUser(function (user) {
 Accounts.validateLoginAttempt(function(attempt) {
 
     if(attempt.type == 'password'){
-        var userEmail = attempt.methodArguments[0].user['email'].toLowerCase();
-        // check the reason for failure
-        if(attempt.allowed == false){
-            throw new Meteor.Error(403,"Check your email and password");
-            //throw new Meteor.Error(403,"Can not find user " + userEmail);
-            return false;
-        }
         // check if user is banned
         if(attempt.user.roles){
             if(attempt.user.roles.indexOf('banned') >= 0){

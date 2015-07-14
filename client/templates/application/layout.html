@@ -1,5 +1,6 @@
 <template name="layout">
     {{#ionBody}}
+        {{#if currentUser}}
         {{> inpForm}}
         {{!-- {{> functionsDiv}} --}}
         {{#ionSideMenuContainer}}
@@ -9,11 +10,14 @@
                 {{#ionSideMenu}}
                 <div id="leftMenuId">
                     <div class="sidePic">
-                        <div class="row" style="height: 100%; width: 100%;">
-                            <img class="col" src="{{profEmail}}">
-                        </div>
-                        <div class="sideEmail row">
-                            <div class="col">{{userEmail}}</div>
+                        <div class="" style="text-align:center">
+                            <a class="popup-image">
+                                <img src="{{currentUser.profile.avatarUrl}}" width="128" height="128" class="rounded">
+                            </a>
+                            <br>
+                            <strong>
+                                {{currentUser.emails.[0].address}}
+                            </strong>
                         </div>
                     </div>
                     <div class="">
@@ -75,5 +79,8 @@
                 {{> deleteMarker}}
             {{/ionSideMenuContent}}
         {{/ionSideMenuContainer}}
+        {{else}}
+            {{> atForm}}
+        {{/if}}
     {{/ionBody}}
 </template>

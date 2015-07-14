@@ -25,7 +25,6 @@ html, body {
 }
 
 .sidePic {
-  height: 25%;
   background: $status;
 }
 
@@ -206,3 +205,20 @@ html, body {
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+.rounded {
+  border-radius: 50%;
+}
+
+.profileClass{
+  background-color: gainsboro;
+}
+
+.scheduletabsClass{
+  background-color: gainsboro;
+}
+
+.homeClass{
+  background-color: gainsboro;
+}
+

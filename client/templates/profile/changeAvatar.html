@@ -1,0 +1,30 @@
+<template name="changeAvatar">
+    {{#contentFor "headerButtonLeft"}}
+        {{>ionNavBackButton path="profileTemplate"}}
+    {{/contentFor}}
+
+    {{#contentFor 'headerTitle'}}
+        <h1 class="title">Change avatar</h1>
+    {{/contentFor}}
+    {{#ionView}}
+        {{#ionContent}}
+        <div class="list card">
+            {{#if isCordova}}
+                <div class="item item-button-right">
+                    Gallery
+                    <a data-action="browse-gallery" class="button button-icon icon ion-images"></a>
+                </div>
+            {{/if}}
+            <div class="item item-button-right">
+                Camera
+                <a data-action="take-photo" class="button button-icon icon ion-camera"></a>
+            </div>
+
+            <div class="item item-button-right">
+                Delete avatar
+                <a data-action="delete-avatar" class="button button-icon icon ion-trash-a"></a>
+            </div>
+        </div>
+        {{/ionContent}}
+    {{/ionView}}
+</template>
