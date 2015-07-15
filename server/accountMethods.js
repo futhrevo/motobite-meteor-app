@@ -39,5 +39,12 @@ Meteor.methods({
     setNotification: function(value) {
         check(value, Boolean);
         Meteor.users.update(this.userId, {$set: {'profile.notifications': value, 'profile.updatedAt': new Date()}});
-    }
+    },
+
+    //search users by email
+    searchUser: function(searchId) {
+        check(searchId, String);
+        searchId = searchId.toLowerCase();
+        return Meteor.users.findOne({"emails.address": searchId}, {fields: {profile: 1} });
+    },
 });

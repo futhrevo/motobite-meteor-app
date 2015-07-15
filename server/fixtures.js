@@ -19,6 +19,9 @@ Meteor.startup(function () {
         "locs": "2dsphere"
     });
 
+    //Messages.find({room: room, users: this.userId}, {sort: {time: -1}, limit: 1})
+    Messages._ensureIndex({"room": 1, "users": 1, "time": -1});
+
     //start process in later to handle old records deletions
     var Later = Meteor.npmRequire('later');
     var wrapLater = Later;
