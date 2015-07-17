@@ -29,6 +29,11 @@ Template.layout.events({
 
     "click .snap-drawer-left" : function(){
         menuClose();
+    },
+
+    "click .sidePic" : function(event){
+        event.preventDefault();
+        Router.go('/profile');
     }
 });
 

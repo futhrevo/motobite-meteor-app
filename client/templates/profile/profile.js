@@ -1,6 +1,7 @@
 
 Template.profileTemplate.rendered = function(){
     // IonSideMenu.snapper.close();
+    $('.popup-image').magnificPopup({type:'image'});
 };
 
 

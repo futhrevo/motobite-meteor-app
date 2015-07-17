@@ -11,7 +11,7 @@
                 <div id="leftMenuId">
                     <div class="sidePic">
                         <div class="" style="text-align:center">
-                            <a class="popup-image">
+                            <a href="{{pathFor 'profileTemplate'}}" class="side-popup-image">
                                 <img src="{{currentUser.profile.avatarUrl}}" width="128" height="128" class="rounded">
                             </a>
                             <br>
@@ -37,6 +37,11 @@
                                 Contacts
                                 <i class="icon ion-ios-arrow-thin-right"></i>
                             </a>
+                            <a class="drawer-left-menu-item item item-icon-left item-icon-right" href="{{pathFor 'recentChats'}}">
+                                <i class="icon ion-chatboxes"></i>
+                                Chats
+                                <i class="icon ion-ios-arrow-thin-right"></i>
+                            </a>
                             <a class="drawer-left-menu-item item item-icon-left item-icon-right" href="{{pathFor route='inflate.drivers'}}">
                                 <i class="icon ion-calendar"></i>
                                 Schedule
@@ -45,11 +50,6 @@
                             <a class="drawer-left-menu-item item item-icon-left item-icon-right" href="{{pathFor 'about'}}">
                                 <i class="icon ion-heart"></i>
                                 About
-                                <i class="icon ion-ios-arrow-thin-right"></i>
-                            </a>
-                            <a class="drawer-left-menu-item item item-icon-left item-icon-right" data-action="sign-out">
-                                <i class="icon ion-log-out"></i>
-                                Sign Out
                                 <i class="icon ion-ios-arrow-thin-right"></i>
                             </a>
                         </div>
