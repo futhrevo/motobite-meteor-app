@@ -13,7 +13,9 @@
     {{#contentFor "headerTitle"}}
         <h1 class="title">Team Polo
             {{#if countNotifications}}
-            <span class="badge badge-assertive badgeNotif" data-val= {{countNotifications}}>{{countNotifications}}</span>
+                <a href="{{pathFor route='inflateReq'}}">
+                    <span class="badge badge-assertive badgeNotif" data-val= {{countNotifications}}>{{countNotifications}}</span>
+                </a>
             {{/if}}
         </h1>
 
@@ -21,9 +23,13 @@
 
     {{#contentFor "headerButtonRight"}}
     <div class="buttons">
-        <button class="button button-clear" style="margin-right: 10px;" data-action="centerBounds">
-            <i class="icon ion-android-locate"></i>
-        </button>
+    {{#if newMessage}}
+        <a href="{{pathFor 'recentChats'}}">
+            <button class="button button-clear" >
+                {{> ionIcon icon='chatbubble-working'}}
+            </button>
+        </a>
+    {{/if}}
         <button class="button button-clear" data-ion-popover="_myPopover">
             {{#if isAndroid}}
                 {{> ionIcon icon='android-more-vertical'}}
@@ -37,6 +43,9 @@
     {{#ionView}}
         {{#ionContent class="homeClass" }}
             <div class="mapState">
+                    <button class="locate-button" style="display:block;" data-action="centerBounds">
+                        <i class="ion-android-locate"></i>
+                    </button>
                 {{> dispMap}}
             </div>
         {{/ionContent}}

@@ -152,11 +152,11 @@ function popupApplyScreen(obj){
 function submitDrive(){
 	var search = getSearchBoxdata();
 
-	console.info('user selected a ride from '+search[0]+' to '+search[1]);
-	var distance = gmap.haversine(search[0],search[1],"km","geo");
+	console.info('user selected a ride from '+search.fromCoord+' to '+search.toCoord);
+	var distance = gmap.haversine(search.fromCoord,search.toCoord,"km","geo");
 	var duration = 15 + (distance * 6);
-	search.push(duration);
-	var validTime = validateTime(search[2], duration);
+	search.duration = duration;
+	var validTime = validateTime(search.time, duration);
 	console.log(validTime);
 	if(validTime[0]){
 		Meteor.call('postDriveAdvt',search,function(error,result){
@@ -213,5 +213,16 @@ getSearchBoxdata = function (){
 	var initialBearing = bearingInitial(fromCoord[1],fromCoord[0],toCoord[1],toCoord[0]);
 	var finalBearing = bearingFinal(fromCoord[1],fromCoord[0],toCoord[1],toCoord[0]);
 
-	return [fromCoord,toCoord,inputTime.getTime() / 1000,$('#polyMapSrcSearch').val().split(", "),$('#polyMapDesSearch').val().split(", "),fromHashObj,toHashObj,initialBearing,finalBearing];
-}
+	//return [fromCoord,toCoord,inputTime.getTime() / 1000,$('#polyMapSrcSearch').val().split(", "),$('#polyMapDesSearch').val().split(", "),fromHashObj,toHashObj,initialBearing,finalBearing];
+	return {
+		fromCoord:fromCoord,
+		toCoord : toCoord,
+		time: inputTime.getTime() / 1000,
+		src : $('#polyMapSrcSearch').val().split(", "),
+		dst : $('#polyMapDesSearch').val().split(", "),
+		fromHashObj : fromHashObj,
+		toHashObj : toHashObj,
+		initialBearing : initialBearing,
+		finalBearing : finalBearing
+	}
+};

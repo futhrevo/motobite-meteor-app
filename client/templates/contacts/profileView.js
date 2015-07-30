@@ -41,6 +41,18 @@ Template.profileView.helpers({
         } else {
             return false;
         }
+    },
+
+    'isPending' : function(friendId){
+        var user = _.find(Meteor.user().profile.friends, function(u) {
+            return u._id === friendId;
+        });
+
+        if (user) {
+            return user.state === 'pending';
+        } else {
+            return false;
+        }
     }
 });
 

@@ -1,9 +1,5 @@
 Template.layout.created = function(){
 
-    // $('body').attr('fullbleed', '');
-    // $('body').attr('vertical', '');
-    // $('body').attr('layout', '');
-
 };
 Template.layout.rendered = function(){
     IonSideMenu.snapper.disable();
@@ -38,7 +34,9 @@ Template.layout.events({
 });
 
 Template.layout.helpers({
-
+    countNotifications: function () {
+        return TransactColl.find({$and: [{requestee: Meteor.userId()}, {status: null}]}).count();
+    },
 });
 
 function menuOpenBody() {

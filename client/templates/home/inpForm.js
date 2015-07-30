@@ -5,11 +5,19 @@ $(document).on({
 }, '.pac-container');
 
 Template.inpForm.onRendered(function () {
-
+    gmap.regDivs();
+    console.log("inpform rendered");
     //http://weareoutman.github.io/clockpicker/
     $('.clockpicker').clockpicker({
         'default': 'now'
     });
+});
+Template.inpForm.onDestroyed(function () {
+    console.log("inpform destroyed");
+    //remove leftover clockpickers
+    $('.pickerPopover').remove();
+    //remove leftover pac containers
+    $('.pac-container').remove();
 });
 
 Template.inpForm.helpers({
@@ -90,7 +98,7 @@ Template.inpForm.events({
             return false;
         }
         //check value of destination
-        if(gmap.searchBoxDest.getPlaces() === undefined){
+        if(gmap.searchBoxDest.getPlaces() === undefined && template.find('#polyMapDesSearch').value === ""){
             toastr.warning("destination location is not understood");
             return false;
         }
@@ -106,23 +114,21 @@ Template.inpForm.events({
         var search = getSearchBoxdata();
         //close for once submitted
 
-        var distance = gmap.haversine(search[0], search[1], "km", "geo");
+        var distance = gmap.haversine(search.fromCoord, search.toCoord, "km", "geo");
         console.log(distance);
         if (distance < 0.1) {
             // Display an error toast, with a title
             toastr.error("Please select a farther destination", "Input Error");
         }
         var duration = 15 + (distance * 6);
-        var validTime = validateTime(search[2], duration);
+        var validTime = validateTime(search.time, duration);
         if (validTime[0]) {
             $('#inputFormOuterId').hide(200);
             var post = getSearchBoxdata();
             if (selectedOption == 'rider') {
                 Session.set('mode', 'rider');
                 if (!$('#directions-panel').length) {
-                    //$('#map-canvas').addClass('col-sm-9 col-md-9 col-lg-9').removeClass('col-sm-12 col-md-12 col-lg-12');
-                    //$(".mapd").append('<div class="col-xs-12 col-sm-3 col-md-3" id="directions-panel"></div>');
-                    $("#outputDirectionDiv").show(50);
+                     $("#outputDirectionDiv").show(50);
                 }
                 // gmap.calcRoute(placesSrc[0].geometry.location,placesDest[0].geometry.location);
                 gmap.calcRoute();
@@ -133,7 +139,7 @@ Template.inpForm.events({
 
                         console.log(data);
                         _.each(data, function (mark) {
-                            gmap.markDraw(mark, post);
+                            gmap.markDraw(mark);
                         });
                     }
                 });

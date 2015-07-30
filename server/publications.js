@@ -1,34 +1,61 @@
 //Publications from the server after removal of autopublish
 
 Meteor.publish('theMarkers',function(){
+    if(! this.userId){
+        return;
+    }
+    check(this.userId, String);
     var userid = this.userId;
     return MarkerColl.find({_id:userid});
 });
 
 Meteor.publish('theDrivers',function(){
+    if(! this.userId){
+        return;
+    }
+    check(this.userId, String);
     var userid = this.userId;
     return DriversAdvtColl.find({id:userid});
 });
 
 Meteor.publish('theDrives',function(){
+    if(! this.userId){
+        return;
+    }
+    check(this.userId, String);
     var userid = this.userId;
     return DrivesAdvtColl.find({id:userid});
 });
 
 Meteor.publish('theLogs',function(){
+    if(! this.userId){
+        return;
+    }
+    check(this.userId, String);
     return ULogsColl.find();
 });
 
 Meteor.publish('theRiderReqs',function(){
+    if(! this.userId){
+        return;
+    }
+    check(this.userId, String);
     var userid = this.userId;
-    return TransactColl.find({ $or: [ {requestee:userid },{requester:userid} ] });
+    return TransactColl.find({ $or: [ {requestee:userid },{requester:userid} ] },{sort: {'request.at': -1}});
 });
 Meteor.publish('thefences',function(){
+    if(! this.userId){
+        return;
+    }
+    check(this.userId, String);
     var userid = this.userId;
     return TransactColl.find({$and:[{ $or: [ {requestee:userid },{requester:userid} ] },{'request.starts':{$gt:1436079608}},{status:true}]});
 });
 
 Meteor.publish(null ,function(){
+    if(! this.userId){
+        return;
+    }
     var userid = this.userId;
     return Meteor.users.find (
         {_id: this.userId},
@@ -36,6 +63,22 @@ Meteor.publish(null ,function(){
 });
 
 Meteor.publish('friends', function(userIds) {
+    if(! this.userId){
+        return;
+    }
+    check(this.userId, String);
+    check(userIds, Array);
+    return Meteor.users.find(
+        {_id: {$in: userIds}},
+        {fields: {_id: 1, 'profile.name': 1, 'profile.status': 1,
+            'profile.updatedAt': 1, 'profile.avatarUrl': 1}});
+});
+
+Meteor.publish('acquaintance',function(userIds){
+    if(! this.userId){
+        return;
+    }
+    check(this.userId, String);
     check(userIds, Array);
     return Meteor.users.find(
         {_id: {$in: userIds}},
@@ -44,7 +87,10 @@ Meteor.publish('friends', function(userIds) {
 });
 
 Meteor.publish('recentChats', function(friendId) {
-
+    if(! this.userId){
+        return;
+    }
+    check(this.userId, String);
     check(friendId, String);
     var room = createRoom(this.userId, friendId);
 
@@ -52,6 +98,10 @@ Meteor.publish('recentChats', function(friendId) {
 });
 
 Meteor.publish('profile', function(id) {
+    if(! this.userId){
+        return;
+    }
+    check(this.userId, String);
     check(id, String);
     return Meteor.users.find(
         {_id: id},
@@ -60,6 +110,10 @@ Meteor.publish('profile', function(id) {
 });
 
 Meteor.publish('chat', function(friendId, limit) {
+    if(! this.userId){
+        return;
+    }
+    check(this.userId, String);
     check(friendId, String);
     check(limit, Number);
     var room = createRoom(this.userId, friendId);

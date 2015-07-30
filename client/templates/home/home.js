@@ -2,6 +2,9 @@ Template.home.helpers({
     countNotifications: function () {
         return TransactColl.find({$and: [{requestee: Meteor.userId()}, {status: null}]}).count();
     },
+    newMessage: function () {
+        return Messages.find({to: Meteor.userId(), state: 'new-msg'}).count();
+    }
 });
 
 Template.home.rendered = function () {
@@ -11,7 +14,7 @@ Template.home.rendered = function () {
             // Display a success toast, with a title
             toastr.success("hooh no pending requests", "Hurray !");
         } else {
-            IonSideMenu.snapper.expand('right');
+            //IonSideMenu.snapper.open('right');
         }
     });
 };

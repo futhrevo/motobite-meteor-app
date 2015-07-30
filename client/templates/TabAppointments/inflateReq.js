@@ -1,10 +1,10 @@
-Template.inflateReq.helpers({
+Template.listReq.helpers({
     req:function(){
         return TransactColl.find({ $and: [ {requestee:Meteor.userId() },{status:null} ] });
     },
 });
 
-Template.inflateReq.events({
+Template.listReq.events({
     'click .btnReject':function(event){
         event.preventDefault();
         if(confirm("Are you sure?")){

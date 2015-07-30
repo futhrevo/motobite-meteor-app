@@ -12,20 +12,20 @@ Meteor.startup(function () {
     // to enable indexing based on 2d sphere for DrivesAdvtColl
     DrivesAdvtColl._ensureIndex({
         "nodes.locs": "2dsphere"
-    });
+    },{ background: true });
 
 
     DriversAdvtColl._ensureIndex({
         "locs": "2dsphere"
-    });
+    },{ background: true });
 
     //Messages.find({room: room, users: this.userId}, {sort: {time: -1}, limit: 1})
     Messages._ensureIndex({"room": 1, "users": 1, "time": -1});
-
+    TransactColl._ensureIndex({requestee:1,requester:1,'advtRequest':1});
     //start process in later to handle old records deletions
     var Later = Meteor.npmRequire('later');
     var wrapLater = Later;
-    // will fire every 5 minutes
+    // will fire every 1 minutes
     var textSched = wrapLater.parse.text('every 1 min');
     var smtp = {
         username: 'mailer.motobite@gmail.com',
@@ -88,14 +88,29 @@ Meteor.methods({
     },
 
     rideQueryBeta: function (post) {
+        if(! this.userId){
+            return;
+        }
+        check(this.userId, String);
+        check(post,{
+            fromCoord : [Number] ,
+            toCoord : [Number],
+            time : Number,
+            src : [String],
+            dst : [String],
+            fromHashObj : Object,
+            toHashObj : Object,
+            initialBearing : Number,
+            finalBearing : Number
+        });
         var docs = DriversAdvtColl.find(
             {
                 $and: [
                     {
                         locs: {
                             $near: {
-                                $geometry: {type: "Point", coordinates: post[0]},
-                                $geometry: {type: "Point", coordinates: post[1]},
+                                $geometry: {type: "Point", coordinates: post.fromCoord},
+                                $geometry: {type: "Point", coordinates: post.toCoord},
                                 $maxDistance: 250
                             }
                         }
@@ -113,6 +128,21 @@ Meteor.methods({
 
     //Query for drivers for a rider
     rideQuery: function (post) {
+        if(! this.userId){
+            return;
+        }
+        check(this.userId, String);
+        check(post,{
+            fromCoord : [Number] ,
+            toCoord : [Number],
+            time : Number,
+            src : [String],
+            dst : [String],
+            fromHashObj : Object,
+            toHashObj : Object,
+            initialBearing : Number,
+            finalBearing : Number
+        });
         //TODO use $and to query from and to which is not working in current mongodb < 2.55
         //TODO mongo aggregation http://joshowens.me/using-mongodb-aggregations-to-power-a-meteor-js-publication/
         //TODO if DriversAdvtColl is empty, bypass the procedure to escape server error
@@ -125,7 +155,7 @@ Meteor.methods({
             "$geoNear": {
                 near: {
                     type: "Point",
-                    coordinates: post[0]
+                    coordinates: post.fromCoord
                 },
                 distanceField: "srcDist",
                 maxDistance: 250,
@@ -155,7 +185,7 @@ Meteor.methods({
             "$geoNear": {
                 near: {
                     type: "Point",
-                    coordinates: post[1]
+                    coordinates: post.toCoord
                 },
                 distanceField: "dstDist",
                 maxDistance: 250,
@@ -163,18 +193,18 @@ Meteor.methods({
                 query: {_id: {$in: ids}}
             }
         }]).map(function (u) {
-            var srcIndex = u.gh6.indexOf(post[5].c);
-            var dstIndex = u.gh6.indexOf(post[6].c);
+            var srcIndex = u.gh6.indexOf(post.fromHashObj.c);
+            var dstIndex = u.gh6.indexOf(post.toHashObj.c);
 
             var i = 1;
             while (srcIndex == -1 && i < 9) {
-                srcIndex = u.gh6.indexOf(post[5][dKeys[i]]);
+                srcIndex = u.gh6.indexOf(post.fromHashObj.dKeys[i]);
                 console.log(i);
                 i++;
             }
             i = 1;
             while (dstIndex == -1 && i < 9) {
-                dstIndex = u.gh6.indexOf(post[6][dKeys[i]]);
+                dstIndex = u.gh6.indexOf(post.toHashObj.dKeys[i]);
                 console.log(i);
                 i++;
             }
@@ -237,6 +267,22 @@ Meteor.methods({
 
     //Query for riders for a ride
     riderQuery: function (post) {
+        if(! this.userId){
+            return;
+        }
+        check(this.userId, String);
+        check(post,{
+            fromCoord : [Number] ,
+            toCoord : [Number],
+            time : Number,
+            src : [String],
+            dst : [String],
+            fromHashObj : Object,
+            toHashObj : Object,
+            initialBearing : Number,
+            finalBearing : Number
+        });
+        console.log(post);
         console.log("Querying markers for " + this.userId);
         var drivepool = DrivesAdvtColl.find({"nodes.locs": {$geoWithin: {$box: [[77.676245, 12.926030], [100, 100]]}}});
         return drivepool.fetch();
@@ -244,32 +290,44 @@ Meteor.methods({
 
     //Entry for drive advertisement
     postDriveAdvt: function (postAttributes) {
+        if(! this.userId){
+            return;
+        }
         check(this.userId, String);
-        //TODO find a better way to check for array of numbers
-        check(postAttributes, [Match.Any]);
-        // console.log(postAttributes[2]);
+        check(post,{
+            fromCoord : [Number] ,
+            toCoord : [Number],
+            time : Number,
+            src : [String],
+            dst : [String],
+            fromHashObj : Object,
+            toHashObj : Object,
+            initialBearing : Number,
+            finalBearing : Number,
+            duration : Number
+        });
         var userid = this.userId;
         var post = {
             id: userid,
             at: new Date(),
             mapid: null,
-            duration: postAttributes[postAttributes.length - 1],
-            origin: postAttributes[3],
-            destination: postAttributes[4],
-            startTime: postAttributes[2],
-            bearingInitial: postAttributes[7],
-            bearingFinal: postAttributes[8],
+            duration: postAttributes.duration,
+            origin: postAttributes.src,
+            destination: postAttributes.dst,
+            startTime: postAttributes.time,
+            bearingInitial: postAttributes.finalBearing,
+            bearingFinal: postAttributes.initialBearing,
             nodes: [{
                 addr: "from",
                 locs: {
                     type: "Point",
-                    coordinates: postAttributes[0]
+                    coordinates: postAttributes.fromCoord
                 }
             }, {
                 addr: "to",
                 locs: {
                     type: "Point",
-                    coordinates: postAttributes[1]
+                    coordinates: postAttributes.toCoord
                 }
             }]
         };
@@ -281,7 +339,13 @@ Meteor.methods({
     //function to let communication between clients to ask for ride
     AskRider: function (obj) {
         check(this.userId, String);
-        check(obj._id, String);
+        check(obj, {
+            _id: String,
+            srcloc : [Number],
+            dstloc : [Number],
+            startTime : Number,
+            overview : String
+        });
         var requestee = DriversAdvtColl.findOne({_id: obj._id}, {id: 1});
         var requester = this.userId;
         console.log("rider " + requestee.id + " is being requested by " + requester);

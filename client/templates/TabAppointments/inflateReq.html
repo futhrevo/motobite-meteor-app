@@ -1,0 +1,33 @@
+<template name="inflateReq">
+    {{#contentFor "headerButtonLeft"}}
+        {{>ionNavBackButton path="index"}}
+    {{/contentFor}}
+    {{#contentFor "headerTitle"}}
+        <h1 class="title">Requests</h1>
+    {{/contentFor}}
+
+
+    {{#ionView}}
+        {{#ionContent class="scheduletabsClass"}}
+            {{> listReq}}
+        {{/ionContent}}
+    {{/ionView}}
+    {{> _tabs}}
+</template>
+
+<template name="listReq">
+    {{#ionList}}
+        {{#each req}}
+
+            <a class="item btnInfo list-group-item item-icon-right" >
+                <h2 _id={{this._id}}>{{this.requestee}} &nbsp; requesting for &nbsp; {{this.advtRequest}} </h2>
+                <p>
+                    Show some details
+                </p>
+                <i class="icon ion-ios-arrow-right"></i>
+            </a>
+
+
+        {{/each}}
+    {{/ionList}}
+</template>

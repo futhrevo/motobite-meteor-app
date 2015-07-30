@@ -1,0 +1,27 @@
+<template name="inflateDrivers">
+    {{#contentFor "headerButtonLeft"}}
+        {{>ionNavBackButton path="index"}}
+    {{/contentFor}}
+    {{#contentFor "headerTitle"}}
+        <h1 class="title">Drivers Scheduled</h1>
+    {{/contentFor}}
+
+    {{#ionView}}
+        {{#ionContent class="scheduletabsClass"}}
+            {{#ionList}}
+                {{#each driver}}
+                    {{#ionItem buttonRight=true }}
+                        <a class="btnInfo">
+                            <h2>{{tripOrigin}}  &nbsp; to &nbsp; {{tripDest}} </h2>
+                            <p>
+                                {{start}}
+                            </p>
+                        </a>
+                        <button class="button icon ion-trash-a button-assertive button-clear btnDel" ></button>
+                    {{/ionItem}}
+                {{/each}}
+            {{/ionList}}
+        {{/ionContent}}
+    {{/ionView}}
+    {{> _tabs}}
+</template>

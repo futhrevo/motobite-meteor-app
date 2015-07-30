@@ -28,11 +28,7 @@
 
 
     //Subscriptions goes here
-    Meteor.subscribe('theMarkers');
-    Meteor.subscribe('theDrivers');
-    Meteor.subscribe('theDrives');
-    Meteor.subscribe('theLogs');
-    Meteor.subscribe('theRiderReqs');
+    // ?? subscriptions moved to iron router
 
     //initialize toastr
     toasterInit();
@@ -70,7 +66,6 @@ function onDeviceReady() {
             history.go(-1);
         }
     });
-    BGLocationInit();
     console.log("Cordova is running");
 
 };
@@ -106,23 +101,4 @@ function toasterInit(){
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-}
-
-function BGLocationInit(){
-    GeolocationBG.config({
-        url: 'http://192.168.2.6:3000/api/geolocation',
-        debug: false, //or true if you want to see logs
-        // Android ONLY, customize the title of the notification
-        notificationTitle: 'MotoBite Background Task',
-        // Android ONLY, customize the text of the notification
-        notificationText: 'RUNNING',
-        params: {
-            // will be sent in with 'location' in POST data (root level params)
-            // these will be added automatically in setup()
-            userId: GeolocationBG.userId(),
-            uuid:   GeolocationBG.uuid(),
-            device: GeolocationBG.device()
-        },
-        activityType: 'AutomotiveNavigation'
-    });
 }

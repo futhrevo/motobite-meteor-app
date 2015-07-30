@@ -7,50 +7,48 @@
 
             {{#ionSideMenus}}
 
-                {{#ionSideMenu}}
+                {{#ionSideMenu class="menu"}}
                 <div id="leftMenuId">
-                    <div class="sidePic">
-                        <div class="" style="text-align:center">
-                            <a href="{{pathFor 'profileTemplate'}}" class="side-popup-image">
-                                <img src="{{currentUser.profile.avatarUrl}}" width="128" height="128" class="rounded">
-                            </a>
-                            <br>
+                    <div class="expanded bar bar-header sidePic" href="{{pathFor 'profileTemplate'}}" >
+                                <img src="{{currentUser.profile.avatarUrl}}" class="avatar motion spin fade rounded">
+
+                        <div class="menu-bottom">
                             <strong>
                                 {{currentUser.emails.[0].address}}
                             </strong>
                         </div>
+
                     </div>
-                    <div class="">
+                    <div class="has-expanded-header scroll-content ionic-scroll  has-header">
                         <div class="list">
-                            <a class="drawer-left-menu-item item item-icon-left item-icon-right" href="/">
+                            <a class="drawer-left-menu-item item item-icon-left " href="/">
                                 <i class="icon ion-map"></i>
                                 Home
-                                <i class="icon ion-ios-arrow-thin-right"></i>
                             </a>
-                            <a class="drawer-left-menu-item item item-icon-left item-icon-right" href="{{pathFor 'profileTemplate'}}">
+                            <a class="drawer-left-menu-item item item-icon-left item-icon-right" href="{{pathFor route='inflateReq'}}">
+                                <i class="icon ion-calendar"></i>
+                                Appointments
+                                {{#if countNotifications}}
+                                    <i class="icon ion-android-notifications"></i>
+                                {{else}}
+                                    <i class="icon ion-android-notifications-none"></i>
+                                {{/if}}
+                            </a>
+                            <a class="drawer-left-menu-item item item-icon-left " href="{{pathFor 'profileTemplate'}}">
                                 <i class="icon ion-person"></i>
                                 My Profile
-                                <i class="icon ion-ios-arrow-thin-right"></i>
                             </a>
-                            <a class="drawer-left-menu-item item item-icon-left item-icon-right" href="{{pathFor 'myContacts'}}">
+                            <a class="drawer-left-menu-item item item-icon-left " href="{{pathFor 'myContacts'}}">
                                 <i class="icon ion-person-stalker"></i>
                                 Contacts
-                                <i class="icon ion-ios-arrow-thin-right"></i>
                             </a>
-                            <a class="drawer-left-menu-item item item-icon-left item-icon-right" href="{{pathFor 'recentChats'}}">
+                            <a class="drawer-left-menu-item item item-icon-left " href="{{pathFor 'recentChats'}}">
                                 <i class="icon ion-chatboxes"></i>
                                 Chats
-                                <i class="icon ion-ios-arrow-thin-right"></i>
                             </a>
-                            <a class="drawer-left-menu-item item item-icon-left item-icon-right" href="{{pathFor route='inflate.drivers'}}">
-                                <i class="icon ion-calendar"></i>
-                                Schedule
-                                <i class="icon ion-ios-arrow-thin-right"></i>
-                            </a>
-                            <a class="drawer-left-menu-item item item-icon-left item-icon-right" href="{{pathFor 'about'}}">
+                            <a class="drawer-left-menu-item item item-icon-left " href="{{pathFor 'about'}}">
                                 <i class="icon ion-heart"></i>
                                 About
-                                <i class="icon ion-ios-arrow-thin-right"></i>
                             </a>
                         </div>
                     </div>
@@ -61,12 +59,16 @@
                 <div id="rightMenuId">
                     <div class="row">
                         <button class="button button-clear col col-10" data-ion-menu-close>
-                            <i class="icon ion-android-arrow-back"></i>
+                            {{#if isAndroid}}
+                                {{> ionIcon icon='android-arrow-back'}}
+                            {{else}}
+                                {{> ionIcon icon='ios-arrow-back'}}
+                            {{/if}}
                         </button>
                         <h4 class="title col">Requests</h4>
                     </div>
                     <div class="content ">
-                        {{> inflateReq}}
+                        {{> listReq}}
                     </div>
                     <div class="bar bar-footer bar-balanced">
                         <div class="title">Footer</div>
