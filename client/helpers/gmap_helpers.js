@@ -21,9 +21,13 @@ gmap = {
     regDivs: function () {
         //remove leftover pac containers
         $('.pac-container').remove();
-        var searchBounds = new google.maps.LatLngBounds(asLatLng(5.5, 66.5), asLatLng(37, 97));
-        this.searchBoxSrc = new google.maps.places.SearchBox(document.getElementById("polyMapSrcSearch"), {bounds: searchBounds});
-        this.searchBoxDest = new google.maps.places.SearchBox(document.getElementById("polyMapDesSearch"), {bounds: searchBounds});
+        var searchBounds = new google.maps.LatLngBounds(asLatLng(12.6, 77.7), asLatLng(13.25, 78.02));
+        var autoCompleteOptions = {
+            bounds: searchBounds,
+            componentRestrictions: {country: 'in'}
+        };
+        this.searchBoxSrc = new google.maps.places.Autocomplete(document.getElementById("polyMapSrcSearch"),autoCompleteOptions);
+        this.searchBoxDest = new google.maps.places.Autocomplete(document.getElementById("polyMapDesSearch"), autoCompleteOptions);
     },
     //add a marker from the given marker object
     addMarker: function (marker, type, objType) {
@@ -430,6 +434,7 @@ Template.dispMap.rendered = function () {
 
     if (Meteor.isCordova) {
         console.log("Meteor is running as cordova");
+        console.log("TODO : checkGPS only works on Android, need to figure for iOS");
         CheckGPS.check(function () {
                 //GPS is enabled!
                 console.log("GPS enabled");
@@ -771,3 +776,15 @@ var MAP_STYLE = [
 var styleOptions = {
     name: "First Style"
 };
+// Add Gurgaon, Mysore, Noida
+var cities = [{"city":"Bangalore","center":{"lat":12.971599,"lng":77.594563},"bounds":{"sw":{"lat":12.69,"lng":77.18},"ne":{"lat":13.26,"lng":77.97}}},
+    {"city":"hyderabad","center":{"lat":17.385044,"lng":78.486671},"bounds":{"sw":{"lat":17.16,"lng":78.04},"ne":{"lat":17.71,"lng":78.9}}},
+    {"city":"Chennai","center":{"lat":13.08268,"lng":80.270718},"bounds":{"sw":{"lat":12.9,"lng":80.01},"ne":{"lat":13.2,"lng":80.4}}},
+    {"city":"Delhi","center":{"lat":28.613939,"lng":77.209021},"bounds":{"sw":{"lat":28.07,"lng":76.44},"ne":{"lat":29.15,"lng":77.97}}},
+    {"city":"Mumbai","center":{"lat":19.075984,"lng":72.877656},"bounds":{"sw":{"lat":18.8,"lng":72.59},"ne":{"lat":19.02,"lng":73.36}}},
+    {"city":"Pune","center":{"lat":18.52043,"lng":73.856744},"bounds":{"sw":{"lat":18.4,"lng":73.67},"ne":{"lat":18.69,"lng":74.05}}},
+    {"city":"Thiruvananthapuram","center":{"lat":8.524139,"lng":76.936638},"bounds":{"sw":{"lat":8.39,"lng":76.75},"ne":{"lat":8.69,"lng":77.13}}},
+    {"city":"APCR","center":{"lat":16.572983,"lng":80.357513},"bounds":{"sw":{"lat":16.4,"lng":80.78},"ne":{"lat":16.77,"lng":80.8}}},
+    {"city":"Bhubaneshwar","center":{"lat":20.296059,"lng":85.82454},"bounds":{"sw":{"lat":20.2,"lng":86.07},"ne":{"lat":20.58,"lng":86.2}}},
+    {"city":"Kolkata","center":{"lat":22.572646,"lng":88.363895},"bounds":{"sw":{"lat":22.24,"lng":87.94},"ne":{"lat":22.8,"lng":88.7}}},
+    {"city":"Ahmedabad","center":{"lat":23.022505,"lng":72.571362},"bounds":{"sw":{"lat":22.75,"lng":72.18},"ne":{"lat":23.3,"lng":72.95}}}]

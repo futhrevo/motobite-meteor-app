@@ -282,7 +282,7 @@ Meteor.methods({
             initialBearing : Number,
             finalBearing : Number
         });
-        console.log(post);
+        console.log("TODO riderquery buildup");
         console.log("Querying markers for " + this.userId);
         var drivepool = DrivesAdvtColl.find({"nodes.locs": {$geoWithin: {$box: [[77.676245, 12.926030], [100, 100]]}}});
         return drivepool.fetch();
@@ -294,7 +294,7 @@ Meteor.methods({
             return;
         }
         check(this.userId, String);
-        check(post,{
+        check(postAttributes,{
             fromCoord : [Number] ,
             toCoord : [Number],
             time : Number,

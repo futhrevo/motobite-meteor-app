@@ -93,12 +93,12 @@ Template.inpForm.events({
         localStorage.checked = selectedOption;
 
         //check value of src input
-        if(gmap.searchBoxSrc.getPlaces() === undefined && template.find('#polycheckboxSrc').checked === false){
+        if(gmap.searchBoxSrc.getPlace() === undefined && template.find('#polycheckboxSrc').checked === false){
             toastr.warning("source location is not understood");
             return false;
         }
         //check value of destination
-        if(gmap.searchBoxDest.getPlaces() === undefined && template.find('#polyMapDesSearch').value === ""){
+        if(gmap.searchBoxDest.getPlace() === undefined && template.find('#polyMapDesSearch').value === ""){
             toastr.warning("destination location is not understood");
             return false;
         }

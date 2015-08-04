@@ -182,11 +182,11 @@ getSearchBoxdata = function (){
 	if($("#polycheckboxSrc").prop( "checked")){
 		var fromCoord = [Session.get('lng'),Session.get('lat')];
 	}else{
-		var placesSrc = gmap.searchBoxSrc.getPlaces();
-		var fromCoord = [placesSrc[0].geometry.location.lng(),placesSrc[0].geometry.location.lat()];
+		var placesSrc = gmap.searchBoxSrc.getPlace();
+		var fromCoord = [placesSrc.geometry.location.lng(),placesSrc.geometry.location.lat()];
 	}
-	var placesDest = gmap.searchBoxDest.getPlaces();
-	var toCoord = [placesDest[0].geometry.location.lng(),placesDest[0].geometry.location.lat()];
+	var placesDest = gmap.searchBoxDest.getPlace();
+	var toCoord = [placesDest.geometry.location.lng(),placesDest.geometry.location.lat()];
 
 
 	var selectedDate = $('#polyDateSel').val();
