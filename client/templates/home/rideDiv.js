@@ -50,10 +50,12 @@ Template.rideDiv.events({
 			    onOk: function() {
 			        console.log('Ask rider clicked');
 					//function to let the other side alert about the drive
-					Meteor.call('AskRider',subset,function(err){
+					Meteor.call('AskRider',subset,function(err,res){
 						if(err){
 							toastr.error("Server error", "Oops..!");
-						}else{
+						}else if(res){
+                            toastr.info(res);
+                        }else{
 							$(".inputForm").show();
 							Session.set('mode', null);
 							toastr.success("Request Sent", "Success");

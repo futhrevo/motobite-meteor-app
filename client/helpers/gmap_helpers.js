@@ -409,14 +409,17 @@ Template.dispMap.rendered = function () {
         $('#map-canvas').replaceWith(gmap.map.getDiv());
         //gmap.regDivs();
     }
-
-    // preload lat and lng from server if get location fails
-    var oldHash = MarkerColl.findOne({_id:Meteor.userId()}).gh;
-    if(oldHash){
-        var oldCoords = geohash.decode(oldHash);
-        Session.set('lat', oldCoords[0]);
-        Session.set('lng', oldCoords[1]);
+    if(MarkerColl && MarkerColl.findOne({_id:Meteor.userId()})){
+        var oldHash = MarkerColl.findOne({_id:Meteor.userId()}).gh;
+        // preload lat and lng from server if get location fails
+        if(oldHash){
+            var oldCoords = geohash.decode(oldHash);
+            Session.set('lat', oldCoords[0]);
+            Session.set('lng', oldCoords[1]);
+        }
     }
+
+
 
     function waitForGPS() {
         CheckGPS.check(function () {
@@ -622,6 +625,7 @@ function beforePostLoc(){
     var chash = geohash.encode(clat, clng);
     var post = {
         gh: chash,
+        loc : { type: "Point", coordinates: [clng, clat] },
         heading: heading || null
     };
     console.log("posting updates to mongo ");

@@ -1,14 +1,4 @@
 Meteor.startup(function () {
-
-    if (MarkerColl.find().count() === 0) {
-        MarkerColl.insert({
-            gh: 'tdr38juym8ns',
-            _id: 'tEsTdAtA',
-            type: "taxi",
-            at: new Date(),
-            valid: true
-        });
-    }
     // to enable indexing based on 2d sphere for DrivesAdvtColl
     DrivesAdvtColl._ensureIndex({
         "nodes.locs": "2dsphere"
@@ -19,9 +9,26 @@ Meteor.startup(function () {
         "locs": "2dsphere"
     },{ background: true });
 
+    MarkerColl._ensureIndex({"id":1});
+    MarkerColl._ensureIndex({"loc" : "2dsphere","at":-1},{ background: true });
     //Messages.find({room: room, users: this.userId}, {sort: {time: -1}, limit: 1})
     Messages._ensureIndex({"room": 1, "users": 1, "time": -1});
     TransactColl._ensureIndex({requestee:1,requester:1,'advtRequest':1});
+
+    if (MarkerColl.find().count() === 0) {
+        MarkerColl.insert({
+            gh: 'tdr38juym8ns',
+            type: "taxi",
+            at: Date.now(),
+            valid: true,
+            heading:null,
+            loc:{
+                type:"Point",
+                coordinates:[77,12]
+            },
+            id:"tEsTdAtA"
+        });
+    }
     //start process in later to handle old records deletions
     var Later = Meteor.npmRequire('later');
     var wrapLater = Later;
@@ -61,28 +68,32 @@ Meteor.methods({
         check(this.userId, String);
         check(postAttributes, {
             gh: String,
-            heading: Match.OneOf(Number,null)
+            heading: Match.OneOf(Number,null),
+            loc:{
+                type:String,
+                coordinates:[Number]
+            }
         });
         var userid = Meteor.user()._id;
-        var qw = MarkerColl.findOne({_id: userid});
+        var qw = MarkerColl.findOne({id: userid});
         var post;
         if (!qw) {
             console.log("new user");
             post = _.extend(postAttributes, {
-                _id: userid,
+                id: userid,
                 type: "user",
-                at: new Date(),
+                at: Date.now(),
                 valid: true
             });
             MarkerColl.insert(post);
         } else {
-            console.log('user entry present at ' + userid);
+            console.log('user entry present at ' + qw._id);
             ULogsColl.update({_id: userid}, {$push: {logs: EJSON.stringify(qw)}}, {upsert: true});
             post = _.extend(postAttributes, {
                 at: new Date(),
                 valid: true
             });
-            MarkerColl.update(userid, {$set: post});
+            MarkerColl.update(qw._id, {$set: post});
         }
 
     },
@@ -337,6 +348,9 @@ Meteor.methods({
     //postDriverAdvt implemented at client side in riderDiv.js
 //
     //function to let communication between clients to ask for ride
+    /**
+     * @return {string}
+     */
     AskRider: function (obj) {
         check(this.userId, String);
         check(obj, {
@@ -348,7 +362,14 @@ Meteor.methods({
         });
         var requestee = DriversAdvtColl.findOne({_id: obj._id}, {id: 1});
         var requester = this.userId;
+        //if (requestee === requester) {
+        //    return 'You can not send message to yourself';
+        //}
         console.log("rider " + requestee.id + " is being requested by " + requester);
+        if(DriversAdvtColl.findOne({_id:obj._id,"pending.requester":requester})){
+            return "You already sent a request for this rider";
+        }
+
         var post = {
             requester: requester,
             requestee: requestee.id,
@@ -363,7 +384,8 @@ Meteor.methods({
             status: null
 
         };
-        TransactColl.insert(post);
+        var requestId = TransactColl.insert(post);
+        DriversAdvtColl.update({_id: obj._id}, {$push: {pending: {requestId:requestId,requester:requester}}}, {upsert: true});
     }
 });
 
