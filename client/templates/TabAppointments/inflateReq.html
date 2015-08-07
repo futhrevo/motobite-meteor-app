@@ -17,6 +17,9 @@
 
 <template name="listReq">
     {{#ionList}}
+        <div class="item item-divider">
+            <p>Total ride requests - {{totalReqs}}</p>
+        </div>
         {{#each req}}
 
             <a class="item btnInfo list-group-item item-icon-right" >

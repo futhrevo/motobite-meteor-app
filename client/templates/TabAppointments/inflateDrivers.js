@@ -1,4 +1,7 @@
 Template.inflateDrivers.helpers({
+    total:function(){
+        return DriversAdvtColl.find().fetch().length;
+    },
     driver: function(){
         return DriversAdvtColl.find({},{sort: {startTime: 1}});
     },
@@ -21,7 +24,17 @@ Template.inflateDrivers.events({
     'click .btnDel':function(event){
         event.preventDefault();
         if(confirm("Are you sure?")){
-            DriversAdvtColl.remove(this._id);
+            var post = {_id:this._id};
+            //DriversAdvtColl.remove(this._id);
+            Meteor.call('deleteRide',post,function(err,res){
+                if(err){
+                    console.log("Error in deleteRide method");
+                }else if(res){
+                    toastr[res.type](res.message);
+                }else{
+
+                }
+            });
         }
     },
     'click .btnInfo':function(event){

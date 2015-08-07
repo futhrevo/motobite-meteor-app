@@ -6,7 +6,7 @@ Meteor.publish('theMarkers',function(){
     }
     check(this.userId, String);
     var userid = this.userId;
-    return MarkerColl.find({_id:userid});
+    return MarkerColl.find({id:userid});
 });
 
 Meteor.publish('theDrivers',function(){

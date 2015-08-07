@@ -1,4 +1,7 @@
 Template.inflateDrives.helpers({
+    total: function(){
+        return DrivesAdvtColl.find().fetch().length;
+    },
     drive: function(){
         return DrivesAdvtColl.find({},{sort: {startTime: 1}});
     },

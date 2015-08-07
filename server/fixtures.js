@@ -14,6 +14,7 @@ Meteor.startup(function () {
     //Messages.find({room: room, users: this.userId}, {sort: {time: -1}, limit: 1})
     Messages._ensureIndex({"room": 1, "users": 1, "time": -1});
     TransactColl._ensureIndex({requestee:1,requester:1,'advtRequest':1});
+    DriversTTL._ensureIndex({ "ends": 1 }, { expireAfterSeconds: 10800 });
 
     if (MarkerColl.find().count() === 0) {
         MarkerColl.insert({
@@ -360,11 +361,11 @@ Meteor.methods({
             startTime : Number,
             overview : String
         });
-        var requestee = DriversAdvtColl.findOne({_id: obj._id}, {id: 1});
+        var requestee = DriversAdvtColl.findOne({_id: obj._id},{fields: {id: 1}});
         var requester = this.userId;
-        //if (requestee === requester) {
-        //    return 'You can not send message to yourself';
-        //}
+        if (requestee === requester) {
+            return {type:"info",message:'You can not send message to yourself'};
+        }
         console.log("rider " + requestee.id + " is being requested by " + requester);
         if(DriversAdvtColl.findOne({_id:obj._id,"pending.requester":requester})){
             return "You already sent a request for this rider";
@@ -386,6 +387,74 @@ Meteor.methods({
         };
         var requestId = TransactColl.insert(post);
         DriversAdvtColl.update({_id: obj._id}, {$push: {pending: {requestId:requestId,requester:requester}}}, {upsert: true});
+    },
+    // function to set rider actions
+    /**
+     * @return {string}
+     */
+    RiderActions:function(obj){
+        check(this.userId, String);
+        check(obj, {
+            _id: String,
+            status: Boolean
+        });
+        // first check if advt exists
+        var advt = TransactColl.findOne({_id:obj._id},{fields:{advtRequest:1,requester:1}});
+        // check if user is in pending state and pull
+        var state = DriversAdvtColl.update({_id:advt.advtRequest,"pending.requester":advt.requester}, {$pull: {"pending":{"requester":advt.requester}}});
+        if(state > 0){
+            if(obj.status){
+                DriversAdvtColl.update({_id: advt.advtRequest}, {$push: {accepted: {requestId:obj._id,requester:advt.requester}}}, {upsert: true});
+                var send = {type:"success",message:"Request Accepted"};
+            }else{
+                DriversAdvtColl.update({_id: advt.advtRequest}, {$push: {rejected: {requestId:obj._id,requester:advt.requester}}}, {upsert: true});
+                var send = {type:"success",message:"Request Rejected"};
+            }
+            // change status to boolean sent
+            TransactColl.update(obj._id,{$set:{status:obj.status,time:new Date()}});
+            return send;
+        }else{
+            TransactColl.remove({_id:obj._id});
+            return {type:"info",message:"the requester is unavailable"};
+        }
+    },
+    // function to delete a ride scheduled by user
+    deleteRide:function(obj){
+        check(this.userId, String);
+        check(obj, {
+            _id: String
+        });
+        // fetch all pending, accepted and rejected requests for this _id
+        var data = DriversAdvtColl.findOne({_id:obj._id,id:this.userId},{fields:{pending:1,accepted:1,rejected:1}});
+        var pendReq = [],accReq = [],rejReq = [];
+        if(data.pending){
+            pendReq = _.pluck(data.pending, 'requestId');
+            console.log(pendReq);
+        }
+        if(data.accepted){
+            accReq = _.pluck(data.accepted, 'requestId');
+            console.log(accReq);
+        }
+        if(data.rejected){
+            rejReq = _.pluck(data.rejected, 'requestId');
+            console.log(rejReq);
+        }
+        // send notification to accepted users about cancellation
+        if(accReq.length > 0){
+            var accUsers = _.pluck(data.accepted, 'requester');
+            var senderName = "MotoBite Traffic";
+            var title = senderName;
+            var text = "One of your scheduled rider cancelled his ride";
+            var query = {userId: {$in: accUsers}};
+            var payload = {sender: senderName};
+            //Meteor.call('sendNotification', title, text, query, payload);
+
+        }
+        // delete from transacts pending and rejected
+        var total = pendReq.concat(accReq,rejReq);
+        TransactColl.remove({_id:{$in: total}});
+        DriversAdvtColl.remove({_id:obj._id});
+        return {type:"info",message:"successfully deleted ride"};
     }
 });
 

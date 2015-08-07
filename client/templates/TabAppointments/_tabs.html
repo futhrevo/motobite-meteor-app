@@ -2,14 +2,14 @@
     {{#if isAndroid}}
         {{#ionTabs style="android" class="tabs-background-positive tabs-color-light"}}
             {{> ionTab title="Requests" path="inflateReq" icon="filing"}}
-            {{> ionTab title="Drivers Scheduled" path="inflateDrivers" icon="android-home"}}
-            {{> ionTab title="Drives Scheduled" path="inflateDrives" icon="android-star"}}
+            {{> ionTab title="Scheduled Rides" path="inflateDrivers" icon="android-home"}}
+            {{> ionTab title="Scheduled Riders" path="inflateDrives" icon="android-star"}}
         {{/ionTabs}}
     {{else}}
         {{#ionTabs style="ios"}}
             {{> ionTab title="Requests" path="inflateReq" iconOff="ios-filing-outline" iconOn="ios-filing"}}
-            {{> ionTab title="Drivers Scheduled" path="inflateDrivers" iconOff="ios-home-outline" iconOn="ios-home"}}
-            {{> ionTab title="Drives Scheduled" path="inflateDrives" iconOff="ios-star-outline" iconOn="ios-star"}}
+            {{> ionTab title="Scheduled Rides" path="inflateDrivers" iconOff="ios-home-outline" iconOn="ios-home"}}
+            {{> ionTab title="Scheduled Riders" path="inflateDrives" iconOff="ios-star-outline" iconOn="ios-star"}}
 
         {{/ionTabs}}
     {{/if}}

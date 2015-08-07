@@ -13,12 +13,12 @@ Template.searchContactModal.events({
 
             Meteor.call('searchUser', searchId, function(err, result) {
                 if (result) {
+                    IonLoading.hide();
                     $('#resultAvatarUrl').attr('src', result.profile.avatarUrl);
                     $('#resultDisplayName').text(result.profile.name);
                     $('#resultStatus').text(result.profile.status);
                     $('#to-id').val(result._id);
                     $('#user-data').show();
-                    IonLoading.hide();
                 } else {
                     $('#no-user-error').show();
                     IonLoading.hide();

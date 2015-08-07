@@ -1,7 +1,10 @@
 Template.listReq.helpers({
+    totalReqs:function(){
+        return TransactColl.find({ $and: [ {requestee:Meteor.userId() },{status:null} ] }).fetch().length;
+    },
     req:function(){
         return TransactColl.find({ $and: [ {requestee:Meteor.userId() },{status:null} ] });
-    },
+    }
 });
 
 Template.listReq.events({
@@ -25,6 +28,7 @@ Template.listReq.events({
         event.preventDefault();
         var _id = this._id;
         var obj = TransactColl.findOne({_id:_id});
+        var post = {_id:_id};
         IonPopup.confirm({
             title: "Are you Sure?",
             template: popupAcceptScreen(obj),
@@ -34,14 +38,18 @@ Template.listReq.events({
             onOk: function() {
                 var unixTime = moment().format('X');
                 if($("#decisionVal").is(':checked')){
-                    console.log('Request Accepted');
-                    TransactColl.update(_id,{$set:{status:true,accepted:unixTime}});
-                    IonSideMenu.snapper.close();
+                    post.status = true;
                 }else{
-                    console.log('Request Rejected');
-                    TransactColl.update(_id,{$set:{status:false,rejected:unixTime}});
-                    IonSideMenu.snapper.close();
+                    post.status = false;
                 }
+                Meteor.call('RiderActions',post,function(err,res){
+                    if(err){
+                        console.log("Error in riderActions method");
+                    }else{
+                        toastr[res.type](res.message);
+                    }
+                });
+                IonSideMenu.snapper.close();
 
             },
             onCancel: function() {

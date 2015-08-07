@@ -3,11 +3,14 @@
         {{>ionNavBackButton path="index"}}
     {{/contentFor}}
     {{#contentFor "headerTitle"}}
-        <h1 class="title">Drives Scheduled</h1>
+        <h1 class="title">Scheduled Riders</h1>
     {{/contentFor}}
     {{#ionView}}
         {{#ionContent class="scheduletabsClass" }}
             {{#ionList}}
+                <div class="item item-divider">
+                    <p>Total riders offering you rides - {{total}}</p>
+                </div>
                 {{#each drive}}
                     {{#ionItem buttonRight=true }}
                         <a class="btnInfo">
