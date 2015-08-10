@@ -1,15 +1,29 @@
 /**
  * Created by rakeshkalyankar on 06/08/15.
  */
-DriversTTL = new Mongo.Collection('driversttl');
+
 
 // build a ttl based on drivers _id and approximate end time, current ttl is 3hours
 DriversAdvtColl.after.insert(function (userId, doc) {
-    var post = {id:doc._id,ends:new Date((doc.startTime + doc.duration * 60)*1000)};
-    DriversTTL.insert(post);
+    // var post = {id:doc._id,ends:new Date((doc.startTime + doc.duration * 60)*1000)};
+    var post = {id:doc._id,ends:new Date()};
+    console.log("drivers ttl inserted");
 });
 
-//create a before delete hook for driversttl and check for _id status if still running
-    // if not running copy important data to archive and delete document
+DriversAdvtColl.after.remove(function (userId, doc) {
+    // copy important data to archive and delete document
+    console.log("after drivers deleted");
+    console.log(doc);
+});
 
-    // else create one more ttl with added duration of one hour
+// create bson date key to indicate invalid after for drivers coll
+
+// create bson date key to indicate invalid after for transacts coll
+
+// create a pending riders collection
+
+    // when new driver is added
+        // get all riders in vicinity of this ride using box
+        // try vectors to get angle
+        // if positive angle alert users about a potential rider
+

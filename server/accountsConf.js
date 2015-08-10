@@ -43,7 +43,7 @@ Accounts.validateNewUser(function (user) {
 // Validate username, without a specific error message.
 //TODO: Mechanism for users to report offensive usernames
 Accounts.validateNewUser(function (user) {
-    var disallowed = ["root","admin","god","xxx","fuck","sex","slut","bitch"];
+    var disallowed = ["root","admin","xxx","fuck","sex","slut","bitch"];
     var name = user.profile.name.toLowerCase();
     return !(_.contains(name,disallowed));
 });

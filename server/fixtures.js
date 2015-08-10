@@ -8,13 +8,14 @@ Meteor.startup(function () {
     DriversAdvtColl._ensureIndex({
         "locs": "2dsphere"
     },{ background: true });
+    DriversAdvtColl._ensureIndex({"at":1},{expireAfterSeconds: 30 });
 
     MarkerColl._ensureIndex({"id":1});
     MarkerColl._ensureIndex({"loc" : "2dsphere","at":-1},{ background: true });
     //Messages.find({room: room, users: this.userId}, {sort: {time: -1}, limit: 1})
     Messages._ensureIndex({"room": 1, "users": 1, "time": -1});
     TransactColl._ensureIndex({requestee:1,requester:1,'advtRequest':1});
-    DriversTTL._ensureIndex({ "ends": 1 }, { expireAfterSeconds: 10800 });
+    //DriversTTL._ensureIndex({ "ends": 1 }, { expireAfterSeconds: 10800 });
 
     if (MarkerColl.find().count() === 0) {
         MarkerColl.insert({
@@ -30,11 +31,6 @@ Meteor.startup(function () {
             id:"tEsTdAtA"
         });
     }
-    //start process in later to handle old records deletions
-    var Later = Meteor.npmRequire('later');
-    var wrapLater = Later;
-    // will fire every 1 minutes
-    var textSched = wrapLater.parse.text('every 1 min');
     var smtp = {
         username: 'mailer.motobite@gmail.com',
         password: 'I0Hd723TJFq7-u2wKBCyRA',
@@ -43,6 +39,11 @@ Meteor.startup(function () {
     };
     process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
 
+    //start process in later to handle old records deletions
+    var Later = Meteor.npmRequire('later');
+    var wrapLater = Later;
+    // will fire every 1 minutes
+    var textSched = wrapLater.parse.text('every 1 min');
     // execute logTime one time on the next occurrence of the text schedule
     var timer = wrapLater.setInterval(Meteor.bindEnvironment(logTime), textSched);
     // function to execute
@@ -51,7 +52,7 @@ Meteor.startup(function () {
         //3 hour old time stamp
         var epochTime = (Date.now() / 1000 | 0) - (3600 * 3);
 
-        DriversAdvtColl.remove({startTime: {$lt: epochTime}});
+        // DriversAdvtColl.remove({startTime: {$lt: epochTime}});
         DrivesAdvtColl.remove({startTime: {$lt: epochTime}});
     }
     //Email.send({
