@@ -1,13 +1,16 @@
 /**
  * Created by Admin on 8/10/2015.
  */
-
+ 
 // create emailotp for user
+EmailOtp = new Meteor.Collection('emailotp');
+// create smsotp for user
+SmsOtp = new Meteor.Collection('smsotp');
+
 // check if user has already created a OTP
 // delete last document if existing
 // else create a document with TTL and check counter and send it to user's emails
 
-// create smsotp for user
 // check if user has already created a OTP
 // delete last document if existing
 // else create a document with TTL and check counter send it to user
