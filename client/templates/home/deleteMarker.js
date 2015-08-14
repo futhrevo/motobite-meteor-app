@@ -1,3 +1,6 @@
+/* global gmap */
+/* global MarkerColl */
+/* global Session */
 Template.deleteMarker.helpers({
 	marker: function(){
 		if(Session.get('map'))

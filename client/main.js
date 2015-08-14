@@ -1,3 +1,6 @@
+/* global Tracker */
+/* global markArray */
+/* global ReactiveArray */
 (function () {
     console.info("Immediate function fired up at "+ new Date().toTimeString());
     Session.set('map', false);

@@ -1,7 +1,7 @@
 /**
  * Created by rakeshkalyankar on 16/07/15.
  */
-Template.chat.rendered = function () {
+Template.chat.onRendered (function () {
 
     //setting window focuses
     Session.set('window_focus', document.hasFocus());
@@ -31,7 +31,7 @@ Template.chat.rendered = function () {
 
     //scroll to bottom when page is rendered
     $('.discussion').scrollTop($('.discussion')[0].scrollHeight);
-};
+});
 
 Template.chat.helpers({
 

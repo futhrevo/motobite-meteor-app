@@ -1,3 +1,3 @@
-Template.about.rendered = function(){
+Template.about.onRendered(function(){
     // IonSideMenu.snapper.close();
-};
+});

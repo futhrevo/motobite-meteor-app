@@ -1,14 +1,18 @@
-Template.rideDiv.created = function(){
+/* global bearingFinal */
+/* global bearingInitial */
+/* global asBounds */
+/* global IonPopup */
+Template.rideDiv.onCreated(function(){
 	console.log("rideDiv Created");
 	directionsDisplay.setMap(null);
-};
+});
 
-Template.rideDiv.destroyed = function(){
+Template.rideDiv.onDestroyed(function(){
 	console.log("rideDiv destroyed");
 	// TODO: No need to clear if going to schedule screen view
 	clearPolylines();
 	polyArray.clear();
-};
+});
 
 Template.rideDiv.helpers({
 	hideInput: function(){
@@ -180,12 +184,12 @@ function submitDrive(){
 	//console.log("TODO update user status into collection");
 }
 getSearchBoxdata = function (){
-
+	var fromCoord;
 	if($("#polycheckboxSrc").prop( "checked")){
-		var fromCoord = [Session.get('lng'),Session.get('lat')];
+		fromCoord = [Session.get('lng'),Session.get('lat')];
 	}else{
 		var placesSrc = gmap.searchBoxSrc.getPlace();
-		var fromCoord = [placesSrc.geometry.location.lng(),placesSrc.geometry.location.lat()];
+		fromCoord = [placesSrc.geometry.location.lng(),placesSrc.geometry.location.lat()];
 	}
 	var placesDest = gmap.searchBoxDest.getPlace();
 	var toCoord = [placesDest.geometry.location.lng(),placesDest.geometry.location.lat()];

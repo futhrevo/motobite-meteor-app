@@ -1,3 +1,4 @@
+/* global IonSideMenu */
 Template.listReq.helpers({
     totalReqs:function(){
         return TransactColl.find({ $and: [ {requestee:Meteor.userId() },{status:null} ] }).fetch().length;

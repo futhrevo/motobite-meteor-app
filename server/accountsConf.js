@@ -1,3 +1,4 @@
+/* global Accounts */
 //configure user accounts
 Accounts.config({
     //New users with an email address will receive an address verification email
@@ -18,8 +19,10 @@ Accounts.onCreateUser(function(options, user) {
   if (options.profile)
     user["works"] = {};
     user["roles"] = [];
-    user["works"]["emails"] = [{address : options.profile.workEmail,verified:false}];
+    user["works"]["emails"] = [{ address: options.profile.workEmail, verified: false }];
+    user["mobile"] = [{number:options.profile.mobile, verified: false}];
     delete options.profile.workEmail;
+    delete options.profile.mobile;
     options.profile.status = 'I care for planet!';
     options.profile.updatedAt = new Date();
     options.profile.avatarUrl = '/no_avatar.png';
@@ -49,18 +52,18 @@ Accounts.validateNewUser(function (user) {
 });
 
 // Called whenever a login is attempted (either successful or unsuccessful)
-Accounts.validateLoginAttempt(function(attempt) {
+Accounts.validateLoginAttempt(function (attempt) {
 
-    if(attempt.type == 'password'){
-        // check if user is banned
-        if(attempt.user.roles){
-            if(attempt.user.roles.indexOf('banned') >= 0){
-                throw new Meteor.Error(403, "Login suspended, Please contact adminstrator");
-                return false;
+    if (attempt.type == 'password') {
+        if (attempt.allowed == true) {
+            // check if user is banned
+            if (attempt.user.roles) {
+                if (attempt.user.roles.indexOf('banned') >= 0) {
+                    throw new Meteor.Error(403, "Login suspended, Please contact adminstrator");
+                    return false;
+                }
             }
         }
-
-
     }
     return true;
 });

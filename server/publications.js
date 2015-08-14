@@ -59,7 +59,7 @@ Meteor.publish(null ,function(){
     var userid = this.userId;
     return Meteor.users.find (
         {_id: this.userId},
-        {fields: { roles: 1}});
+        {fields: { roles: 1, mobile:1,works:1}});
 });
 
 Meteor.publish('friends', function(userIds) {

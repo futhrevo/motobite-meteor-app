@@ -1,10 +1,14 @@
+/* global $ */
+/* global _ */
+/* global Meteor */
+/* global Template */
 /**
  * Created by rakeshkalyankar on 15/07/15.
  */
 
-Template.profileView.rendered = function () {
+Template.profileView.onRendered(function () {
     $('.popup-image').magnificPopup({type:'image'});
-};
+});
 
 Template.profileView.helpers({
     'isNewRequest': function(friendId) {

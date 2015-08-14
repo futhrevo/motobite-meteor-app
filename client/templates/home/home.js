@@ -1,3 +1,7 @@
+/* global updateLocation */
+/* global toastr */
+/* global Messages */
+/* global TransactColl */
 Template.home.helpers({
     countNotifications: function () {
         return TransactColl.find({$and: [{requestee: Meteor.userId()}, {status: null}]}).count();
@@ -7,7 +11,7 @@ Template.home.helpers({
     }
 });
 
-Template.home.rendered = function () {
+Template.home.onRendered(function () {
     $(".badgeNotif").click(function () {
         var val = this.dataset.val;
         if (val < 1) {
@@ -17,7 +21,7 @@ Template.home.rendered = function () {
             //IonSideMenu.snapper.open('right');
         }
     });
-};
+});
 
 Template.ionBody.events({
     "click [data-action=centerBounds]": function () {

@@ -8,7 +8,11 @@ Meteor.startup(function () {
     DriversAdvtColl._ensureIndex({
         "locs": "2dsphere"
     },{ background: true });
-    DriversAdvtColl._ensureIndex({"at":1},{expireAfterSeconds: 30 });
+    DriversAdvtColl._ensureIndex({ "at": 1 }, { expireAfterSeconds: 30 });
+    EmailOtpColl._ensureIndex({"id":1});
+    EmailOtpColl._ensureIndex({ "at": 1 }, { expireAfterSeconds: 3600 });
+    SmsOtpColl._ensureIndex({"id":1});
+    SmsOtpColl._ensureIndex({ "at": 1 }, { expireAfterSeconds: 900 });
 
     MarkerColl._ensureIndex({"id":1});
     MarkerColl._ensureIndex({"loc" : "2dsphere","at":-1},{ background: true });
@@ -67,6 +71,9 @@ Meteor.startup(function () {
 Meteor.methods({
     //Entry for location
     postLocation: function (postAttributes) {
+        if(! this.userId){
+            return;
+        }
         check(this.userId, String);
         check(postAttributes, {
             gh: String,
@@ -123,7 +130,7 @@ Meteor.methods({
                         locs: {
                             $near: {
                                 $geometry: {type: "Point", coordinates: post.fromCoord},
-                                $geometry: {type: "Point", coordinates: post.toCoord},
+                                // $geometry: {type: "Point", coordinates: post.toCoord},
                                 $maxDistance: 250
                             }
                         }
@@ -448,7 +455,7 @@ Meteor.methods({
             var text = "One of your scheduled rider cancelled his ride";
             var query = {userId: {$in: accUsers}};
             var payload = {sender: senderName};
-            //Meteor.call('sendNotification', title, text, query, payload);
+            //SendNotification(title, text, query, payload);
 
         }
         // delete from transacts pending and rejected

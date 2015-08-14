@@ -1,3 +1,10 @@
+/* global polyArray */
+/* global wrangleDataDriver */
+/* global DriversAdvtColl */
+/* global DrivesAdvtColl */
+/* global validateTime */
+/* global getSearchBoxdata */
+/* global moment */
 $(document).on({
     'DOMNodeInserted': function () {
         $('.pac-item, .pac-item span', this).addClass('needsclick');

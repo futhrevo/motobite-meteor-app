@@ -1,3 +1,5 @@
+/* global google */
+/* global geohash */
 Template.drawMarker.helpers({
 	draw: function(){
 		var index = this._id;

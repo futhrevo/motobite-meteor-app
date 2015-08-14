@@ -1,19 +1,19 @@
-Template.layout.created = function(){
+Template.layout.onCreated(function () {
 
-};
-Template.layout.rendered = function(){
+});
+Template.layout.onRendered(function () {
     IonSideMenu.snapper.disable();
     IonSideMenu.snapper.settings({
         tapToClose: true, // If true, tapping an open pane will close it
         flickThreshold: 300, // Number of pixels the user needs to swiftly travel to activate a "flick" open
-        hyperextensible:true
+        hyperextensible: true
     });
     // $('#navheader').css('background-image', 'url(profile.jpg)');
     IonSideMenu.snapper.on('open', menuOpenBody);
 
     IonSideMenu.snapper.on('close', menuCloseBody);
-    
-};
+
+});
 
 Template.layout.events({
     "click [data-action=sign-out]" : function(){

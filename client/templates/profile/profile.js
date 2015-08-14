@@ -1,8 +1,8 @@
 
-Template.profileTemplate.rendered = function(){
+Template.profileTemplate.onRendered(function(){
     // IonSideMenu.snapper.close();
     $('.popup-image').magnificPopup({type:'image'});
-};
+});
 
 
 Template.profileTemplate.helpers({

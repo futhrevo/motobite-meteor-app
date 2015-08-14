@@ -1,3 +1,8 @@
+/* global wpid */
+/* global directionsDisplay */
+/* global checkin */
+/* global IonActionSheet */
+/* global Router */
 Template.dispMap.helpers({
     marker: function() {
         if (Session.get('map'))
@@ -91,12 +96,12 @@ Template.dispMap.events({
     }
 });
 
-Template.dispMap.destroyed = function(){
+Template.dispMap.onDestroyed(function(){
     console.log("display map destroyed");
     navigator.geolocation.clearWatch(wpid);
 	//Session.set('map', false);
-};
+});
 
-Template.dispMap.created = function(){
+Template.dispMap.onCreated(function(){
     console.log("display map created");
-};
+});
