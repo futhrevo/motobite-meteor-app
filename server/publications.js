@@ -58,7 +58,7 @@ Meteor.publish(null ,function(){
     }
     var userid = this.userId;
     return Meteor.users.find (
-        {_id: this.userId},
+        {_id: userid},
         {fields: { roles: 1, mobile:1,works:1}});
 });
 

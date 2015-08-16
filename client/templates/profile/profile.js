@@ -1,3 +1,7 @@
+/* global $ */
+/* global IonPopup */
+/* global Template */
+/* global toastr */
 
 Template.profileTemplate.onRendered(function(){
     // IonSideMenu.snapper.close();

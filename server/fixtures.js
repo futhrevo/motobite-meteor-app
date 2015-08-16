@@ -1,3 +1,13 @@
+/* global EJSON */
+/* global Match */
+/* global process */
+/* global Messages */
+/* global MarkerColl */
+/* global SmsOtpColl */
+/* global EmailOtpColl */
+/* global DriversAdvtColl */
+/* global DrivesAdvtColl */
+/* global Meteor */
 Meteor.startup(function () {
     // to enable indexing based on 2d sphere for DrivesAdvtColl
     DrivesAdvtColl._ensureIndex({

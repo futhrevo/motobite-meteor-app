@@ -76,7 +76,7 @@
                     <p>Blocked friends - {{totalBlocked}}</p>
                 </div>
                 {{#each blockedFriends}}
-                    <a class="item item-avatar" href="{{pathFor 'profileView' username}}">
+                    <a class="item item-avatar" href="{{pathFor 'profileView' _id}}">
                         <img src="{{profile.avatarUrl}}">
                         <h2>{{profile.displayName}}</h2>
                         <p>{{profile.status}}</p>

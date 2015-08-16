@@ -1,3 +1,5 @@
+/* global SendEmailOtp */
+/* global SendSms */
 /* global check,Meteor,EmailOtpColl,SmsOtpColl,Match */
 /**
  * Created by Admin on 8/10/2015.
@@ -23,15 +25,19 @@ Meteor.methods({
 			index:index
 		}
 		// else create a document with TTL and check counter and send it to user's phone
-		SmsOtpColl.insert(post, function (error, result) {
+		var docId = SmsOtpColl.insert(post, function (error, result) {
 			if (error) {
-				return "Server Error, Try again!"
 			}
 			var code = result.substring(1, 7);
 			var text = "Your MotoBite app OTP for mobile verification is \"" + code + "\" valid for 30 Minutes";
 			var query = { user: user, index: index };
 			SendSms(text, query);
-		})
+		});
+		if (docId) {
+			return {type:"success",message:"OTP sent"};
+		} else {
+			return {type:"error",message:"Server Error, Try again!"};
+		}
 	},
 	
 	createEmailOtp: function (cat,index) {
@@ -48,17 +54,20 @@ Meteor.methods({
 		}
 		post[cat] = index;
 		// else create a document with TTL and check counter send it to user
-		EmailOtpColl.insert(post, function (error, result) {
-			if (error) {
-				return "Server Error, Try again!"
+		var docId = EmailOtpColl.insert(post, function (error, result) {
+			if (error) {	
 			}
 			var code = result.substring(1,9);
 			var text = "Your MotoBite app OTP for Email verification is \"" + code + "\" valid for 60 Minutes";
 			var query = { user: user, index: index, cat: cat };
 			SendEmailOtp(text, query);
-			// Meteor.call('SendEmailOtp', text, query);
+			
 		})
-		
+		if (docId) {
+			return {type:"success",message:"OTP sent"};
+		} else {
+			return {type:"error",message:"Server Error, Try again!"};
+		}
 	},
 	
 	// verify emailotp for user
@@ -88,8 +97,10 @@ Meteor.methods({
 					console.log("Bug report");
 				}
 				EmailOtpColl.remove({ id: user });
+				return {type:"success",message:"OTP Verified succesfully"};
 			} else {
 				EmailOtpColl.update({ id: user }, { $inc: { counter: 1 } });
+				return {type:"error",message:"Wrong code, Try again!"};
 			}
 		}
 	},
@@ -115,8 +126,10 @@ Meteor.methods({
 				// set the number as verified
 				setMobileVerify(user, codeEm.index);
 				SmsOtpColl.remove({ id: user });
+				return {type:"success",message:"OTP Verified succesfully"};
 			 } else {
 				SmsOtpColl.update({ id: user }, { $inc: { counter: 1 } });
+				return {type:"error",message:"Wrong code, Try again!"};
 			}
 			
 		}

@@ -218,7 +218,12 @@ html, body {
 .recentChatsClass{
   background-color: gainsboro;
 }
-
+.verifyEmailClass {
+  background-color: gainsboro;
+}
+.verifyMobileClass{
+  background-color: gainsboro;
+}
 .rounded {
   border-radius: 50%;
 }
@@ -256,4 +261,7 @@ html, body {
 
 .tinker-tabs .bar.bar-positive{
     border-color: $positive ;
-  }
+}
+.center{
+    text-align:center;
+}
