@@ -1,3 +1,7 @@
+/* global DriversAdvtColl */
+/* global DrivesAdvtColl */
+/* global Template */
+/* global validateTime */
 Template.inflateDrives.helpers({
     total: function(){
         return DrivesAdvtColl.find().fetch().length;
@@ -47,4 +51,4 @@ validateTime = function(date,duration){
             return [false,"drivers",drivers[i]._id];
         }
     return [true];
-}
+};

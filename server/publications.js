@@ -123,4 +123,5 @@ Meteor.publish('chat', function(friendId, limit) {
 DriversAdvtColl.before.insert(function (userId, doc) {
     doc.at = new Date();
     doc.id = userId;
+    doc.ends = new Date((doc.startTime + doc.duration * 60)*1000);
 });

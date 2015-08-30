@@ -43,6 +43,7 @@ Template.listReq.events({
                 }else{
                     post.status = false;
                 }
+                console.log("Sending request to RiderActions");
                 Meteor.call('RiderActions',post,function(err,res){
                     if(err){
                         console.log("Error in riderActions method");
@@ -59,9 +60,9 @@ Template.listReq.events({
         });
         $('#decisionVal').change(function() {
             if($("#decisionVal").is(':checked'))
-                $('[data-index="0"]').html('Accept').addClass("button-balanced").removeClass("button-assertive");
+                $('[data-index="1"]').html('Accept').addClass("button-balanced").removeClass("button-assertive");
             else
-                $('[data-index="0"]').html('Reject').addClass("button-assertive").removeClass("button-balanced");
+                $('[data-index="1"]').html('Reject').addClass("button-assertive").removeClass("button-balanced");
         });
     },
 

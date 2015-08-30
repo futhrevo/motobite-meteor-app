@@ -5,8 +5,9 @@
 }
 
 .publicClass {
-  background: url(random_grey_background.png);
+  background: radial-gradient(rgba($status,0.6),rgba($status,1));
   height: 100%;
+  text-align: center;
 }
 
 html, body {
@@ -19,13 +20,16 @@ html, body {
 
 .enterClass {
   position: absolute;
-  bottom: 5%;
+  bottom: 10%;
   left: 50%;
   margin-left: -54.5px;
 }
 
 .sidePic {
-  background: $status;
+  background: $status url(/mb2);
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: right !important;
 }
 
 .sideEmail {
@@ -264,4 +268,27 @@ html, body {
 }
 .center{
     text-align:center;
+}
+.logo-div{
+  width: 50%;
+  height: 50vw;
+  z-index: 2;
+    position: absolute;
+    left: 50%;
+    margin-left: -25%;
+}
+.logo-img{
+  height: 100%;
+  width:100%;
+}
+.logo-text{
+    bottom: 5%;
+    position: absolute;
+    width: 100%;
+    color: rgb(38, 50, 56);
+    font-weight: bold;
+    font-size: xx-large
+}
+.logo-caption{
+  
 }

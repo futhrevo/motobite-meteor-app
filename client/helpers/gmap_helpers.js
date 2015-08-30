@@ -21,13 +21,15 @@ gmap = {
     regDivs: function () {
         //remove leftover pac containers
         $('.pac-container').remove();
-        var searchBounds = new google.maps.LatLngBounds(asLatLng(12.6, 77.7), asLatLng(13.25, 78.02));
+        if(typeof google !== 'undefined'){
+            var searchBounds = new google.maps.LatLngBounds(asLatLng(12.6, 77.7), asLatLng(13.25, 78.02));
         var autoCompleteOptions = {
             bounds: searchBounds,
             componentRestrictions: {country: 'in'}
         };
         this.searchBoxSrc = new google.maps.places.Autocomplete(document.getElementById("polyMapSrcSearch"),autoCompleteOptions);
         this.searchBoxDest = new google.maps.places.Autocomplete(document.getElementById("polyMapDesSearch"), autoCompleteOptions);
+        }
     },
     //add a marker from the given marker object
     addMarker: function (marker, type, objType) {

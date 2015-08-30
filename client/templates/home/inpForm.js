@@ -12,12 +12,13 @@ $(document).on({
 }, '.pac-container');
 
 Template.inpForm.onRendered(function () {
-    gmap.regDivs();
-    console.log("inpform rendered");
-    //http://weareoutman.github.io/clockpicker/
     $('.clockpicker').clockpicker({
         'default': 'now'
     });
+    gmap.regDivs();
+    console.log("inpform rendered");
+    //http://weareoutman.github.io/clockpicker/
+
 });
 Template.inpForm.onDestroyed(function () {
     console.log("inpform destroyed");
@@ -43,21 +44,7 @@ Template.inpForm.events({
 
     },
     'blur #timeInput': function (event,template) {
-        var time = template.find('#timeInput').value;
-        var day = template.find('#polyDateSel').value;
-        var correction = day === "Today" ? 0 : 1;
-        //check if unix time is less than current time
-        var utime = moment(time,"HH:mm").add(correction,'day').unix();
-        var now = moment().unix();
-
-        if(utime < now){
-            console.log('past time entered');
-            toastr.warning("please enter a future time");
-            $('#timeInput').val('');
-        }else{
-            console.log('future time entered');
-        }
-
+        checkTimeInp(template);
     },
     'click [data-action=clearFields]': function (event) {
         event.preventDefault();
@@ -92,6 +79,7 @@ Template.inpForm.events({
     // 'submit form':function(event,template){
     'click #fabInpSubmit': function (event, template) {
         event.preventDefault();
+            
         var selectedOption = Session.get('modeSel');
         //http://diveintohtml5.info/storage.html
         //using local storage to store more permanently
@@ -109,13 +97,11 @@ Template.inpForm.events({
             toastr.warning("destination location is not understood");
             return false;
         }
-
-        //check if time is empty
-        if (template.find('#polyDateSel').value === "Tomorrow" && template.find('#timeInput').value === ""){
-            toastr.warning("please enter a time for tomorrow");
+        
+        //check if time is valid
+        if(! checkTimeInp(template)){
             return false;
         }
-
         console.info("selected element is : " + selectedOption);
 
         var search = getSearchBoxdata();
@@ -220,3 +206,29 @@ var clearFields = function () {
     $('#timeInput').val('');
 };
 
+var checkTimeInp = function(template){
+        var time = template.find('#timeInput').value;
+        var day = template.find('#polyDateSel').value;
+        // check if input is empty
+        if(day === "Today" && time === ""){
+            return true;
+        }
+        if(day === "Tomorrow" && time ===""){
+            toastr.warning("please enter a time for tomorrow");
+            return false;
+        }
+        var correction = day === "Today" ? 0 : 1;
+        //check if unix time is less than current time
+        var utime = moment(time,"HH:mm").add(correction,'day').unix();
+        var now = moment().unix();
+        
+        if(utime < now){
+            console.log('past time entered');
+            toastr.warning("please enter a future time");
+            template.$('#timeInput').val('');
+            return false;
+        }else{
+            console.log('future time entered');
+            return true;
+        }
+}

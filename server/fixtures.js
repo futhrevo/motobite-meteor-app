@@ -18,7 +18,7 @@ Meteor.startup(function () {
     DriversAdvtColl._ensureIndex({
         "locs": "2dsphere"
     },{ background: true });
-    DriversAdvtColl._ensureIndex({ "at": 1 }, { expireAfterSeconds: 30 });
+    DriversAdvtColl._ensureIndex({ "ends": 1 }, { expireAfterSeconds: 300 });
     EmailOtpColl._ensureIndex({"id":1});
     EmailOtpColl._ensureIndex({ "at": 1 }, { expireAfterSeconds: 3600 });
     SmsOtpColl._ensureIndex({"id":1});
@@ -411,6 +411,7 @@ Meteor.methods({
      * @return {string}
      */
     RiderActions:function(obj){
+        console.log("Rider Actions Executing");
         check(this.userId, String);
         check(obj, {
             _id: String,
@@ -418,8 +419,10 @@ Meteor.methods({
         });
         // first check if advt exists
         var advt = TransactColl.findOne({_id:obj._id},{fields:{advtRequest:1,requester:1}});
+        console.log(advt);
         // check if user is in pending state and pull
         var state = DriversAdvtColl.update({_id:advt.advtRequest,"pending.requester":advt.requester}, {$pull: {"pending":{"requester":advt.requester}}});
+        console.log(state);
         if(state > 0){
             if(obj.status){
                 DriversAdvtColl.update({_id: advt.advtRequest}, {$push: {accepted: {requestId:obj._id,requester:advt.requester}}}, {upsert: true});

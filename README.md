@@ -14,7 +14,7 @@
 * [x] User profile page
 * [ ] Fuel points management, billing and charging
 * [ ] User input validation - remove or implement parsely input panel
-* [ ] Remove Insecure Package
+* [x] Remove Insecure Package
 * [x] Not Required - Remove geohash package
 * [x] modify core tool-bar height according to ios specs
 * [ ] Wait button when rider is waiting
@@ -23,6 +23,7 @@
 * [ ] fill outputDirectionDiv if only one route available
 * [x] clear button to clear input panel
 * [x] checkin function
+    * [ ] CheckinHeap remove
 TODO SERVER
 * [x] Remove 1 day old records to archives
 * [ ] Need ways to request clients to checkin in seamless way

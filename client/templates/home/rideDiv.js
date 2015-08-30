@@ -1,3 +1,10 @@
+/// <reference path="../../../typings/jquery/jquery.d.ts"/>
+/// <reference path="../../../typings/jquery/jquery.d.ts"/>
+/* global $ */
+/* global polyArray */
+/* global directionsDisplay */
+/* global Template */
+/* global validateTime */
 /* global bearingFinal */
 /* global bearingInitial */
 /* global asBounds */
