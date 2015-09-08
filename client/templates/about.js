@@ -1,3 +1,5 @@
 Template.about.onRendered(function(){
-    // IonSideMenu.snapper.close();
+    if (!IonPopover.view.isDestroyed) {
+        IonPopover.hide();
+    }
 });

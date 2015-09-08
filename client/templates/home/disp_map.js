@@ -98,7 +98,9 @@ Template.dispMap.events({
 
 Template.dispMap.onDestroyed(function(){
     console.log("display map destroyed");
-    navigator.geolocation.clearWatch(wpid);
+    if (typeof wpid !== "undefined") {
+        navigator.geolocation.clearWatch(wpid);
+    }
 	//Session.set('map', false);
 });
 

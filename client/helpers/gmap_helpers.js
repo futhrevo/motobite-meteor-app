@@ -1,3 +1,4 @@
+/* global Meteor */
 //http://www.andrehonsberg.com/article/reactive-google-maps-markers-meteor-js
 
 gmap = {
@@ -49,7 +50,7 @@ gmap = {
 
         if (objType == 'gmapMarker') {
             myLatlng = new google.maps.LatLng(marker.lat, marker.lng);
-            title = marker.title;
+            title = marker.title || marker.user;
         } else if (objType == 'latlng') {
             myLatlng = marker;
         } else if (objType == 'geoLatLng') {
@@ -96,7 +97,16 @@ gmap = {
         // obj[key] = mymarker;
         //keep track of markers and geo data
         this.latLngs.push(myLatlng);
-        this.markers[marker.id] = mymarker;
+        // check if it is user marker then add an event listener to receive click events
+        if (marker.user == Meteor.userId()) { 
+            mymarker.addListener('click', function () { 
+                $(".mapState .save-location-button").show(200);
+                console.log("user marker clicked");
+            });
+            this.markers[marker.id] = mymarker;
+        } else {
+            this.markers[marker.id] = mymarker;
+        }
         this.markerData.push(marker);
 
         return mymarker;
@@ -137,6 +147,10 @@ gmap = {
         this.map.mapTypes.set("First Style", mapType);
         this.map.setMapTypeId("First Style");
         this.regDivs();
+        this.map.addListener('click', function (e) {
+            $(".mapState .save-location-button").hide(200);
+            console.log("TODO: map clicked, hide HUD icons");
+        });
         bounds = new google.maps.LatLngBounds();
         bounds.extend(loc);
         // this.map.fitBounds(bounds);
@@ -576,9 +590,11 @@ function drawCanvas() {
     if ($('#map-canvas').length) {
         console.info("map-canvas added to the dom");
         $('#map-canvas').ready(gmap.initialize());
-    } else {
+    } else if (Router.current().lookupTemplate() == "Index"){
         console.info("wait for map-canvas to be ready");
         setTimeout(drawCanvas, 500);
+    } else {
+        console.log("This should not happen");
     }
 }
 

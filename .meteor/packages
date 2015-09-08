@@ -26,8 +26,11 @@ momentjs:moment
 meteorhacks:npm
 
 
-npm-container
 launch-screen
 email
 mizzao:user-status
 raix:push
+
+
+npm-container
+useraccounts:iron-routing

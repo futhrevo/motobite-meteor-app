@@ -43,9 +43,15 @@
     {{#ionView}}
         {{#ionContent class="homeClass" }}
             <div class="mapState">
-                    <button class="locate-button" style="display:block;" data-action="centerBounds">
-                        <i class="ion-android-locate"></i>
-                    </button>
+                  
+                        <button class="locate-button" style="display:block;" data-action="centerBounds">
+                            <i class="ion-android-locate"></i>
+                        </button>
+                    <div class="hud-div">
+                        <button class="save-location-button" data-action="addSafeHouse">
+                            <i class="ion-star"></i>
+                        </button>
+                    </div>
                 {{> dispMap}}
             </div>
         {{/ionContent}}

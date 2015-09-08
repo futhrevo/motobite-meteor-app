@@ -8,7 +8,8 @@ Template.drawMarker.helpers({
 		var marker = {
 			lat:decMarker[0],
 			lng:decMarker[1],
-			id: index
+			id: index,
+			user: this.id
 		};
 		if(gmap.markers[index] === undefined){
 			console.log(marker);

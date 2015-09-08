@@ -4,11 +4,6 @@
   -moz-box-shadow: 0 -8px 6px -6px rgba(0, 0, 0, 0.4);
 }
 
-.publicClass {
-  background: radial-gradient(rgba($status,0.6),rgba($status,1));
-  height: 100%;
-  text-align: center;
-}
 
 html, body {
   height: 100%;
@@ -16,13 +11,6 @@ html, body {
 
 .ionic-body {
   height: 100%;
-}
-
-.enterClass {
-  position: absolute;
-  bottom: 10%;
-  left: 50%;
-  margin-left: -54.5px;
 }
 
 .sidePic {
@@ -194,46 +182,35 @@ html, body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.profileClass{
+.profileClass, .scheduletabsClass, .homeClass, .contactsClass, .profileViewClass, .recentChatsClass, .verifyEmailClass, .verifyMobileClass{
   background-color: gainsboro;
 }
 
-.scheduletabsClass{
-  background-color: gainsboro;
-}
-
-.homeClass{
-  background-color: gainsboro;
-}
-
-.contactsClass{
-  background-color: gainsboro;
-}
 
 .notFoundClass{
   text-align:center;
   background-color: firebrick;
 }
 
-.profileViewClass{
-  background-color: gainsboro;
-}
-
-.recentChatsClass{
-  background-color: gainsboro;
-}
-.verifyEmailClass {
-  background-color: gainsboro;
-}
-.verifyMobileClass{
-  background-color: gainsboro;
-}
 .rounded {
   border-radius: 50%;
 }
 
-.mapState .ion-android-locate:before {
-  content: "\f2e9";
+.hud-button{
+  display: none;
+  height: 40px;
+  width: 40px;
+  min-width: 40px;
+  position: absolute;
+  z-index: 999;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  top:10px;
+  margin-right: 5px;
+}
+.hud-button-text{
   line-height: 24px;
   width: 24px;
   position: absolute;
@@ -241,23 +218,27 @@ html, body {
   left: 50%;
   transform: translate(-12px,-12px);
   font-size: 24px;
+  content: "\f2e9";
+}
+.mapState .ion-android-locate:before {
+  @extend .hud-button-text;
 }
 
 .mapState .locate-button  {
-  display: block;
-  height: 40px;
-  width: 40px;
-  min-width: 40px;
-  position: absolute;
-  z-index: 999;
+  @extend .hud-button;
   right: 5px;
-  top:10px;
-  border-radius: 50%;
-  background-color: white;
-  border: none;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  display: block;
 }
-
+.mapState .save-location-button{
+  @extend .hud-button;
+  right: 50px;
+  background-color: gold;
+  
+}
+.mapState .ion-star:before{
+  @extend .hud-button-text;
+  content: "\f24e";
+}
 .mapState .button-fab-bottom-right{
   background-color: #E65100;
   color: white;
@@ -269,13 +250,26 @@ html, body {
 .center{
     text-align:center;
 }
+
+.publicClass {
+  background: radial-gradient(rgba($status,0.6),rgba($status,1));
+  height: 100%;
+  text-align: center;
+}
+
+.enterClass {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  margin-left: -54.5px + 13px;
+}
 .logo-div{
-  width: 50%;
-  height: 50vw;
+  width: 50vh;
+  height: 50%;
   z-index: 2;
     position: absolute;
     left: 50%;
-    margin-left: -25%;
+    margin-left: -25vh;
 }
 .logo-img{
   height: 100%;
@@ -287,8 +281,11 @@ html, body {
     width: 100%;
     color: rgb(38, 50, 56);
     font-weight: bold;
-    font-size: xx-large
+    font-size: 4vw;
 }
 .logo-caption{
-  
+  width: 100%;
+    color: rgb(38, 50, 56);
+    font-size: 4vw;
 }
+

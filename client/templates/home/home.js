@@ -33,5 +33,33 @@ Template.ionBody.events({
         if (gmap.map.getZoom() < 16)
             gmap.map.setZoom(16);
         updateLocation();
+    },
+    "click [data-action=addSafeHouse]": function () {
+        console.log("Add safe house");
+        updateLocation();
+        IonPopup.show({
+            title: "Add a Safe House ?",
+            subTitle: "A region where you are not tracked with GPS, hence better battery life. You can add your home, work or other areas where you spend most time",
+            template: '<div class="item range range-positive"><i>100m</i><input type="range" name="distance" min="100" max="250" value="200"><i>250m</i></div>' + 
+                        '<output for="range" class="output"></output>',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    type: 'button-default',
+                    onTap: function (event, template) {
+                        console.log("user cancelled safe house adition!");
+                        return true;
+                    }
+                },
+                {
+                    text: 'Add Safe house',
+                    type: 'button-positive',
+                    onTap: function (event, template) {
+                        console.log("user add safe house");
+                        return true;
+                    }
+                }
+            ]
+        });
     }
 });

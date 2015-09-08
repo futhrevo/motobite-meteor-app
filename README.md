@@ -32,7 +32,7 @@ TODO SERVER
 Created using meteor in Mac
 Authors:
 Rakesh k.rakeshlal@gmail.com
-Sandeep sandepkumr@gmail.com
+
 
 ### What is this repository for? ###
 
@@ -194,3 +194,7 @@ db.getCollection('drivers').find(
        {'request.starts':{$gt:1436079608}},
        {status:true}
    ]})
+
+cordova-plugin-device-orientation@https://github.com/apache/cordova-plugin-device-orientation/tarball/d0c83f2cde672a77567195437db02d113438f3a6
+
+427d49f61297f749b09b971c00dfeedc289c1809
