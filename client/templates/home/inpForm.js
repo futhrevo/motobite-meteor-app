@@ -54,14 +54,14 @@ Template.inpForm.events({
     },
     'click #fabInpCancel': function (event) {
         event.preventDefault();
-        $('#inputFormOuterId').hide(200);
+        $('#inputFormOuterId').removeClass("inpShowing").hide(200);
         Session.set('mode', null);
         directionsDisplay.setMap(null);
     },
 
     'click .inputCloseBtn': function (event) {
         event.preventDefault();
-        $('#inputFormOuterId').hide(200);
+        $('#inputFormOuterId').removeClass("inpShowing").hide(200);
         Session.set('mode', null);
         directionsDisplay.setMap(null);
     },
@@ -116,7 +116,7 @@ Template.inpForm.events({
         var duration = 15 + (distance * 6);
         var validTime = validateTime(search.time, duration);
         if (validTime[0]) {
-            $('#inputFormOuterId').hide(200);
+            $('#inputFormOuterId').removeClass("inpShowing").hide(200);
             var post = getSearchBoxdata();
             if (selectedOption == 'rider') {
                 Session.set('mode', 'rider');

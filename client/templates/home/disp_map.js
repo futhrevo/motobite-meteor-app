@@ -52,12 +52,12 @@ Template.dispMap.events({
             if (index === 0) {
                 console.log('User is a rider!');
                 Session.set('modeSel','rider');
-                $('#inputFormOuterId').show(100);
+                $('#inputFormOuterId').addClass("inpShowing").show(100);
             }
             if (index === 1) {
                 console.log('User needs ride!');
                 Session.set('modeSel','ride');
-                $('#inputFormOuterId').show(100);
+                $('#inputFormOuterId').addClass("inpShowing").show(100);
             }
             if (index === 2) {
                 console.log('User needs to checkin');
@@ -83,7 +83,7 @@ Template.dispMap.events({
     'click [data-action=showInput]': function(event, template) {
         $(".inputForm").show();
         $("#outputDirectionDiv").hide(50);
-        $('#inputFormOuterId').show(50);
+        $('#inputFormOuterId').addClass("inpShowing").show(50);
     },
 
     'click [data-action=submitDriver]': function(event, template) {

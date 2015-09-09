@@ -120,6 +120,15 @@ Meteor.publish('chat', function(friendId, limit) {
 
     return Messages.find({room: room, users: this.userId}, {sort: {time: -1}, limit: limit});
 });
+
+Meteor.publish('theHouses',function(){
+    if(! this.userId){
+        return;
+    }
+    check(this.userId, String);
+    var userid = this.userId;
+    return SafeHouseColl.find({id:userid});
+});
 DriversAdvtColl.before.insert(function (userId, doc) {
     doc.at = new Date();
     doc.id = userId;

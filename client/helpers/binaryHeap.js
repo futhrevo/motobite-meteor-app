@@ -33,7 +33,7 @@ BinaryHeap.prototype = {
     // To remove a value, we must search through the array to find
     // it.
     for (var i = 0; i < length; i++) {
-      if (this.content[i] != node) continue;
+      if (this.content[i]["id"] != node) continue;
       // When it is found, the process seen in 'pop' is repeated
       // to fill up the hole.
       var end = this.content.pop();

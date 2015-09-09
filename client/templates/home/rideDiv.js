@@ -38,7 +38,7 @@ Template.rideDiv.events({
 	'click [data-action=showdriveInput]': function(event, template) {
 		$(".inputForm").show();
 		Session.set('mode',null);
-		$('#inputFormOuterId').show(50);
+		$('#inputFormOuterId').addClass("inpShowing").show(50);
 	},
 
 	'click [data-action=showApplyScreen]': function(event, template) {
@@ -65,7 +65,7 @@ Template.rideDiv.events({
 						if(err){
 							toastr.error("Server error", "Oops..!");
 						}else if(res){
-                            toastr.info(res);
+                            toastr[res.type](res.message);
                         }else{
 							$(".inputForm").show();
 							Session.set('mode', null);

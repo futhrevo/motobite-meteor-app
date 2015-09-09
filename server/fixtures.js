@@ -1,3 +1,4 @@
+/* global SafeHouseColl */
 /* global EJSON */
 /* global Match */
 /* global process */
@@ -23,7 +24,7 @@ Meteor.startup(function () {
     EmailOtpColl._ensureIndex({ "at": 1 }, { expireAfterSeconds: 3600 });
     SmsOtpColl._ensureIndex({"id":1});
     SmsOtpColl._ensureIndex({ "at": 1 }, { expireAfterSeconds: 900 });
-
+    SafeHouseColl._ensureIndex({"id":1});
     MarkerColl._ensureIndex({"id":1});
     MarkerColl._ensureIndex({"loc" : "2dsphere","at":-1},{ background: true });
     //Messages.find({room: room, users: this.userId}, {sort: {time: -1}, limit: 1})
@@ -379,14 +380,14 @@ Meteor.methods({
             startTime : Number,
             overview : String
         });
-        var requestee = DriversAdvtColl.findOne({_id: obj._id},{fields: {id: 1}});
+        var requestee = DriversAdvtColl.findOne({_id: obj._id},{fields: {id: 1,ends:1}});
         var requester = this.userId;
-        if (requestee === requester) {
-            return {type:"info",message:'You can not send message to yourself'};
+        if (requestee.id === requester) {
+            return {type:"info",message:'You can not send request to yourself'};
         }
         console.log("rider " + requestee.id + " is being requested by " + requester);
-        if(DriversAdvtColl.findOne({_id:obj._id,"pending.requester":requester})){
-            return "You already sent a request for this rider";
+        if (DriversAdvtColl.findOne({ _id: obj._id, "pending.requester": requester })) {
+            return {type:"info",message:'You already sent a request for this rider'};
         }
 
         var post = {
@@ -398,8 +399,9 @@ Meteor.methods({
                 srcloc: obj.srcloc,
                 dstloc: obj.dstloc,
                 starts: obj.startTime,
-                overview: obj.overview
+                overview: obj.overview,
             },
+            ends: requestee.ends,
             status: null
 
         };
@@ -476,6 +478,38 @@ Meteor.methods({
         TransactColl.remove({_id:{$in: total}});
         DriversAdvtColl.remove({_id:obj._id});
         return {type:"info",message:"successfully deleted ride"};
+    },
+    //function to add user's safe House
+    addSafeHouse: function (obj) {
+        check(this.userId, String);
+        check(obj, {
+            coordinates: [Number],
+            radius: Number,
+            name: String,
+            address: String
+        });
+        var user = this.userId;
+        if (SafeHouseColl.find({ id: user }).count() > 5) {
+            return {type:"info",message:"only 5 safe houses are allowed at this time, please delete any"};
+        }
+        var post = {
+            id: user,
+            radius: obj.radius,
+            name: obj.name,
+            address: obj.address,
+            loc:{
+                type:"Point",
+                coordinates: obj.coordinates
+            }
+        }
+        SafeHouseColl.insert(post);
+        return {type:"success",message:"added safehouse"};
+    },
+    deleteSafeHouse: function (_id) {
+        check(this.userId, String);
+        var user = this.userId;
+        SafeHouseColl.remove({ _id: _id, id: user });
+        return {type:"success",message:"removed the selected safehouse"};
     }
 });
 

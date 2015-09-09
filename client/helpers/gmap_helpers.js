@@ -1,3 +1,4 @@
+/* global checkinHeap */
 /* global Meteor */
 //http://www.andrehonsberg.com/article/reactive-google-maps-markers-meteor-js
 
@@ -364,7 +365,8 @@ gmap.geocode = function (lat, lng) {
         } else {
             result = "Cannot determine address at this location";
         }
-        $('#polyMapSrcSearch').val(result);
+        $('.inpShowing #polyMapSrcSearch').val(result);
+        Session.set('address', result);
     });
 };
 
@@ -514,10 +516,12 @@ var checkinTrackerInt = function () {
     var handle = query.observeChanges({
         added: function (id, user) {
             console.log(user.requestee + " accepted " + moment.unix(user.accepted).calendar());
+            user.id = id;
             checkinHeap.push(user);
         },
         removed: function (id) {
             console.log(id + " status changed");
+            checkinHeap.remove(id);
         }
     });
 };
