@@ -15,7 +15,7 @@ Template.dispMap.helpers({
     mapState: function() {
         var currentRoute = Router.current();
         var route = currentRoute.lookupTemplate();
-        if (route === "") {
+        if (route === "" || route ==="Index") {
             $('.mapState').show();
         } else {
             $('.mapState').hide("slow");

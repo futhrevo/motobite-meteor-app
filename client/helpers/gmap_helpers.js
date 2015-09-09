@@ -1,3 +1,26 @@
+/* global _ */
+/* global $ */
+/* global moment */
+/* global wpid */
+/* global Router */
+/* global TransactColl */
+/* global asBounds */
+/* global IonPopup */
+/* global CheckGPS */
+/* global geohash */
+/* global Template */
+/* global polyArray */
+/* global polyline */
+/* global validateTime */
+/* global getSearchBoxdata */
+/* global markerManager */
+/* global MarkerManager */
+/* global updateLocation */
+/* global gmap */
+/* global directionsDisplay */
+/* global bounds */
+/* global Session */
+/* global google */
 /* global checkinHeap */
 /* global Meteor */
 //http://www.andrehonsberg.com/article/reactive-google-maps-markers-meteor-js
@@ -18,6 +41,9 @@ gmap = {
 
     //formatted marker data objects
     markerData: [],
+    
+    //safehouse array
+    safeHouseArray:[],
 
     //register serachbox divs
     regDivs: function () {
@@ -175,7 +201,8 @@ gmap = {
 
         //create MarkerManager object to control Markers
         markerManager = new MarkerManager(this.map);
-        checkinTrackerInt();
+        checkinTrackerInit();
+        safehouseTrackerInit();
     },
 
     //distance calculation using Haversine formula
@@ -507,7 +534,7 @@ function asLatLng(lat, lng) {
     return new google.maps.LatLng(lat, lng);
 }
 
-var checkinTrackerInt = function () {
+var checkinTrackerInit = function () {
     var query = TransactColl.find({
         $and: [{status: true},
             {requester: Meteor.userId()}]
@@ -524,8 +551,48 @@ var checkinTrackerInt = function () {
             checkinHeap.remove(id);
         }
     });
+    return handle;
 };
 
+var safehouseTrackerInit = function () {
+    var query = SafeHouseColl.find({});
+    
+    var handle = query.observeChanges({
+        added: function (id, user) {
+            console.log("added safehouse with id: " + id);
+            var center = new google.maps.LatLng(user.loc.coordinates[1], user.loc.coordinates[0]);
+             var circle = new google.maps.Circle({
+                center: center,
+                clickable: false,
+                draggable: false,
+                editable: false,
+                fillColor: '#009688',
+                fillOpacity: 0.27,
+                map: gmap.map,
+                radius: user.radius,
+                strokeColor: '#009688',
+                strokeOpacity: 0.62,
+                strokeWeight: 1
+            });
+             var post = {
+                 id: id,
+                 circle: circle
+             }
+             gmap.safeHouseArray.push(post);
+        },
+        removed: function (id) {
+            console.log(id + " safehouse removed");
+            for (var index = 0; index < gmap.safeHouseArray.length; index++) {
+                if (gmap.safeHouseArray[index]["id"] !== id) continue;
+                var circle = gmap.safeHouseArray[index]["circle"];
+                circle.setMap(null);
+                gmap.safeHouseArray.splice(index, 1);
+                break;
+            }
+        }
+    });
+    return handle;
+}
 
 function onDeviceReady() {
     console.log("device is ready");
@@ -588,13 +655,21 @@ function mapDom() {
     } else if ($('#map-canvas').html() === "") {
         updateLocation();
     }
+    var query = Router.current().params.query;
+    if (_.has(query, "lat") && _.has(query, "lng")) {
+        var center = new google.maps.LatLng(query.lat, query.lng);
+        gmap.map.panTo(center);
+        gmap.map.setZoom(16);
+        Router.go('index');
+    }
+ 
 }
 
 function drawCanvas() {
     if ($('#map-canvas').length) {
         console.info("map-canvas added to the dom");
         $('#map-canvas').ready(gmap.initialize());
-    } else if (Router.current().lookupTemplate() == "Index"){
+    } else if (Router.current().lookupTemplate() == "Index" || Router.current().lookupTemplate() == "Home"){
         console.info("wait for map-canvas to be ready");
         setTimeout(drawCanvas, 500);
     } else {

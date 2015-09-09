@@ -164,12 +164,16 @@ Template.inpForm.events({
             } else {
                 result = DriversAdvtColl.find({_id: validTime[2]});
             }
-            if (confirm("Duplicate ride already exists. Do you want to cancel it?")) {
-                console.log("TODO go to edit page for the conflict ride");
-            } else {
-                // Do nothing!
-            }
-
+            IonPopup.confirm({
+                title: 'Are you sure?',
+                template: "Duplicate ride already exists. Do you want to cancel it?",
+                onOk: function() {
+                    console.log("TODO go to edit page for the conflict ride");
+                },
+                onCancel: function() {
+                    console.log('Cancelled');
+                }
+			});
 
         }
 

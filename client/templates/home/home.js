@@ -84,6 +84,11 @@ Template.ionBody.events({
 var insertSafeHouseCircle = function (name, radius) {
     var lat = Session.get('lat');
     var lng = Session.get('lng');
+    var pointCheck = validateSafeHouse(lat, lng);
+    if (pointCheck) {
+        toastr.error("you alredy have a safe house named " + pointCheck + " here. Move out of circle and try again");
+        return;
+    }
     var address = Session.get('address') || "";
     if (address !== "") {
         Session.set('address', "");
@@ -102,4 +107,23 @@ var insertSafeHouseCircle = function (name, radius) {
 				toastr[res.type](res.message);
 			}
 		})
+}
+var validateSafeHouse = function (lat,lng) {
+    var safehouses = SafeHouseColl.find().fetch();
+    var checkPoint = { lat: lat, lng: lng };
+    for (var index = 0; index < safehouses.length; index++) {
+        var element = safehouses[index];
+        var centerPoint = { lat: element.loc.coordinates[1], lng: element.loc.coordinates[0] };
+        if (arePointsNear(checkPoint, centerPoint, element.radius)) {
+            return element.name;
+        }
+    }
+    return null;
+}
+var arePointsNear = function (checkPoint, centerPoint, m) {
+    var ky = 40000 / 360;
+    var kx = Math.cos(Math.PI * centerPoint.lat / 180.0) * ky;
+    var dx = Math.abs(centerPoint.lng - checkPoint.lng) * kx;
+    var dy = Math.abs(centerPoint.lat - checkPoint.lat) * ky;
+    return Math.sqrt(dx * dx + dy * dy)*1000 <= m;
 }

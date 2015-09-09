@@ -1,7 +1,7 @@
 /* global IonSideMenu */
 Template.listReq.helpers({
     totalReqs:function(){
-        return TransactColl.find({ $and: [ {requestee:Meteor.userId() },{status:null} ] }).fetch().length;
+        return TransactColl.find({ $and: [ {requestee:Meteor.userId() },{status:null} ] }).count();
     },
     req:function(){
         return TransactColl.find({ $and: [ {requestee:Meteor.userId() },{status:null} ] });
@@ -11,15 +11,28 @@ Template.listReq.helpers({
 Template.listReq.events({
     'click .btnReject':function(event){
         event.preventDefault();
-        if(confirm("Are you sure?")){
-            TransactColl.update(this._id,{$set:{status:false}});
-        }
+         IonPopup.confirm({
+                title: 'Are you sure?',
+                template: 'Are you <strong>really</strong> sure to reject ?',
+                onOk: function() {
+                    TransactColl.update(this._id,{$set:{status:false}});
+                },
+                onCancel: function() {
+                    console.log('Cancelled');
+                }
+		});
     },
     'click .btnAccept':function(event){
         event.preventDefault();
-        if(confirm("Are you sure?")){
-            TransactColl.update(this._id,{$set:{status:true}});
-        }
+        IonPopup.confirm({
+                title: 'Are you sure?',
+                onOk: function() {
+                    TransactColl.update(this._id,{$set:{status:true}});
+                },
+                onCancel: function() {
+                    console.log('Cancelled');
+                }
+		});
     },
     'click .list-group-item': function(event) {
 		event.preventDefault();

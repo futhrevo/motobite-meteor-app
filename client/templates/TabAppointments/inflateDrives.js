@@ -4,7 +4,7 @@
 /* global validateTime */
 Template.inflateDrives.helpers({
     total: function(){
-        return DrivesAdvtColl.find().fetch().length;
+        return DrivesAdvtColl.find().count();
     },
     drive: function(){
         return DrivesAdvtColl.find({},{sort: {startTime: 1}});
@@ -18,9 +18,16 @@ Template.inflateDrives.helpers({
 Template.inflateDrives.events({
     'click .btnDel':function(event){
         event.preventDefault();
-        if(confirm("Are you sure?")){
-            DrivesAdvtColl.remove(this._id);
-        }
+        IonPopup.confirm({
+                title: 'Are you sure?',
+                template: 'Are you <strong>really</strong> sure to delete ?',
+                onOk: function() {
+                    DrivesAdvtColl.remove(this._id);
+                },
+                onCancel: function() {
+                    console.log('Cancelled');
+                }
+		});
     },
     'click .btnInfo':function(event){
         event.preventDefault();
