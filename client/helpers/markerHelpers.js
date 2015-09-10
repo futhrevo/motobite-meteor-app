@@ -1,3 +1,6 @@
+/* global checkinMarkers */
+/* global driversMarkers */
+/* global drivesMarkers */
 // MarkerManager inspired from original MarkerManager
 drivesMarkers = {};
 driversMarkers = {};
@@ -34,7 +37,7 @@ MarkerManager.prototype.addMarker = function(loc, options) {
             //no need to save as it is already saved in checkinHeap array
             //checkinMarkers[loc.id] = mymarker;
         } else{
-            consol.log("cannot get type to add marker in MarkerManager");
+            console.log("cannot get type to add marker in MarkerManager");
         }
     }
     return mymarker;

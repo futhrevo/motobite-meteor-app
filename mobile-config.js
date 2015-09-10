@@ -1,3 +1,4 @@
+/* global App */
 // This section sets up some basic app metadata,
 // the entire section is optional.
 App.info({

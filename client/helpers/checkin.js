@@ -1,3 +1,7 @@
+/* global moment */
+/* global distanceToLine */
+/* global markerManager */
+/* global checkin */
 checkin = function(){
     //check if checkinHeap is empty
     if(checkinHeap.content.length === 0){

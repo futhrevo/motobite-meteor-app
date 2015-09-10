@@ -1,5 +1,3 @@
-/* global $ */
-/* global _ */
 /* global Meteor */
 /* global Template */
 /**

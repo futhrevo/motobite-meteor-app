@@ -1,3 +1,4 @@
+/* global Package */
 var path = Npm.require('path');
 var fs = Npm.require('fs');
 

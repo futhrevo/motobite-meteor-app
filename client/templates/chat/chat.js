@@ -1,3 +1,4 @@
+/* global roomToUsers */
 /**
  * Created by rakeshkalyankar on 16/07/15.
  */

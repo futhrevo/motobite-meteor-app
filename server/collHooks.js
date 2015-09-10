@@ -3,9 +3,6 @@
  */
 
 
-// create bson date key to indicate invalid after for drivers coll
-
-// create bson date key to indicate invalid after for transacts coll
 
 // create a pending riders collection
 

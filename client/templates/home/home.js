@@ -1,3 +1,8 @@
+/* global SafeHouseColl */
+/* global IonPopup */
+/* global google */
+/* global Meteor */
+/* global Template */
 /* global gmap */
 /* global Session */
 /* global updateLocation */
@@ -98,7 +103,7 @@ var insertSafeHouseCircle = function (name, radius) {
         radius: parseInt(radius),
         name: name,
         address: address
-    }
+    };
     Meteor.call('addSafeHouse', post, function (err, res) {
 			if (err) {
                 console.log(err);
@@ -106,8 +111,8 @@ var insertSafeHouseCircle = function (name, radius) {
 			if (res) {
 				toastr[res.type](res.message);
 			}
-		})
-}
+		});
+};
 var validateSafeHouse = function (lat,lng) {
     var safehouses = SafeHouseColl.find().fetch();
     var checkPoint = { lat: lat, lng: lng };
@@ -119,7 +124,7 @@ var validateSafeHouse = function (lat,lng) {
         }
     }
     return null;
-}
+};
 var arePointsNear = function (checkPoint, centerPoint, m) {
     var ky = 40000 / 360;
     var kx = Math.cos(Math.PI * centerPoint.lat / 180.0) * ky;

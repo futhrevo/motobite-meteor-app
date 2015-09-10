@@ -1,6 +1,3 @@
-/// <reference path="../../../typings/jquery/jquery.d.ts"/>
-/// <reference path="../../../typings/jquery/jquery.d.ts"/>
-/* global $ */
 /* global polyArray */
 /* global directionsDisplay */
 /* global Template */
@@ -237,5 +234,5 @@ getSearchBoxdata = function (){
 		toHashObj : toHashObj,
 		initialBearing : initialBearing,
 		finalBearing : finalBearing
-	}
+	};
 };

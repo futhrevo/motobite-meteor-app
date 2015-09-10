@@ -1,3 +1,4 @@
+/* global MeterOn */
 //get the path travelled using continuous integration
 
 MeterOn = function (){

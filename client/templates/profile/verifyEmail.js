@@ -18,7 +18,7 @@ Template.verifyEmail.events({
 				toastr[res.type](res.message);
 				template.$('[data-action=send-emailotp-button]').fadeOut( "slow" );
 			}
-		})
+		});
 	},
 	'click [data-action=verify-emailotp-button]': function (event, template) { 
 		var str = template.$('.verifyEmailClass input').val();

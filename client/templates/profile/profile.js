@@ -1,4 +1,3 @@
-/* global $ */
 /* global IonPopup */
 /* global Template */
 /* global toastr */

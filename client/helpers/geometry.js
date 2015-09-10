@@ -1,5 +1,6 @@
+/* global polyline */
 /**
- * Created by Admin on 4/10/2015.
+ * Created by Rakesh Kalyankar on 4/10/2015.
  */
 //http://docs.openlayers.org/library/spherical_mercator.html
 

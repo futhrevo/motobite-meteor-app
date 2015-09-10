@@ -1,3 +1,5 @@
+/* global IonModal */
+/* global IonLoading */
 /**
  * Created by rakeshkalyankar on 15/07/15.
  */

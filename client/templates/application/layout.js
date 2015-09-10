@@ -1,3 +1,4 @@
+/* global IonSideMenu */
 Template.layout.onCreated(function () {
 
 });

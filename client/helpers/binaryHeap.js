@@ -1,3 +1,4 @@
+/* global checkinHeap */
 //inspired from http://eloquentjavascript.net/1st_edition/appendix2.html
 
 function BinaryHeap(scoreFunction){

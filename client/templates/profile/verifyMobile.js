@@ -14,7 +14,7 @@ Template.verifyMobile.events({
 				toastr[res.type](res.message);
 				template.$('[data-action=send-smsotp-button]').fadeOut( "slow" );
 			}
-		})
+		});
 	},
 	'click [data-action=verify-smsotp-button]': function (event, template) { 
 		var str = template.$('.verifyMobileClass input').val();
@@ -31,7 +31,7 @@ Template.verifyMobile.events({
 				if (res.type === "success")
 					Router.go('profileTemplate');
 			}
-		})
+		});
 		// to prevent form reload when submitted
 		return false;
 	}

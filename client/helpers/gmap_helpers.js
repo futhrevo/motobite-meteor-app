@@ -1,5 +1,6 @@
-/* global _ */
-/* global $ */
+/* global DrivesAdvtColl */
+/* global MarkerColl */
+/* global DriversAdvtColl */
 /* global moment */
 /* global wpid */
 /* global Router */
@@ -505,7 +506,7 @@ Template.dispMap.rendered = function () {
                                 waitForGPS();
                             },
                             function () {
-                                console.log("Unable to show GPS settings screen")
+                                console.log("Unable to show GPS settings screen");
                             });
                     },
                     onCancel: function () {
@@ -577,7 +578,7 @@ var safehouseTrackerInit = function () {
              var post = {
                  id: id,
                  circle: circle
-             }
+             };
              gmap.safeHouseArray.push(post);
         },
         removed: function (id) {
@@ -592,7 +593,7 @@ var safehouseTrackerInit = function () {
         }
     });
     return handle;
-}
+};
 
 function onDeviceReady() {
     console.log("device is ready");
@@ -888,4 +889,4 @@ var cities = [{"city":"Bangalore","center":{"lat":12.971599,"lng":77.594563},"bo
     {"city":"APCR","center":{"lat":16.572983,"lng":80.357513},"bounds":{"sw":{"lat":16.4,"lng":80.78},"ne":{"lat":16.77,"lng":80.8}}},
     {"city":"Bhubaneshwar","center":{"lat":20.296059,"lng":85.82454},"bounds":{"sw":{"lat":20.2,"lng":86.07},"ne":{"lat":20.58,"lng":86.2}}},
     {"city":"Kolkata","center":{"lat":22.572646,"lng":88.363895},"bounds":{"sw":{"lat":22.24,"lng":87.94},"ne":{"lat":22.8,"lng":88.7}}},
-    {"city":"Ahmedabad","center":{"lat":23.022505,"lng":72.571362},"bounds":{"sw":{"lat":22.75,"lng":72.18},"ne":{"lat":23.3,"lng":72.95}}}]
+    {"city":"Ahmedabad","center":{"lat":23.022505,"lng":72.571362},"bounds":{"sw":{"lat":22.75,"lng":72.18},"ne":{"lat":23.3,"lng":72.95}}}];

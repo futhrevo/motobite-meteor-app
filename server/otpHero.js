@@ -23,7 +23,7 @@ Meteor.methods({
 			at: new Date(),
 			counter: 0,
 			index:index
-		}
+		};
 		// else create a document with TTL and check counter and send it to user's phone
 		var docId = SmsOtpColl.insert(post, function (error, result) {
 			if (error) {
@@ -51,7 +51,7 @@ Meteor.methods({
 			id: user,
 			at: new Date(),
 			counter: 0,
-		}
+		};
 		post[cat] = index;
 		// else create a document with TTL and check counter send it to user
 		var docId = EmailOtpColl.insert(post, function (error, result) {
@@ -62,7 +62,7 @@ Meteor.methods({
 			var query = { user: user, index: index, cat: cat };
 			SendEmailOtp(text, query);
 			
-		})
+		});
 		if (docId) {
 			return {type:"success",message:"OTP sent"};
 		} else {
@@ -149,7 +149,7 @@ var setEmailVerify = function (user, cat, index) {
 	set[proj] = true;
 	Meteor.users.update({ _id: user }, { $set: set });
 	return true;
-}
+};
 
 var setMobileVerify = function (user, index) {
 	var proj = "mobile."+ index + ".verified",
@@ -157,4 +157,4 @@ var setMobileVerify = function (user, index) {
 	set[proj] = true;
 	Meteor.users.update({ _id: user }, { $set: set });
 	return true;
-}
+};
