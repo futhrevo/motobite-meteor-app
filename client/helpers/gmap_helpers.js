@@ -1,7 +1,15 @@
+/* global SafeHouseColl */
+/// <reference path="../../typings/lodash/lodash.d.ts"/>
+/// <reference path="../../typings/underscore/underscore.d.ts"/>
+/// <reference path="../../typings/jquery/jquery.d.ts"/>
+/// <reference path="../../typings/meteor/meteor.d.ts"/>
+/// <reference path="../../typings/moment/moment.d.ts"/>
+/// <reference path="../../typings/googlemaps/google.maps.d.ts"/>
+/// <reference path="../../typings/mongodb/mongodb.d.ts"/>
+/// <reference path="../../typings/toastr/toastr.d.ts"/>
 /* global DrivesAdvtColl */
 /* global MarkerColl */
 /* global DriversAdvtColl */
-/* global moment */
 /* global wpid */
 /* global Router */
 /* global TransactColl */
@@ -9,7 +17,6 @@
 /* global IonPopup */
 /* global CheckGPS */
 /* global geohash */
-/* global Template */
 /* global polyArray */
 /* global polyline */
 /* global validateTime */
@@ -21,9 +28,7 @@
 /* global directionsDisplay */
 /* global bounds */
 /* global Session */
-/* global google */
 /* global checkinHeap */
-/* global Meteor */
 //http://www.andrehonsberg.com/article/reactive-google-maps-markers-meteor-js
 
 gmap = {
@@ -126,7 +131,7 @@ gmap = {
         //keep track of markers and geo data
         this.latLngs.push(myLatlng);
         // check if it is user marker then add an event listener to receive click events
-        if (marker.user == Meteor.userId()) { 
+        if (marker.user == Worker.userId()) { 
             mymarker.addListener('click', function () { 
                 $(".mapState .save-location-button").show(200);
                 console.log("user marker clicked");

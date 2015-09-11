@@ -1,4 +1,3 @@
-/* global moment */
 /* global distanceToLine */
 /* global markerManager */
 /* global checkin */
