@@ -131,7 +131,7 @@ gmap = {
         //keep track of markers and geo data
         this.latLngs.push(myLatlng);
         // check if it is user marker then add an event listener to receive click events
-        if (marker.user == Worker.userId()) { 
+        if (marker.user == Meteor.userId()) { 
             mymarker.addListener('click', function () { 
                 $(".mapState .save-location-button").show(200);
                 console.log("user marker clicked");
@@ -168,6 +168,9 @@ gmap = {
         console.info("[+] Initializing Google Maps with center (" + Session.get('lat') + "," + Session.get('lng') + ")");
         var clat = Session.get('lat');
         var clng = Session.get('lng');
+        if (typeof google !== 'undefined') {
+            console.log("TODO if app is offline and google is not resolved/available");
+        }
         var loc = new google.maps.LatLng(clat, clng);
         // Create a new StyledMapType object
         var mapType = new google.maps.StyledMapType(MAP_STYLE, styleOptions);
