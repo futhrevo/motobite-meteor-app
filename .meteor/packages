@@ -28,7 +28,6 @@ meteorhacks:npm
 launch-screen
 email
 mizzao:user-status
-raix:push
 
 
 npm-container
@@ -46,3 +45,4 @@ random
 ejson
 spacebars
 check
+raix:push

@@ -1,7 +1,5 @@
-com.borismus.webintent@https://github.com/Initsogar/cordova-webintent.git#3d12378de9f38be900761a0ad06ab697cf6d9add
+com.motobite.cordova.location.plugin@file://../cordova/motobite-plugin-background
 cordova-plugin-device-orientation@1.0.1
-cordova-plugin-fastrde-checkgps@1.0.0
 cordova-plugin-geolocation@1.0.1
-cordova-plugin-motobite-location@file://../cordova/motobite-plugin-background
 cordova-plugin-statusbar@1.0.1
 cordova-plugin-vibration@1.2.0
