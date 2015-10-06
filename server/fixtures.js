@@ -1,3 +1,4 @@
+/* global ULogsColl */
 /* global SafeHouseColl */
 /* global EJSON */
 /* global Match */
@@ -8,7 +9,6 @@
 /* global EmailOtpColl */
 /* global DriversAdvtColl */
 /* global DrivesAdvtColl */
-/* global Meteor */
 Meteor.startup(function () {
     // to enable indexing based on 2d sphere for DrivesAdvtColl
     DrivesAdvtColl._ensureIndex({
@@ -61,7 +61,7 @@ Meteor.startup(function () {
     // will fire every 1 minutes
     var textSched = wrapLater.parse.text('every 1 min');
     // execute logTime one time on the next occurrence of the text schedule
-    var timer = wrapLater.setInterval(Meteor.bindEnvironment(logTime), textSched);
+    wrapLater.setInterval(Meteor.bindEnvironment(logTime), textSched);
     // function to execute
     function logTime() {
         console.log(new Date());
@@ -502,7 +502,7 @@ Meteor.methods({
                 type:"Point",
                 coordinates: obj.coordinates
             }
-        }
+        };
         SafeHouseColl.insert(post);
         return {type:"success",message:"added safehouse"};
     },
