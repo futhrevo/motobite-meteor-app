@@ -3,6 +3,7 @@
 /* global checkin */
 /* global IonActionSheet */
 /* global Router */
+var vibrate = navigator.vibrate ? 'vibrate' : navigator.webkitVibrate ? 'webkitVibrate' : null;
 Template.dispMap.helpers({
     marker: function() {
         if (Session.get('map'))
@@ -32,7 +33,8 @@ Template.dispMap.helpers({
 
 Template.dispMap.events({
     //show action sheet when fab icon is pressed
-    'click [data-action=showActionSheet]': function(event, template) {
+    'click [data-action=showActionSheet]': function (event, template) {
+        navigator[vibrate](10);
     IonActionSheet.show({
         titleText: 'Actions Menu',
         buttons: [{
@@ -106,4 +108,7 @@ Template.dispMap.onDestroyed(function(){
 
 Template.dispMap.onCreated(function(){
     console.log("display map created");
+    if (Meteor.isCordova) {
+        window.motobite.location.configure();
+    }
 });

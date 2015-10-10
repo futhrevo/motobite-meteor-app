@@ -1,12 +1,4 @@
 /* global SafeHouseColl */
-/// <reference path="../../typings/lodash/lodash.d.ts"/>
-/// <reference path="../../typings/underscore/underscore.d.ts"/>
-/// <reference path="../../typings/jquery/jquery.d.ts"/>
-/// <reference path="../../typings/meteor/meteor.d.ts"/>
-/// <reference path="../../typings/moment/moment.d.ts"/>
-/// <reference path="../../typings/googlemaps/google.maps.d.ts"/>
-/// <reference path="../../typings/mongodb/mongodb.d.ts"/>
-/// <reference path="../../typings/toastr/toastr.d.ts"/>
 /* global DrivesAdvtColl */
 /* global MarkerColl */
 /* global DriversAdvtColl */
@@ -168,8 +160,9 @@ gmap = {
         console.info("[+] Initializing Google Maps with center (" + Session.get('lat') + "," + Session.get('lng') + ")");
         var clat = Session.get('lat');
         var clng = Session.get('lng');
-        if (typeof google !== 'undefined') {
+        if (typeof google === 'undefined') {
             console.log("TODO if app is offline and google is not resolved/available");
+            return;
         }
         var loc = new google.maps.LatLng(clat, clng);
         // Create a new StyledMapType object
@@ -392,18 +385,23 @@ gmap.parseRoute = function() {
 };
 
 gmap.geocode = function (lat, lng) {
-    var latlng = new google.maps.LatLng(lat, lng);
-    var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({'latLng': latlng}, function (results, status) {
-        var result;
-        if (status == google.maps.GeocoderStatus.OK) {
-            result = results[1].formatted_address;
-        } else {
-            result = "Cannot determine address at this location";
-        }
-        $('.inpShowing #polyMapSrcSearch').val(result);
-        Session.set('address', result);
-    });
+    if (typeof google !== "undefined") {
+        var latlng = new google.maps.LatLng(lat, lng);
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'latLng': latlng}, function (results, status) {
+            var result;
+            if (status == google.maps.GeocoderStatus.OK) {
+                result = results[1].formatted_address;
+            } else {
+                result = "Cannot determine address at this location";
+            }
+            $('.inpShowing #polyMapSrcSearch').val(result);
+            Session.set('address', result);
+        });
+    } else {
+         Session.set('address', null);
+     }
+    
 };
 
 //function to draw polyline on map
@@ -475,56 +473,10 @@ Template.dispMap.rendered = function () {
 
 
 
-    function waitForGPS() {
-        CheckGPS.check(function () {
-                //GPS is enabled!
-                onDeviceReady();
-
-            },
-            function () {
-                //GPS is disabled!
-                setTimeout(waitForGPS, 250);
-                console.log("waiting");
-
-            });
-    }
 
     if (Meteor.isCordova) {
         console.log("Meteor is running as cordova");
-        console.log("TODO : checkGPS only works on Android, need to figure for iOS");
-        CheckGPS.check(function () {
-                //GPS is enabled!
-                console.log("GPS enabled");
-                onDeviceReady();
-            },
-            function () {
-                //GPS is disabled!
-                console.log("GPS disabled");
-
-                IonPopup.confirm({
-                    title: 'Enable Location',
-                    template: 'This app requires access to your <strong>location</strong>. Do you want to <strong>enable</strong> it?',
-                    okText: 'Enable GPS',
-                    onOk: function () {
-                        console.log('Confirmed');
-                        //open GPS settings page
-                        window.plugins.webintent.startActivity({action: 'android.settings.LOCATION_SOURCE_SETTINGS'},
-                            function () {
-                                console.log("GPS settings screen showing now");
-                                waitForGPS();
-                            },
-                            function () {
-                                console.log("Unable to show GPS settings screen");
-                            });
-                    },
-                    onCancel: function () {
-                        console.log('Cancelled by user');
-                    }
-                });
-
-
-            });
-
+        onDeviceReady();
     } else {
         onDeviceReady();
     }
@@ -617,7 +569,24 @@ function getPosition(funct) {
         actionfunct = function () {
         };
     }
-    //success callback for geolocation
+    if (Meteor.isCordova) {
+        var success = function(obj){
+            console.log(obj);
+            Session.set('lat', obj.latitude);
+            Session.set('lng', obj.longitude);
+            Session.set('accuracy', obj.accuracy);
+            Session.set('speed', obj.velocity);
+            Session.set('atTime', obj.timestamp);
+            console.log("Got corodva location  <--");
+            actionfunct();
+        }
+        var failure = function () {
+            console.log("failed");
+            actionfunct();
+         }
+        window.motobite.location.getLocation(true,success,failure)
+    } else {
+        //success callback for geolocation
     function geo_success(position) {
         Session.set('lat', position.coords.latitude);
         Session.set('lng', position.coords.longitude);
@@ -654,6 +623,7 @@ function getPosition(funct) {
     };
     // Now safe to use device APIs
     wpid = navigator.geolocation.getCurrentPosition(geo_success, geo_error, geo_options);
+    }
 }
 
 //function to update map dom
@@ -665,13 +635,15 @@ function mapDom() {
         updateLocation();
     }
     var query = Router.current().params.query;
-    if (_.has(query, "lat") && _.has(query, "lng")) {
-        var center = new google.maps.LatLng(query.lat, query.lng);
-        gmap.map.panTo(center);
-        gmap.map.setZoom(16);
-        Router.go('index');
-    }
- 
+        if (_.has(query, "lat") && _.has(query, "lng")) {
+            Router.go('index');
+            if (typeof google !== "undefined") {
+                var center = new google.maps.LatLng(query.lat, query.lng);
+                gmap.map.panTo(center);
+                gmap.map.setZoom(16);
+            
+        } 
+    } 
 }
 
 function drawCanvas() {
@@ -886,7 +858,7 @@ var MAP_STYLE = [
 var styleOptions = {
     name: "First Style"
 };
-// Add Gurgaon, Mysore, Noida
+// Add Gurgaon, Mysore, Noida, Ahmedabad
 var cities = [{"city":"Bangalore","center":{"lat":12.971599,"lng":77.594563},"bounds":{"sw":{"lat":12.69,"lng":77.18},"ne":{"lat":13.26,"lng":77.97}}},
     {"city":"hyderabad","center":{"lat":17.385044,"lng":78.486671},"bounds":{"sw":{"lat":17.16,"lng":78.04},"ne":{"lat":17.71,"lng":78.9}}},
     {"city":"Chennai","center":{"lat":13.08268,"lng":80.270718},"bounds":{"sw":{"lat":12.9,"lng":80.01},"ne":{"lat":13.2,"lng":80.4}}},

@@ -15,8 +15,6 @@ sacha:spin
 less
 meteorhacks:aggregate
 meteoric:ionic
-meteoric:ionic-sass
-meteoric:ionicons-sass
 meteoric:autoform-ionic
 useraccounts:ionic
 copleykj:livestamp
@@ -46,3 +44,7 @@ ejson
 spacebars
 check
 raix:push
+meteoric:ionic-sass
+meteoric:ionicons-sass
+reactive-var
+ecmascript

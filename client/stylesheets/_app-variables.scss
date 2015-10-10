@@ -289,3 +289,17 @@ html, body {
     font-size: 4vw;
 }
 
+.platform-android .action-sheet-group{
+  padding-left: 10vw;
+}
+.license ol{
+  padding-left:30px;
+  padding-right: 5px;
+  list-style: decimal;
+  li ol{
+    list-style: lower-alpha;
+    li ol{
+      list-style: lower-roman;
+    }
+  }
+}

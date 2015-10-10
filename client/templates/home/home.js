@@ -9,6 +9,7 @@
 /* global toastr */
 /* global Messages */
 /* global TransactColl */
+var vibrate = navigator.vibrate ? 'vibrate' : navigator.webkitVibrate ? 'webkitVibrate' : null;
 Template.home.helpers({
     countNotifications: function () {
         return TransactColl.find({$and: [{requestee: Meteor.userId()}, {status: null}]}).count();
@@ -33,6 +34,7 @@ Template.home.onRendered(function () {
 Template.ionBody.events({
     "click [data-action=centerBounds]": function () {
         console.log("Center Map");
+        navigator[vibrate](10);
         var clat = Session.get('lat');
         var clng = Session.get('lng');
         var loc = new google.maps.LatLng(clat, clng);
@@ -43,6 +45,7 @@ Template.ionBody.events({
     },
     "click [data-action=addSafeHouse]": function () {
         console.log("Add safe house");
+        navigator[vibrate](10);
         updateLocation();
         var lat = Session.get('lat');
         var lng = Session.get('lng');
