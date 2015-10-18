@@ -476,9 +476,9 @@ Template.dispMap.rendered = function () {
 
     if (Meteor.isCordova) {
         console.log("Meteor is running as cordova");
-        onDeviceReady();
+        onDeviceDOMReady();
     } else {
-        onDeviceReady();
+        onDeviceDOMReady();
     }
 
 
@@ -555,7 +555,7 @@ var safehouseTrackerInit = function () {
     return handle;
 };
 
-function onDeviceReady() {
+function onDeviceDOMReady() {
     console.log("device is ready");
     getPosition(mapDom);
 }
