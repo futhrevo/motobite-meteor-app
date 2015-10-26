@@ -55,7 +55,7 @@ Template.ionBody.events({
             subTitle: "A region where you are not tracked with GPS, hence better battery life. You can add your home, work or other areas where you spend most time",
             template: '<div class="list"><label class="item item-input">' +
                         '<input type="text" placeholder="Enter a name" name="prompt"></label>' +
-                        '<div class="item range range-positive"><i>500m</i><input type="range" name="distance" min="500" max="1000" value="750"><i>1000m</i></div>' + 
+                        '<div class="item range range-positive"><i>300m</i><input type="range" name="distance" min="300" max="700" value="500"><i>700m</i></div>' + 
                         '<output for="range" class="output"></output></div>',
             buttons: [
                 {

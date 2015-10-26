@@ -12,7 +12,7 @@ App.info({
 
 //https://github.com/dburles/meteor-google-maps/issues/27
 //TODO change this all access to particular ip address
-App.accessRule('http://10.0.2.2/*');
+App.accessRule('*');
 App.accessRule('https://*.googleapis.com/*');
 App.accessRule('https://*.gstatic.com/*');
 App.accessRule('https://*.google.com/*');

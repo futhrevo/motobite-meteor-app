@@ -1,0 +1,41 @@
+<template name="help">
+    {{#contentFor "headerButtonLeft"}}
+        {{>ionNavBackButton path="index"}}
+    {{/contentFor}}
+
+    {{#contentFor "headerTitle"}}
+        <h1 class="title">Help</h1>
+    {{/contentFor}}
+    
+    {{#contentFor 'headerButtonRight'}}
+        <button class="button button-clear" data-ion-modal="_supportModal" style="font-weight: 500;">
+            Support
+        </button>
+    {{/contentFor}}
+
+    {{#ionView}}
+        {{#ionContent}}
+        {{#ionSlideBox}}
+                {{#ionSlide class="light-bg"}}
+                <h3>Safe House</h3>
+                {{/ionSlide}}
+                {{#ionSlide class="dark-bg"}}
+                <h3>Check In</h3>
+                {{/ionSlide}}
+                {{#ionSlide class="positive-bg"}}
+                <h3>Slide 3</h3>
+                {{/ionSlide}}
+                {{#ionSlide class="light-bg"}}
+                <h3>Safe House</h3>
+                {{/ionSlide}}
+                {{#ionSlide class="dark-bg"}}
+                <h3>Check In</h3>
+                {{/ionSlide}}
+                {{#ionSlide class="positive-bg"}}
+                <h3>Slide 3</h3>
+                {{/ionSlide}}
+            {{/ionSlideBox}}
+        {{/ionContent}}
+    {{/ionView}}
+
+</template>

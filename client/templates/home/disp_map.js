@@ -104,11 +104,15 @@ Template.dispMap.onDestroyed(function(){
         navigator.geolocation.clearWatch(wpid);
     }
 	//Session.set('map', false);
+    if(Meteor.isCordova){
+        // window.motobite.location.stop();
+    }
 });
 
 Template.dispMap.onCreated(function(){
     console.log("display map created");
     if (Meteor.isCordova) {
         window.motobite.location.configure();
+        // window.motobite.location.start({background:false});
     }
 });

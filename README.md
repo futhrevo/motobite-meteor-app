@@ -17,6 +17,8 @@
 * [x] Remove Insecure Package
 * [x] Not Required - Remove geohash package
 * [x] modify core tool-bar height according to ios specs
+* [ ] Use north when showing map in realtime
+* [ ] tabs doesnt show any accepted rides
 * [ ] Wait button when rider is waiting
 * [ ] edit delete disable after drive started
 * [ ] driver renting

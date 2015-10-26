@@ -1,10 +1,14 @@
 /* global IonSideMenu */
 Template.listReq.helpers({
     totalReqs:function(){
-        return TransactColl.find({ $and: [ {requestee:Meteor.userId() },{status:null} ] }).count();
+        // return TransactColl.find({ $and: [ {requestee:Meteor.userId() },{status:null} ] }).count();
+        return TransactColl.find({ $and: [{$or:[{requester:Meteor.userId()},{requestee:Meteor.userId()}]},{status:null}]}).count();
     },
-    req:function(){
+    reqSent:function(){
         return TransactColl.find({ $and: [ {requestee:Meteor.userId() },{status:null} ] });
+    },
+    reqGot:function(){
+        return TransactColl.find({ $and: [ {requester:Meteor.userId() },{status:null} ] });
     }
 });
 
@@ -37,6 +41,21 @@ Template.listReq.events({
     'click .list-group-item': function(event) {
 		event.preventDefault();
     	$(event.currentTarget).addClass("active").siblings().removeClass('active');
+    },
+    'click .gotInfo':function(event){
+        event.preventDefault();
+        var _id = this._id;
+        var obj = TransactColl.findOne({_id:_id});
+        IonPopup.confirm({
+            title: 'Are you sure?',
+            template: 'Are you <strong>really</strong> sure?',
+            onOk: function() {
+                console.log('Confirmed');
+            },
+            onCancel: function() {
+                console.log('Cancelled');
+            }
+        });
     },
     'click .btnInfo':function(event){
         event.preventDefault();

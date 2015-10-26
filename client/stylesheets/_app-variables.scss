@@ -246,6 +246,7 @@ html, body {
 
 .tinker-tabs .bar.bar-positive{
     border-color: $positive ;
+    background-image: linear-gradient(0deg, $positive, $positive 50%, transparent 50%);
 }
 .center{
     text-align:center;
@@ -282,11 +283,15 @@ html, body {
     color: rgb(38, 50, 56);
     font-weight: bold;
     font-size: 4vw;
+    white-space: nowrap;
+    text-align: -webkit-center;
 }
 .logo-caption{
   width: 100%;
     color: rgb(38, 50, 56);
     font-size: 4vw;
+    white-space: nowrap;
+    text-align: -webkit-center;
 }
 
 .platform-android .action-sheet-group{

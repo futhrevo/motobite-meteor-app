@@ -48,6 +48,11 @@ Template.rideDiv.events({
 			});
 		}else{
 			var obj = _.findWhere(polyArray,{_id:id});
+			var driver = _.omit(obj,'polydraw');
+			driver.driver = obj._id;
+			driver.id = Meteor.userId();
+			delete driver._id;
+			console.log(driver);
 			var subset = _.pick(obj,'_id','srcloc','dstloc','startTime','overview');
 
 

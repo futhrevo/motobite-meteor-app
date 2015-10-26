@@ -409,7 +409,7 @@ gmap.polyDraw = function (poly, post) {
     var polyInfo = polyline.dissect(poly.overview, poly.gh6[poly.srcIndex], poly.gh6[poly.dstIndex], post.fromCoord, post.toCoord);
     poly.overview = polyInfo.overview;
     var path = google.maps.geometry.encoding.decodePath(poly.overview);
-    console.log("before polylinw");
+    console.log("before polyline");
     var polydraw = new google.maps.Polyline({
         path: path,
         strokeColor: '#00acc1',
@@ -418,7 +418,7 @@ gmap.polyDraw = function (poly, post) {
         visible: false,
         map: this.map
     });
-    console.log("after polylinw");
+    console.log("after polyline");
     var distance = Math.round(google.maps.geometry.spherical.computeLength(polydraw.getPath()));
     //lets say speed is 20kmph = 334m per min
     var duration = Math.round(distance / 334);
@@ -436,7 +436,9 @@ gmap.polyDraw = function (poly, post) {
         srcDist: polyInfo.srcDistance,
         dstDist: polyInfo.destDistance,
         srcloc: post.fromCoord,
-        dstloc: post.toCoord
+        dstloc: post.toCoord,
+        src: post.src,
+        dst: post.dst
     };
     polyArray.push(polyObject);
 };
@@ -540,6 +542,24 @@ var safehouseTrackerInit = function () {
                  circle: circle
              };
              gmap.safeHouseArray.push(post);
+             if(Meteor.isCordova){
+                 var config ={};
+                 config.name = user.name;
+                 config.id = id;
+                 config.type = "SafeHouse";
+                 config.lat = user.loc.coordinates[1];
+                 config.lng = user.loc.coordinates[0];
+                 config.radius = user.radius;
+                 
+                 var success = function(){
+                     
+                 }
+                 
+                 var failure = function(){
+                     
+                 }
+                 window.motobite.location.addGeofence(config,success,failure);
+             }
         },
         removed: function (id) {
             console.log(id + " safehouse removed");
@@ -549,6 +569,15 @@ var safehouseTrackerInit = function () {
                 circle.setMap(null);
                 gmap.safeHouseArray.splice(index, 1);
                 break;
+            }
+            if(Meteor.isCordova){
+                var success = function(){
+                
+                }
+            var failure = function(){
+                
+                }
+            window.motobite.location.removeGeofence({id:id},success,failure);
             }
         }
     });
@@ -633,6 +662,9 @@ function mapDom() {
         drawCanvas();
     } else if ($('#map-canvas').html() === "") {
         updateLocation();
+    }
+    if (typeof google !== "undefined") {
+        google.maps.event.trigger(gmap.map,'resize');
     }
     var query = Router.current().params.query;
         if (_.has(query, "lat") && _.has(query, "lng")) {
