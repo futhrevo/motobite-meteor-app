@@ -319,7 +319,30 @@ Meteor.methods({
         var drivepool = DrivesAdvtColl.find({"nodes.locs": {$geoWithin: {$box: [[77.676245, 12.926030], [100, 100]]}}});
         return drivepool.fetch();
     },
-
+    postDriveReq: function(postAttributes){
+        if(! this.userId){
+            return;
+        }
+        check(this.userId, String);
+        check(postAttributes,{
+            summary: String,
+            overview: String,
+            driverAdvt: String,
+            bounds: Object,
+            distance: Number,
+            dst: [String],
+            dstDist: Number,
+            dstloc: [Number],
+            duration: Number,
+            src: [String],
+            srcDist: Number,
+            srcloc: [Number],
+            startTime: Number
+        });
+        postAttributes.id = this.userId;
+        var insertId = DrivesAdvtColl.insert(postAttributes);
+        
+    },
     //Entry for drive advertisement
     postDriveAdvt: function (postAttributes) {
         if(! this.userId){
@@ -376,10 +399,17 @@ Meteor.methods({
         check(this.userId, String);
         check(obj, {
             _id: String,
-            srcloc : [Number],
-            dstloc : [Number],
+            locs:{type:String,coordinates: [[Number]]},
             startTime : Number,
-            overview : String
+            summary: String,
+            overview: String,
+            bounds: Object,
+            distance: Number,
+            dst: [String],
+            dstDist: Number,
+            duration: Number,
+            src: [String],
+            srcDist: Number,
         });
         var requestee = DriversAdvtColl.findOne({_id: obj._id},{fields: {id: 1,ends:1}});
         var requester = this.userId;
@@ -397,10 +427,17 @@ Meteor.methods({
             advtRequest: obj._id,
             request: {
                 at: new Date(),
-                srcloc: obj.srcloc,
-                dstloc: obj.dstloc,
+                locs: obj.locs,
                 starts: obj.startTime,
                 overview: obj.overview,
+                summary: obj.summary,
+                bounds: obj.bounds,
+                distance: obj.distance,
+                dst: obj.dst,
+                dstDist: obj.dstDist,
+                duration: obj.duration,
+                src: obj.src,
+                srcDist: obj.srcDist,
             },
             ends: requestee.ends,
             status: null

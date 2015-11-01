@@ -4,13 +4,13 @@
 /* global validateTime */
 Template.inflateDrives.helpers({
     total: function(){
-        return DrivesAdvtColl.find().count();
+        return TransactColl.find({$and:[{requester:Meteor.userId()},{status:true}]}).count();
     },
     drive: function(){
-        return DrivesAdvtColl.find({},{sort: {startTime: 1}});
+        return TransactColl.find({$and:[{requester:Meteor.userId()},{status:true}]},{sort: {"request.starts": 1}});
     },
     start:function(){
-        var date  = new Date(this.startTime * 1000);
+        var date  = new Date(this.request.starts * 1000);
         return date.toLocaleString();
     }
 });

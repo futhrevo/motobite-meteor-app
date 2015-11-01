@@ -48,12 +48,13 @@ Template.rideDiv.events({
 			});
 		}else{
 			var obj = _.findWhere(polyArray,{_id:id});
-			var driver = _.omit(obj,'polydraw');
-			driver.driver = obj._id;
-			driver.id = Meteor.userId();
-			delete driver._id;
-			console.log(driver);
-			var subset = _.pick(obj,'_id','srcloc','dstloc','startTime','overview');
+			// var driver = _.omit(obj,'polydraw');
+			// driver.driverAdvt = obj._id;
+			obj.locs = { type: "LineString" };
+			obj.locs.coordinates = [obj.srcloc, obj.dstloc];
+			var subset = _.omit(obj, ["srcloc", "dstloc","polydraw"]);
+			// console.log(subset);
+			// var subset = _.pick(obj,'_id','srcloc','dstloc','startTime','overview');
 
 
 			IonPopup.confirm({
