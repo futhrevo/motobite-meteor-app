@@ -48,3 +48,6 @@ meteoric:ionic-sass
 meteoric:ionicons-sass
 reactive-var
 ecmascript
+aldeed:autoform
+cfs:standard-packages
+cfs:gridfs

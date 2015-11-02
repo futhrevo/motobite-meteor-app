@@ -1,0 +1,23 @@
+<template name="groupModal">
+	{{#ionModal title="Add a Group"}}
+		<div class="list">
+			<form>
+			<div class="item item-input-inset">
+				<label class="item-input-wrapper">
+					<i class="icon ion-ios-search placeholder-icon"></i>
+					<input type="text" placeholder="Search By Name" id="search-id">
+				</label>
+				<button class="button button-clear" data-action="search-group">
+                	Search
+            	</button>
+			</div>
+			</form>
+			<div id="search-result" style="text-align:center">
+				<h5 class="assertive" id="no-group-error" style="display: none;">No Group found found with given name</h5>
+				<div id="group-data" style="display: none;">
+					
+				</div>
+			</div>
+		</div>	
+	{{/ionModal}}
+</template>

@@ -1,0 +1,27 @@
+<template name="groups">
+    {{#contentFor "headerButtonLeft"}}
+        {{>ionNavBackButton path="index"}}
+    {{/contentFor}}
+
+    {{#contentFor "headerTitle"}}
+        <h1 class="title">Groups</h1>
+    {{/contentFor}}
+    
+    {{#contentFor 'headerButtonRight'}}
+        <button class="button button-clear" data-ion-modal="groupModal" style="font-weight: 500;">
+            Add
+        </button>
+    {{/contentFor}}
+
+    {{#ionView}}
+        {{#ionContent class="groupsClass"}}
+            <div class="list card">
+                <a class="item item-icon-left positive" href="{{pathFor 'createGroup'}}">
+                    <i class="icon ion-plus-circled"></i>
+                    Create a group
+                </a>
+            </div>
+        {{/ionContent}}
+    {{/ionView}}
+
+</template>

@@ -1,3 +1,4 @@
+/* global IonPopup */
 /* global IonModal */
 /* global IonLoading */
 /**
@@ -30,6 +31,7 @@ Template.searchContactModal.events({
         }else{
             toastr.warning("Please enter proper email");
         }
+        return false;
     },
 
     'click [data-action=send-request]': function(event) {
@@ -66,4 +68,8 @@ Template.searchContactModal.events({
         });
 
     }
+});
+
+Template.searchContactModal.onDestroyed(function () {
+	IonLoading.hide();
 });

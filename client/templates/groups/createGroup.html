@@ -1,0 +1,13 @@
+<template name="createGroup">
+	{{#contentFor "headerButtonLeft"}}
+        {{>ionNavBackButton path="groups"}}
+    {{/contentFor}}
+	{{#contentFor "headerTitle"}}
+        <h1 class="title">Create a Group</h1>
+    {{/contentFor}}
+	{{#ionView}}
+		{{#ionContent}}
+			{{> quickForm schema=groupSchema id="myGroupForm" template="ionic"}}
+		{{/ionContent}}
+    {{/ionView}}
+</template>
