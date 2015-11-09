@@ -1,11 +1,11 @@
 <template name="groupModal">
-	{{#ionModal title="Add a Group"}}
-		<div class="list">
+	{{#ionModal title="Add a Group" class="groupsClass"}}
+		<div class="list" style="margin-bottom: -1px;">
 			<form>
 			<div class="item item-input-inset">
 				<label class="item-input-wrapper">
 					<i class="icon ion-ios-search placeholder-icon"></i>
-					<input type="text" placeholder="Search By Name" id="search-id">
+					<input type="text" placeholder="Name or unique id" id="search-id">
 				</label>
 				<button class="button button-clear" data-action="search-group">
                 	Search
@@ -18,6 +18,20 @@
 					
 				</div>
 			</div>
-		</div>	
+		</div>
+		{{#ionList}}
+			{{#each names}}
+				{{#ionItem buttonRight=true }}
+				<a class="btnInfo">
+                            <h2>{{this.name}} </h2>
+                            <p>
+                                {{this.description}}
+                            </p>
+											</a>
+							<button class="button icon ion-plus-round button-positive button-clear btnAdd" ></button>
+
+				{{/ionItem}}
+			{{/each}}
+		{{/ionList}}	
 	{{/ionModal}}
 </template>

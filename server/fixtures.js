@@ -29,7 +29,9 @@ Meteor.startup(function () {
     MarkerColl._ensureIndex({"loc" : "2dsphere","at":-1},{ background: true });
     //Messages.find({room: room, users: this.userId}, {sort: {time: -1}, limit: 1})
     Messages._ensureIndex({"room": 1, "users": 1, "time": -1});
-    CommColl._ensureIndex({"owner":1});
+    CommColl._ensureIndex({ "owner": 1 });
+    CommColl._ensureIndex({ "id": 1 });
+    CommColl._ensureIndex({ "name": "text" });
     TransactColl._ensureIndex({ requestee: 1, requester: 1, 'advtRequest': 1 });
     TransactColl._ensureIndex({ "ends": 1 }, { expireAfterSeconds: 300 });
     //DriversTTL._ensureIndex({ "ends": 1 }, { expireAfterSeconds: 10800 });
