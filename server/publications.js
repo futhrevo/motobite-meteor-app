@@ -129,6 +129,15 @@ Meteor.publish('theHouses',function(){
     var userid = this.userId;
     return SafeHouseColl.find({id:userid});
 });
+
+Meteor.publish('myOwnGroups', function(){
+    if(! this.userId){
+        return;
+    }
+    check(this.userId, String);
+    var userid = this.userId;
+    return CommColl.find({owner:userid});
+});
 DriversAdvtColl.before.insert(function (userId, doc) {
     doc.at = new Date();
     doc.id = userId;

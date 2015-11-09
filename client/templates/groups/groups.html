@@ -21,6 +21,22 @@
                     Create a group
                 </a>
             </div>
+            {{#ionList}}
+                <div class="item item-divider">
+                    <p>Total Communities you own - {{total}}</p>
+                </div>
+                {{#each comm}}
+                    {{#ionItem buttonRight=true }}
+                        <a class="btnInfo">
+                            <h2>{{this.name}} </h2>
+                            <p>
+                                {{this.description}}
+                            </p>
+                        </a>
+                        <button class="button icon ion-trash-a button-assertive button-clear btnDel" ></button>
+                    {{/ionItem}}
+                {{/each}}
+            {{/ionList}}
         {{/ionContent}}
     {{/ionView}}
 
