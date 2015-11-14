@@ -1,0 +1,54 @@
+<template name="groupView">
+	{{#contentFor "headerButtonLeft"}}
+        {{>ionNavBackButton path="groups"}}
+    {{/contentFor}}
+	{{#contentFor "headerTitle"}}
+        <h1 class="title">{{group.name}}</h1>
+    {{/contentFor}}
+	{{#contentFor 'headerButtonRight'}}
+        <button class="button icon ion-trash-a button-clear btnDel" >
+        </button>
+    {{/contentFor}}
+	{{#ionView}}
+			{{#if group.private}}
+				{{#ionSubheaderBar class= "bar-calm"}}
+				<h2 class="title">Private Group</h2>
+				{{/ionSubheaderBar}}
+			{{else}}
+				{{#ionSubheaderBar}}
+				<h2 class="title">Open Group</h2>
+				{{/ionSubheaderBar}}
+			{{/if}}
+		
+		{{#ionContent class="groupViewClass"}}
+			<div class="list card">
+				<div class="item">
+					<h2>{{group.name}}</h2>
+					<p>{{group.id}}</p>
+				</div>
+				<div class="item item-body">
+					<p>{{group.description}}</p>
+				</div>
+				{{#if group.url}}
+				<div class="item">
+					<p>{{group.url}}</p>
+				</div>
+				{{/if}}
+				<div class="item">
+					<p>
+						<a href="#" class="subdued">{{group.members.length}} Members</a>
+						<a href="#" class="subdued">{{group.pending.length}} Pending</a>
+						<a href="#" class="subdued">{{group.blocked.length}} Blocked</a>
+					</p>
+				</div>
+			</div>
+		{{/ionContent}}
+		{{#ionFooterBar class="bar-calm"}}
+      		<div class="button-bar">
+				<a class="button" data-ion-modal="membersModal" data-title = "Members" data-ismembers=true data-id={{group._id}}>Members</a>
+				<a class="button" data-ion-modal="membersModal" data-title = "Pending Members" data-ispending=true data-id={{group._id}}>Pending</a>
+				<a class="button" data-ion-modal="membersModal" data-title = "Blocked People" data-isblocked=true data-id={{group._id}}>Blocked</a>
+		</div>
+    	{{/ionFooterBar}}
+	{{/ionView}}
+</template>

@@ -9,7 +9,7 @@ Meteor.methods({
 		if(dup != null){
 			return {type:"error",message:"Group with this id already exists, please choose another"}
 		}
-		_.extend(doc, {owner:this.userId});
+		_.extend(doc, {owner:this.userId,pending:[],blocked:[],members:[], createdAt: new Date()});
 		CommColl.insert(doc);
 		return {type:"success",message:"Success"}
 	},
@@ -51,15 +51,15 @@ Meteor.methods({
 			return {type:"info",message:"You own this group"}
 		}
 		// if already added
-		if (_.indexOf(comm.members, user) > 0) {
+		if (_.indexOf(comm.members, user) > -1) {
 			return {type:"info",message:"You are already member of this group"}
 		}
 		// if request is pending
-		if (_.indexOf(comm.pending, user) > 0) {
+		if (_.indexOf(comm.pending, user) > -1) {
 			return {type:"info",message:"You membership is pending by group owner"}
 		}
 		// if blocked
-		if (_.indexOf(comm.blocked, user) > 0) {
+		if (_.indexOf(comm.blocked, user) > -1) {
 			return {type:"error",message:"You are blocked from entering this group"}
 		}
 		// none

@@ -67,7 +67,7 @@ Meteor.publish('friends', function(userIds) {
         return;
     }
     check(this.userId, String);
-    check(userIds, Array);
+    check(userIds, [String]);
     return Meteor.users.find(
         {_id: {$in: userIds}},
         {fields: {_id: 1, 'profile.name': 1, 'profile.status': 1,

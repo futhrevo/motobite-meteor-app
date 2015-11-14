@@ -1,0 +1,30 @@
+<template name="membersModal">
+	{{#ionModal title=title class="membersClass"}}
+	<div class="list">
+			<h2>{{id}}</h2>
+		</div>
+		{{#each member.members}}
+			<h2>{{.}}</h2>
+		{{/each}}
+	{{/ionModal}}
+	<!--{{#if isMembers}}
+		
+		
+	{{else}}
+		{{#if isPending}}
+			{{#ionModal title="Pending" class="membersClass"}}
+			<div class="list">
+				<h2>{{id}}</h2>
+				<p>{{members}}</p>
+			</div>
+			{{/ionModal}}
+		{{else}}
+			{{#ionModal title="Blocked" class="membersClass"}}
+			<div class="list">
+				<h2>{{id}}</h2>
+				<p>{{members}}</p>
+			</div>
+			{{/ionModal}}
+		{{/if}}
+	{{/if}}-->
+</template>

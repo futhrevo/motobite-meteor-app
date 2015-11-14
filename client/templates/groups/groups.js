@@ -4,5 +4,15 @@ Template.groups.helpers({
 	},
 	comm:function(){
 		return CommColl.find({owner:Meteor.userId()});
+	},
+	totalJoin: function () {
+		return CommColl.find({ owner: { $ne: Meteor.userId() } }).count();
+	}
+});
+
+Template.groups.events({
+	'click [data-action=open-group]': function (event) { 
+		event.preventDefault();
+		console.log("TODO: open group");
 	}
 });
