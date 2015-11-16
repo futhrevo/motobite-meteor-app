@@ -1,3 +1,4 @@
+/* global CommColl */
 Meteor.methods({
 	createGroup: function(doc){
 		if(! this.userId){
@@ -91,5 +92,97 @@ Meteor.methods({
 		console.log("Delete Group with id: " + id);
 		CommColl.delete({ _id: id, owner: user });
 		return {type:"success",message:"Deleted"}
+	},
+	blockMember: function (doc) {
+		if(! this.userId){
+            return;
+        }
+        check(this.userId, String);
+		var user = this.userId;
+		check(doc, {
+			groupId: String,
+			memId: String
+		});
+		var comm = CommColl.findOne({ _id: doc.groupId, owner: user });
+		if (comm == null) {
+			return {type:"error",message:"You cannot perform this action"}
+		}
+		// if already added
+		if (_.indexOf(comm.members, doc.memId) > -1) {
+			CommColl.update({ _id: doc.groupId, owner: user }, { $pull: { members: doc.memId } });
+			CommColl.update({ _id: doc.groupId, owner: user  }, { $push: { blocked: doc.memId } }, { upsert: true });
+			return {type:"success",message:"Member blocked"}
+		} else {
+			return {type:"info",message:"Member not found"}
+		}
+	},
+	acceptPending: function (doc) {
+		if(! this.userId){
+            return;
+        }
+        check(this.userId, String);
+		var user = this.userId;
+		check(doc, {
+			groupId: String,
+			memId: String
+		});
+		var comm = CommColl.findOne({ _id: doc.groupId, owner: user });
+		if (comm == null) {
+			return {type:"error",message:"You cannot perform this action"}
+		}
+		// if pending
+		if (_.indexOf(comm.pending, doc.memId) > -1) { 
+			CommColl.update({ _id: doc.groupId, owner: user }, { $pull: { pending: doc.memId } });
+			CommColl.update({ _id: doc.groupId, owner: user  }, { $push: { members: doc.memId } }, { upsert: true });
+			return {type:"success",message:"Member Added"}
+		} else {
+			return {type:"info",message:"Member not found"}
+		}
+	},
+	rejectPending: function (doc) {
+		if(! this.userId){
+            return;
+        }
+        check(this.userId, String);
+		var user = this.userId;
+		check(doc, {
+			groupId: String,
+			memId: String
+		});
+		var comm = CommColl.findOne({ _id: doc.groupId, owner: user });
+		if (comm == null) {
+			return {type:"error",message:"You cannot perform this action"}
+		}
+		// if pending
+		if (_.indexOf(comm.pending, doc.memId) > -1) { 
+			CommColl.update({ _id: doc.groupId, owner: user }, { $pull: { pending: doc.memId } });
+			CommColl.update({ _id: doc.groupId, owner: user  }, { $push: { blocked: doc.memId } }, { upsert: true });
+			return {type:"success",message:"Member Blocked"}
+		} else {
+			return {type:"info",message:"Member not found"}
+		}
+	},
+	unblockMember: function (doc) {
+		if(! this.userId){
+            return;
+        }
+        check(this.userId, String);
+		var user = this.userId;
+		check(doc, {
+			groupId: String,
+			memId: String
+		});
+		var comm = CommColl.findOne({ _id: doc.groupId, owner: user });
+		if (comm == null) {
+			return {type:"error",message:"You cannot perform this action"}
+		}
+		// if pending
+		if (_.indexOf(comm.blocked, doc.memId) > -1) { 
+			CommColl.update({ _id: doc.groupId, owner: user }, { $pull: { blocked: doc.memId } });
+			CommColl.update({ _id: doc.groupId, owner: user  }, { $push: { members: doc.memId } }, { upsert: true });
+			return {type:"success",message:"Member unBlocked"}
+		} else {
+			return {type:"info",message:"Member not found"}
+		}
 	}
 });

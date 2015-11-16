@@ -138,6 +138,15 @@ Meteor.publish('myOwnGroups', function(){
     var userid = this.userId;
     return CommColl.find({owner:userid});
 });
+Meteor.publish('myGroups', function(){
+    if(! this.userId){
+        return;
+    }
+    check(this.userId, String);
+    var userid = this.userId;
+    return CommColl.find({members:userid},{fields:{pending:0,blocked:0,members:0}});
+});
+
 DriversAdvtColl.before.insert(function (userId, doc) {
     doc.at = new Date();
     doc.id = userId;

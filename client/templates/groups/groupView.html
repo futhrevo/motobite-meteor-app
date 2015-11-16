@@ -5,10 +5,12 @@
 	{{#contentFor "headerTitle"}}
         <h1 class="title">{{group.name}}</h1>
     {{/contentFor}}
+	{{#if isowner}}
 	{{#contentFor 'headerButtonRight'}}
         <button class="button icon ion-trash-a button-clear btnDel" >
         </button>
     {{/contentFor}}
+	{{/if}}
 	{{#ionView}}
 			{{#if group.private}}
 				{{#ionSubheaderBar class= "bar-calm"}}
@@ -34,6 +36,7 @@
 					<p>{{group.url}}</p>
 				</div>
 				{{/if}}
+				{{#if isowner}}
 				<div class="item">
 					<p>
 						<a href="#" class="subdued">{{group.members.length}} Members</a>
@@ -41,8 +44,10 @@
 						<a href="#" class="subdued">{{group.blocked.length}} Blocked</a>
 					</p>
 				</div>
+				{{/if}}
 			</div>
 		{{/ionContent}}
+		{{#if isowner}}
 		{{#ionFooterBar class="bar-calm"}}
       		<div class="button-bar">
 				<a class="button" data-ion-modal="membersModal" data-title = "Members" data-ismembers=true data-id={{group._id}}>Members</a>
@@ -50,5 +55,12 @@
 				<a class="button" data-ion-modal="membersModal" data-title = "Blocked People" data-isblocked=true data-id={{group._id}}>Blocked</a>
 		</div>
     	{{/ionFooterBar}}
+		{{else}}
+			{{#ionFooterBar class="bar-assertive"}}
+				<div class="button-bar">
+					<a class="button" >Unjoin this group</a>
+					</div>
+			{{/ionFooterBar}}
+		{{/if}}
 	{{/ionView}}
 </template>

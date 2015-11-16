@@ -31,6 +31,7 @@ Meteor.startup(function () {
     Messages._ensureIndex({"room": 1, "users": 1, "time": -1});
     CommColl._ensureIndex({ "owner": 1 });
     CommColl._ensureIndex({ "id": 1 });
+    CommColl._ensureIndex({ "members": 1 });
     CommColl._ensureIndex({ "name": "text" });
     TransactColl._ensureIndex({ requestee: 1, requester: 1, 'advtRequest': 1 });
     TransactColl._ensureIndex({ "ends": 1 }, { expireAfterSeconds: 300 });

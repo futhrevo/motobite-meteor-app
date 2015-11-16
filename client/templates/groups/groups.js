@@ -7,12 +7,12 @@ Template.groups.helpers({
 	},
 	totalJoin: function () {
 		return CommColl.find({ owner: { $ne: Meteor.userId() } }).count();
+	},
+	commJoin: function () {
+		return CommColl.find({ owner: { $ne: Meteor.userId() } });
 	}
 });
 
 Template.groups.events({
-	'click [data-action=open-group]': function (event) { 
-		event.preventDefault();
-		console.log("TODO: open group");
-	}
+
 });
