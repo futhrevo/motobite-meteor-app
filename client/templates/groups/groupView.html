@@ -7,7 +7,7 @@
     {{/contentFor}}
 	{{#if isowner}}
 	{{#contentFor 'headerButtonRight'}}
-        <button class="button icon ion-trash-a button-clear btnDel" >
+        <button class="button icon ion-trash-a button-clear "  data-action="disband-group">
         </button>
     {{/contentFor}}
 	{{/if}}
@@ -58,7 +58,7 @@
 		{{else}}
 			{{#ionFooterBar class="bar-assertive"}}
 				<div class="button-bar">
-					<a class="button" >Unjoin this group</a>
+					<a class="button" data-action="unjoin-group">Unjoin this group</a>
 					</div>
 			{{/ionFooterBar}}
 		{{/if}}

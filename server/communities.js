@@ -6,12 +6,14 @@ Meteor.methods({
         }
         check(this.userId, String);
 		check(doc, Schema.group);
+		var me = this.userId;
 		var dup = CommColl.findOne({id:doc.id});
 		if(dup != null){
 			return {type:"error",message:"Group with this id already exists, please choose another"}
 		}
-		_.extend(doc, {owner:this.userId,pending:[],blocked:[],members:[], createdAt: new Date()});
-		CommColl.insert(doc);
+		_.extend(doc, {owner:me,pending:[],blocked:[],members:[], createdAt: new Date()});
+		var docid = CommColl.insert(doc);
+		Meteor.users.update({ _id: me }, { $addToSet: { 'profile.communities': { _id: docid, private: doc.private, isowned:true } } });
 		return {type:"success",message:"Success"}
 	},
 	searchGroup: function (doc, skip) {
@@ -85,12 +87,12 @@ Meteor.methods({
 		if (comm == null) {
 			return {type:"error",message:"You cannot delete group you dont own"}
 		}
-		if (comm.members.length() > 0) {
-			return {type:"info",message:"Your group has members, consider transferring your ownership"}
-		}
+		// if (comm.members.length() > 0) {
+		// 	return {type:"info",message:"Your group has members, consider transferring your ownership"}
+		// }
 		
 		console.log("Delete Group with id: " + id);
-		CommColl.delete({ _id: id, owner: user });
+		CommColl.remove({ _id: id, owner: user });
 		return {type:"success",message:"Deleted"}
 	},
 	blockMember: function (doc) {
@@ -181,6 +183,28 @@ Meteor.methods({
 			CommColl.update({ _id: doc.groupId, owner: user }, { $pull: { blocked: doc.memId } });
 			CommColl.update({ _id: doc.groupId, owner: user  }, { $push: { members: doc.memId } }, { upsert: true });
 			return {type:"success",message:"Member unBlocked"}
+		} else {
+			return {type:"info",message:"Member not found"}
+		}
+	},
+	unjoinGroup: function (doc) {
+		if(! this.userId){
+            return;
+        }
+        check(this.userId, String);
+		var user = this.userId;
+		check(doc, {
+			groupId: String,
+			memId: String
+		});
+		var comm = CommColl.findOne({ _id: doc.groupId});
+		if (comm == null) {
+			return {type:"error",message:"You cannot perform this action"}
+		}
+		//if member
+		if (_.indexOf(comm.members, doc.memId) > -1) { 
+			CommColl.update({ _id: doc.groupId}, { $pull: { members: doc.memId } });
+			return {type:"success",message:"Unjoined group"}
 		} else {
 			return {type:"info",message:"Member not found"}
 		}

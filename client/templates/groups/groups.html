@@ -26,34 +26,34 @@
                     <p>Total Communities you own - {{total}}</p>
                 </div>
                 {{#each comm}}
-                    {{#ionItem buttonRight=true }}
+                    <div class="item">
                         <a  href="{{pathFor 'groupView' _id}}">
                             <h2>{{this.name}} </h2>
                             <p>
                                 {{this.description}}
                             </p>
-                        </a>
+                       
                         <p>
-                            <a class="button button-clear icon-left ion-checkmark-circled button-positive btnMem">{{this.members.length}}</a>
-                            <a class="button button-clear icon-left ion-help-circled button-energized btnPend">{{this.pending.length}}</a>
-                            <a class="button button-clear icon-left ion-minus-circled button-assertive btnBlock">{{this.blocked.length}}</a>
-                        </p>
-                        <button class="button icon ion-trash-a button-assertive button-clear btnDel" ></button>
-                    {{/ionItem}}
+						<a  class="subdued">{{this.members.length}} Members</a>
+						<a  class="subdued">{{this.pending.length}} Pending</a>
+						<a  class="subdued">{{this.blocked.length}} Blocked</a>
+					</p>
+                        </a>
+                    </div>
                 {{/each}}
                 <div class="item item-divider">
                     <p>Total Communities you joined - {{totalJoin}}</p>
                 </div>
                 {{#each commJoin}}
-                    {{#ionItem buttonRight=true }}
+                     <div class="item">
                         <a href="{{pathFor 'groupView' _id}}">
                             <h2>{{this.name}} </h2>
                             <p>
                                 {{this.description}}
                             </p>
                         </a>
-                        <button class="button icon ion-trash-a button-assertive button-clear btnDel" ></button>
-                    {{/ionItem}}
+                       
+                    </div>
                 {{/each}}
             {{/ionList}}
         {{/ionContent}}
