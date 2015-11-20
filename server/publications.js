@@ -152,3 +152,12 @@ DriversAdvtColl.before.insert(function (userId, doc) {
     doc.id = userId;
     doc.ends = new Date((doc.startTime + doc.duration * 60)*1000);
 });
+
+// update user collection when a group is deleted
+CommColl.after.remove(function (userId, doc) {
+    if (doc.members.length > 0) {
+        _.each(doc.members, function (member) {
+            Meteor.users.update({_id: member}, {$pull: {'profile.communities': {_id: doc._id}}});
+        })
+    }
+});

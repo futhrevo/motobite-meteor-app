@@ -73,6 +73,7 @@ Meteor.methods({
 		} else {
 			// not private
 			CommColl.update({ _id: id }, { $push: { members: user } }, { upsert: true });
+			Meteor.users.update({ _id: user }, { $addToSet: { 'profile.communities': { _id: id, private: false, isowned:false } } });
 			return {type:"success",message:"You are added to this group"}
 		}
 	},
@@ -113,7 +114,8 @@ Meteor.methods({
 		if (_.indexOf(comm.members, doc.memId) > -1) {
 			CommColl.update({ _id: doc.groupId, owner: user }, { $pull: { members: doc.memId } });
 			CommColl.update({ _id: doc.groupId, owner: user  }, { $push: { blocked: doc.memId } }, { upsert: true });
-			return {type:"success",message:"Member blocked"}
+ 			Meteor.users.update({_id: doc.memId}, {$pull: {'profile.communities': {_id: doc.groupId}}});
+			return { type: "success", message: "Member blocked" }
 		} else {
 			return {type:"info",message:"Member not found"}
 		}
@@ -136,7 +138,9 @@ Meteor.methods({
 		if (_.indexOf(comm.pending, doc.memId) > -1) { 
 			CommColl.update({ _id: doc.groupId, owner: user }, { $pull: { pending: doc.memId } });
 			CommColl.update({ _id: doc.groupId, owner: user  }, { $push: { members: doc.memId } }, { upsert: true });
-			return {type:"success",message:"Member Added"}
+
+			Meteor.users.update({ _id: doc.memId }, { $addToSet: { 'profile.communities': { _id: doc.groupId, private: comm.private, isowned: false } } });
+			return { type: "success", message: "Member Added" }
 		} else {
 			return {type:"info",message:"Member not found"}
 		}
@@ -182,7 +186,8 @@ Meteor.methods({
 		if (_.indexOf(comm.blocked, doc.memId) > -1) { 
 			CommColl.update({ _id: doc.groupId, owner: user }, { $pull: { blocked: doc.memId } });
 			CommColl.update({ _id: doc.groupId, owner: user  }, { $push: { members: doc.memId } }, { upsert: true });
-			return {type:"success",message:"Member unBlocked"}
+			Meteor.users.update({ _id: doc.memId }, { $addToSet: { 'profile.communities': { _id: doc.groupId, private: comm.private, isowned: false } } });
+			return { type: "success", message: "Member unBlocked" }
 		} else {
 			return {type:"info",message:"Member not found"}
 		}
@@ -203,7 +208,8 @@ Meteor.methods({
 		}
 		//if member
 		if (_.indexOf(comm.members, doc.memId) > -1) { 
-			CommColl.update({ _id: doc.groupId}, { $pull: { members: doc.memId } });
+			CommColl.update({ _id: doc.groupId }, { $pull: { members: doc.memId } });
+			Meteor.users.update({_id: doc.memId}, {$pull: {'profile.communities': {_id: doc.groupId}}});
 			return {type:"success",message:"Unjoined group"}
 		} else {
 			return {type:"info",message:"Member not found"}

@@ -14,7 +14,6 @@ App.info({
 //TODO change this all access to particular ip address
 App.accessRule('*');
 // for collectionfs
-App.accessRule("blob:*");
 App.accessRule('https://*.googleapis.com/*');
 App.accessRule('https://*.gstatic.com/*');
 App.accessRule('https://*.google.com/*');
