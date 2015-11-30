@@ -200,3 +200,7 @@ db.getCollection('drivers').find(
 cordova-plugin-device-orientation@https://github.com/apache/cordova-plugin-device-orientation/tarball/d0c83f2cde672a77567195437db02d113438f3a6
 
 427d49f61297f749b09b971c00dfeedc289c1809
+
+
+// get mup recognised in server
+sudo ln -s /usr/bin/nodejs /usr/bin/node

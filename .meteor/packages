@@ -49,5 +49,5 @@ meteoric:ionicons-sass
 reactive-var
 ecmascript
 aldeed:autoform
-mdg:camera
 edgee:slingshot
+meteoric:camera

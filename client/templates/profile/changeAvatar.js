@@ -21,7 +21,7 @@ Template.changeAvatar.events({
  			height: 256,
  			quality: 100
 		};
-		MeteorCamera.getPicture(options, function (err, daraURI) {
+		MeteoricCamera.getPicture(options, function (err, dataURI) {
 			if (err) {
  				IonPopup.alert({
 					title: 'No photo',
@@ -56,7 +56,7 @@ Template.changeAvatar.events({
  			sourceType: Camera.PictureSourceType.PHOTOLIBRARY
  		};
 
- 		MeteorCamera.getPicture(options, function(err, dataURI){
+ 		MeteoricCamera.getPicture(options, function(err, dataURI){
  			if (err) {
  				IonPopup.alert({
 					title: 'No photo',
@@ -83,4 +83,50 @@ Template.changeAvatar.events({
  			}
  		});
  	},
+	 'click [data-action=upload-avatar]': function() {
+		var avatarUploader = new Slingshot.Upload('avatarUploader');
+ 		var cropData = avatarCrop.data(256, 256, 'jpeg');
+ 		var img = dataURItoBlob(cropData.image);
+		 
+		$('.button-bar').hide();
+ 		$(".loading").show();
+		 
+		avatarUploader.send(img, function(err, url) {
+			uploader.set();
+			
+			if (err) {
+ 				IonPopup.alert({
+					title: 'Upload error',
+					template: 'Error occured while uploading image',
+					okText: 'OK',
+					okType: 'button-assertive'
+				});
+				$(".loading").hide();
+				$('.button-bar').show();
+			} else {
+				Meteor.call('changeAvatar', url);
+				Router.go('profileTemplate');
+			}
+			
+		});
+		
+		uploader.set(avatarUploader);
+	 },
+	 'click [data-action=zoom-out]': function () {
+ 		if (currentZoom > 1) {
+ 			currentZoom -= 0.1;
+ 			avatarCrop.zoom(currentZoom);
+ 		}
+ 	},
+
+ 	'click [data-action=zoom-in]': function () {
+ 		if (currentZoom < 5) {
+ 			currentZoom += 0.1;
+ 			avatarCrop.zoom(currentZoom);
+ 		}
+ 	},
+
+ 	'click [data-action=rotate]': function() {
+ 		avatarCrop.rotate();
+ 	}
 });
