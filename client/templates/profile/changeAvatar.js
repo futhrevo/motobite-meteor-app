@@ -112,6 +112,10 @@ Template.changeAvatar.events({
 		
 		uploader.set(avatarUploader);
 	 },
+	 'click [data-action=delete-avatar]': function() {
+ 		Meteor.call('changeAvatar', '');
+ 		Router.go('profileTemplate');
+ 	},
 	 'click [data-action=zoom-out]': function () {
  		if (currentZoom > 1) {
  			currentZoom -= 0.1;

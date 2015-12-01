@@ -1,7 +1,7 @@
 {
 	"public": {
-		"gsBucketURL": "<BUCKET URL>"
+		"gsBucketURL": "https://mbavatar.storage.googleapis.com"
 	},
-	"gsBucket": "<BUCKET NAME>",
-	"GoogleAccessId": "<GOOGLE ACCESS ID>"
+	"gsBucket": "mbavatar",
+	"GoogleAccessId": "account-1@motobite-1137.iam.gserviceaccount.com"
 }
