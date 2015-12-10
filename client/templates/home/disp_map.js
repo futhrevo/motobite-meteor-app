@@ -43,7 +43,10 @@ Template.dispMap.events({
             text: 'I need a ride &nbsp; <i class="icon ion-android-walk"></i>'
         }, {
             text: 'Check-in &nbsp; <i class="icon ion-ios-timer-outline"></i>'
-        }, ],
+        }, {
+            text: 'Record a route &nbsp; <i class="icon ion-ios-recording"></i>'
+            
+        }],
         destructiveText: 'Delete an appointment',
         cancelText: 'Cancel',
         cancelOnStateChange:false,
@@ -64,6 +67,11 @@ Template.dispMap.events({
             if (index === 2) {
                 console.log('User needs to checkin');
                 checkin();
+            }
+            if (index === 3){
+                $('body').removeClass('mb-has-fab');
+                Session.set('mode','record');
+                console.log('User wants to record a route');
             }
             return true;
         },
@@ -107,6 +115,7 @@ Template.dispMap.onDestroyed(function(){
     if(Meteor.isCordova){
         // window.motobite.location.stop();
     }
+    $('body').removeClass('mb-has-fab');
 });
 
 Template.dispMap.onCreated(function(){
@@ -115,4 +124,5 @@ Template.dispMap.onCreated(function(){
         window.motobite.location.configure();
         // window.motobite.location.start({background:false});
     }
+    $('body').addClass('mb-has-fab');
 });

@@ -221,3 +221,7 @@
   -webkit-transition: all 0.5s ease-out !important;
   transition: all 0.5s ease-out !important;
 }
+
+.mb-has-fab .spin{
+  @extend .spin.on;
+}

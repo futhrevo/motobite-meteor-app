@@ -1,23 +1,6 @@
-/* global SafeHouseColl */
-/* global IonPopup */
-/* global google */
-/* global Meteor */
-/* global Template */
-/* global gmap */
-/* global Session */
-/* global updateLocation */
-/* global toastr */
-/* global Messages */
-/* global TransactColl */
+/* global recordRoute, SafeHouseColl, IonPopup, google, Meteor, Template, gmap, Session,  updateLocation, toastr, Messages, TransactColl*/
+
 var vibrate = navigator.vibrate ? 'vibrate' : navigator.webkitVibrate ? 'webkitVibrate' : null;
-Template.home.helpers({
-    countNotifications: function () {
-        return TransactColl.find({$and: [{requestee: Meteor.userId()}, {status: null}]}).count();
-    },
-    newMessage: function () {
-        return Messages.find({to: Meteor.userId(), state: 'new-msg'}).count();
-    }
-});
 
 Template.home.onRendered(function () {
     $(".badgeNotif").click(function () {
@@ -31,6 +14,67 @@ Template.home.onRendered(function () {
     });
 });
 
+Template.home.onCreated(function () {
+    this.meterRunning = new ReactiveVar( false );
+    if(typeof recordRoute !== 'undefined'){
+        this.meterRunning.set(recordRoute.status);
+    }
+});
+
+
+Template.home.helpers({
+    countNotifications: function () {
+        return TransactColl.find({$and: [{requestee: Meteor.userId()}, {status: null}]}).count();
+    },
+    newMessage: function () {
+        return Messages.find({to: Meteor.userId(), state: 'new-msg'}).count();
+    },
+    isRecording: function() {
+        if (Session.get('mode') == 'record')
+            return true;
+        else
+            return false;
+    },
+    isRecordingStarted: function(){
+       return Template.instance().meterRunning.get();
+    }
+});
+
+Template.home.events({
+        "click [data-action=rec-start]": function (e, t) {
+            if(typeof recordRoute === 'undefined'){
+                recordRoute = new MeterOn();
+                recordRoute.start();
+                t.meterRunning.set(true);
+            }else{
+                toastr.info("Already running the task");
+            }
+        
+    },
+    "click [data-action=rec-pause]": function (e, t) {
+        
+    },
+    "click [data-action=rec-cancel]": function (e, t) {
+        Session.set('mode', null);
+        $('body').addClass('mb-has-fab');
+        t.meterRunning.set(false);
+        if(typeof recordRoute !== 'undefined'){
+            recordRoute.stop();
+            delete window.recordRoute;
+        }
+    },
+    "click [data-action=rec-stop]": function (e, t) {
+        Session.set('mode', null);
+        $('body').addClass('mb-has-fab');
+        t.meterRunning.set(false);
+        if(typeof recordRoute !== 'undefined'){
+            var routeResult = recordRoute.stop();
+            delete window.recordRoute;
+        }else{
+            toastr.error("Nothing started to stop");
+        }
+    }
+});
 Template.ionBody.events({
     "click [data-action=centerBounds]": function () {
         console.log("Center Map");

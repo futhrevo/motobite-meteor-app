@@ -1,3 +1,4 @@
+/* global AvatarOpsColl */
 /* global ULogsColl */
 /* global SafeHouseColl */
 /* global EJSON */
@@ -50,6 +51,12 @@ Meteor.startup(function () {
             },
             id:"tEsTdAtA"
         });
+    }
+    if(AvatarOpsColl.find().count() === 0){
+        AvatarOpsColl.insert({
+            _id: "deleteOps1",
+            ops:[]  
+        })
     }
     var smtp = {
         username: 'mailer.motobite@gmail.com',

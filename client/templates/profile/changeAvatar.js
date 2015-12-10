@@ -15,7 +15,7 @@ Template.changeAvatar.helpers({
 });
 
 Template.changeAvatar.events({
-	'click [data-action=take-photo]': function () {
+	'click [data-action=take-avatar-photo]': function () {
 		var options = {  
  			width: 256,
  			height: 256,

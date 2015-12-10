@@ -7,18 +7,19 @@ App.info({
   description: 'Future Evolved',
   author: 'Rakesh Kalyankar',
   email: 'admin@motobite.com',
-  website: 'http://motobite.com'
+  website: 'https://app.motobite.in'
 });
 
 //https://github.com/dburles/meteor-google-maps/issues/27
 //TODO change this all access to particular ip address
-App.accessRule('*');
+// App.accessRule('*');
+App.accessRule('https://app.motobite.in/*');
 App.accessRule('https://*.googleapis.com/*');
 App.accessRule('https://*.gstatic.com/*');
 App.accessRule('https://*.google.com/*');
 App.accessRule('https://*.storage.googleapis.com/*');
 App.accessRule('https://mbavatar.storage.googleapis.com/*');
-
+App.accessRule('https://*.kadira.io/*');
 App.setPreference("StatusBarBackgroundColor", "#00796B");
 
 App.icons({

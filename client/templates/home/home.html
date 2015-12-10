@@ -44,6 +44,11 @@
         {{#ionContent class="homeClass" }}
         {{> status}}
             <div class="mapState">
+                {{#if isRecording}}
+                    <div class="bar bar-header">
+                        <h2 class="title">Start Recording a route</h2>
+                    </div>
+                {{/if}}
                   
                         <button class="locate-button" style="display:block;" data-action="centerBounds">
                             <i class="ion-android-locate"></i>
@@ -54,6 +59,19 @@
                         </button>
                     </div>
                 {{> dispMap}}
+                {{#if isRecording}}
+                <div class="bar bar-footer bar-stable map-footer" style="">
+                    <div class="button-bar">         
+                        {{#if isRecordingStarted}}
+                            <a class="button" data-action="rec-pause">Pause</a>
+                            <a class="button" data-action="rec-stop">Stop</a>
+                        {{else}}
+                            <a class="button" data-action="rec-start">Start</a>
+                            <a class="button" data-action="rec-cancel">Cancel</a>
+                        {{/if}}
+                    </div>
+                </div>
+                {{/if}}
             </div>
         {{/ionContent}}
     {{/ionView}}

@@ -204,3 +204,31 @@ cordova-plugin-device-orientation@https://github.com/apache/cordova-plugin-devic
 
 // get mup recognised in server
 sudo ln -s /usr/bin/nodejs /usr/bin/node
+/etc/letsencrypt/live/app.motobite.in/fullchain.pem
+
+meteor build ../meteorBuild --server=https://app.motobite.in:443 --mobile-settings=settings.json --verbose --debug
+/home/reku/polo_meteor/.meteor/local/cordova-build/platforms/android/build/outputs/apk/android-debug.apk
+
+cat privkey.pem fullchain.pem > ssl.pem
+
+
+privkey.pem - private key
+cert.pem - server cert only
+chain.pem - intermediates
+fullchain.pem - server cert + intermediates
+
+Robomongo - mup
+localhost 27017
+ ----SSH
+    104.155.196.199:22
+    reku
+    Private Key
+    /home/reku/.ssh/google_compute_engine
+    rakesh
+    
+./letsencrypt-auto certonly -a manual -d app.motobite.in --server https://acme-v01.api.letsencrypt.org/directory
+// list all containers
+docker ps
+ 
+./letsencrypt-auto certonly -a manual -d app.motobite.in --server https://acme-v01.api.letsencrypt.org/directory
+./letsencrypt-auto certonly -a standalone -d app.motobite.in --server https://acme-v01.api.letsencrypt.org/directory --agree-dev-preview

@@ -18,7 +18,7 @@ Accounts.onCreateUser(function(options, user) {
   // We still want the default hook's 'profile' behavior.
   if (options.profile)
     user["works"] = {};
-    user["roles"] = [];
+    user["roles"] = ["banned"];
     user["works"]["emails"] = [{ address: options.profile.workEmail, verified: false }];
     user["mobile"] = [{number:options.profile.mobile, verified: false}];
     delete options.profile.workEmail;

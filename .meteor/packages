@@ -21,13 +21,9 @@ copleykj:livestamp
 chrismbeckett:toastr
 momentjs:moment
 meteorhacks:npm
-
-
 launch-screen
 email
 mizzao:user-status
-
-
 npm-container
 useraccounts:iron-routing
 standard-minifiers
@@ -51,3 +47,5 @@ ecmascript
 aldeed:autoform
 edgee:slingshot
 meteoric:camera
+meteorhacks:kadira
+force-ssl
