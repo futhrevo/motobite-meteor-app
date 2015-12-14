@@ -1,0 +1,30 @@
+<template name="dispMap">
+	{{#if currentUser}}
+	{{mapState}}
+	<div class = "mapd">
+		<div class="google-map-canvas col" id="map-canvas"></div>
+	</div>
+        <button class="button button-fab button-fab-bottom-right spin" style="" data-action="showActionSheet">
+            <i class="icon ion-plus-round"></i>
+        </button>
+	<div id="outputDirectionDiv">
+		<button class="button icon button-clear button-dark ion-chevron-left opDiv-left" data-action="showInput"></button>
+		<button class="button icon button-clear button-dark ion-chevron-right opDiv-right"></button>
+		<button class="button icon-left ion-android-cancel button-assertive button-clear opDiv-cancel" data-action="quitdirections">Cancel</button>
+		<button class="button icon-left ion-ios-checkmark button-balanced button-clear opDiv-submit" data-action="submitDriver">Submit</button>
+		<div id="directions-select"></div>
+	</div>
+
+		{{#if validRide}}
+		<div id="outputDrivesDiv">
+			{{> rideDiv}}
+		</div>
+		{{/if}}
+
+	<div id="outputDiv"></div>
+
+	{{#each marker}}
+		{{> drawMarker}}
+	{{/each}}
+	{{/if}}
+</template>

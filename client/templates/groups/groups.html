@@ -1,0 +1,61 @@
+<template name="groups">
+    {{#contentFor "headerButtonLeft"}}
+        {{>ionNavBackButton path="index"}}
+    {{/contentFor}}
+
+    {{#contentFor "headerTitle"}}
+        <h1 class="title">Groups</h1>
+    {{/contentFor}}
+    
+    {{#contentFor 'headerButtonRight'}}
+        <button class="button button-clear" data-ion-modal="groupModal" style="font-weight: 500;">
+            Add
+        </button>
+    {{/contentFor}}
+
+    {{#ionView}}
+        {{#ionContent class="groupsClass"}}
+            <div class="list card">
+                <a class="item item-icon-left positive" href="{{pathFor 'createGroup'}}">
+                    <i class="icon ion-plus-circled"></i>
+                    Create a group
+                </a>
+            </div>
+            {{#ionList}}
+                <div class="item item-divider">
+                    <p>Total Communities you own - {{total}}</p>
+                </div>
+                {{#each comm}}
+                    <div class="item">
+                        <a  href="{{pathFor 'groupView' _id}}">
+                            <h2>{{this.name}} </h2>
+                            <p>
+                                {{this.description}}
+                            </p>
+                       
+                        <p>
+						<a  class="subdued">{{this.members.length}} Members</a>
+						<a  class="subdued">{{this.pending.length}} Pending</a>
+						<a  class="subdued">{{this.blocked.length}} Blocked</a>
+					</p>
+                        </a>
+                    </div>
+                {{/each}}
+                <div class="item item-divider">
+                    <p>Total Communities you joined - {{totalJoin}}</p>
+                </div>
+                {{#each commJoin}}
+                     <div class="item">
+                        <a href="{{pathFor 'groupView' _id}}">
+                            <h2>{{this.name}} </h2>
+                            <p>
+                                {{this.description}}
+                            </p>
+                        </a>
+                       
+                    </div>
+                {{/each}}
+            {{/ionList}}
+        {{/ionContent}}
+    {{/ionView}}
+</template>

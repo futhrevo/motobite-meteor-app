@@ -1,1 +1,5 @@
-
+com.motobite.cordova.location.plugin@file://../cordova/motobite-plugin-background
+cordova-plugin-device-orientation@1.0.1
+cordova-plugin-geolocation@1.0.1
+cordova-plugin-statusbar@1.0.1
+cordova-plugin-vibration@1.2.0

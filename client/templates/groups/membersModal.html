@@ -1,0 +1,39 @@
+<template name="membersModal">
+	{{#ionModal title=title class="membersClass"}}
+	{{#ionList}}
+		 <div class="item item-divider">
+                    <p>Total  - {{member.transformed.length}}
+						{{#if editMode}}
+							<a style="right: 10px;position: absolute;" data-action="show-Done">Done </a>
+						{{else}}
+							<a style="right: 10px;position: absolute;" data-action="show-Done">Edit </a>
+						{{/if}}
+         			</p>
+		 </div>
+		 {{#each member.transformed}}
+		 {{#ionItem buttonRight=true }}
+		 	<h2>{{name}}</h2>
+			<p>{{status}}</p>
+			{{#if isMembers}}
+			{{#if editMode}}
+				 <button class="button button-assertive" data-action="block-Member">{{> ionIcon icon="minus-circled"}}</button>
+			{{/if}}
+			{{/if}}
+			{{#if isBlocked}}
+			{{#if editMode}}
+				<button class="button button-balanced" data-action="unblock-Member">{{> ionIcon icon="checkmark-circled"}}</button>
+			{{/if}}
+			{{/if}}
+			{{#if isPending}}
+			{{#if editMode}}
+			<div class="buttons">
+				<button class="button button-balanced" data-action="accept-Pending">{{> ionIcon icon="checkmark-circled"}}</button>
+				<button class="button button-assertive" data-action="reject-Pending">{{> ionIcon icon="minus-circled"}}</button>
+			</div>
+			{{/if}}
+			{{/if}}
+		 {{/ionItem}}
+		 {{/each}}
+	{{/ionList}}		
+	{{/ionModal}}
+</template>

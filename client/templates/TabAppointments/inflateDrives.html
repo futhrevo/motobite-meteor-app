@@ -1,0 +1,30 @@
+<template name="inflateDrives">
+    {{#contentFor "headerButtonLeft"}}
+        {{>ionNavBackButton path="index"}}
+    {{/contentFor}}
+    {{#contentFor "headerTitle"}}
+        <h1 class="title">Scheduled Riders</h1>
+    {{/contentFor}}
+    {{#ionView}}
+        {{#ionContent class="scheduletabsClass" }}
+            {{#ionList}}
+                <div class="item item-divider">
+                    <p>Total riders offering you rides - {{total}}</p>
+                </div>
+                {{#each drive}}
+                    {{#ionItem buttonRight=true }}
+                        <a class="btnInfo">
+                            <h2>{{this.request.src.[0]}} &nbsp; to &nbsp; {{this.request.dst.[0]}}</h2>
+                            <p>
+                                {{start}}
+                            </p>
+                        </a>
+                        <button class="button icon ion-trash-a button-assertive button-clear btnDel" ></button>
+
+                    {{/ionItem}}
+                {{/each}}
+            {{/ionList}}
+        {{/ionContent}}
+    {{/ionView}}
+    {{> _tabs}}
+</template>

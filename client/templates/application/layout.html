@@ -1,0 +1,101 @@
+<template name="layout">
+    {{#ionBody}}
+        {{#if currentUser}}
+        {{> inpForm}}
+        {{!-- {{> functionsDiv}} --}}
+        {{#ionSideMenuContainer}}
+
+            {{#ionSideMenus}}
+
+                {{#ionSideMenu class="menu"}}
+                <div id="leftMenuId">
+                    <div class="expanded bar bar-header sidePic" href="{{pathFor 'profileTemplate'}}" >
+                                <img src="{{currentUser.profile.avatarUrl}}" class="avatar motion spin fade rounded">
+
+                        <div class="menu-bottom">
+                            <strong>
+                                {{currentUser.emails.[0].address}}
+                            </strong>
+                        </div>
+
+                    </div>
+                    <div class="has-expanded-header scroll-content ionic-scroll  has-header">
+                        <div class="list">
+                            <a class="drawer-left-menu-item item item-icon-left " href="/">
+                                <i class="icon ion-map"></i>
+                                Home
+                            </a>
+                            <a class="drawer-left-menu-item item item-icon-left item-icon-right" href="{{pathFor route='inflateReq'}}">
+                                <i class="icon ion-calendar"></i>
+                                Appointments
+                                {{#if countNotifications}}
+                                    <i class="icon ion-android-notifications"></i>
+                                {{else}}
+                                    <i class="icon ion-android-notifications-none"></i>
+                                {{/if}}
+                            </a>
+                            <a class="drawer-left-menu-item item item-icon-left " href="{{pathFor 'houses'}}">
+                                <i class="icon ion-home"></i>
+                                Safe Houses
+                            </a>
+                            <a class="drawer-left-menu-item item item-icon-left " href="{{pathFor 'profileTemplate'}}">
+                                <i class="icon ion-person"></i>
+                                My Profile
+                            </a>
+                            <a class="drawer-left-menu-item item item-icon-left " href="{{pathFor 'myContacts'}}">
+                                <i class="icon ion-person-stalker"></i>
+                                Contacts
+                            </a>
+                             <a class="drawer-left-menu-item item item-icon-left " href="{{pathFor 'groups'}}">
+                                <i class="icon ion-ios-world"></i>
+                                Groups
+                            </a>
+                            <a class="drawer-left-menu-item item item-icon-left " href="{{pathFor 'recentChats'}}">
+                                <i class="icon ion-chatboxes"></i>
+                                Chats
+                            </a>
+                            <a class="drawer-left-menu-item item item-icon-left " href="{{pathFor 'help'}}">
+                                <i class="icon ion-heart"></i>
+                                Help & Support
+                            </a>
+                        </div>
+                    </div>
+                    </div>
+                {{/ionSideMenu}}
+
+                {{#ionSideMenu side="right" }}
+                <div id="rightMenuId">
+                    <div class="row">
+                        <button class="button button-clear col col-10" data-ion-menu-close>
+                            {{#if isAndroid}}
+                                {{> ionIcon icon='android-arrow-back'}}
+                            {{else}}
+                                {{> ionIcon icon='ios-arrow-back'}}
+                            {{/if}}
+                        </button>
+                        <h4 class="title col">Requests</h4>
+                    </div>
+                    <div class="content ">
+                        {{> listReq}}
+                    </div>
+                    <div class="bar bar-footer bar-balanced">
+                        <div class="title">Footer</div>
+                    </div>
+                    </div>
+                {{/ionSideMenu}}
+
+            {{/ionSideMenus}}
+            {{#ionSideMenuContent}}
+
+                {{> ionNavBar class="bar-positive"}}
+                {{#ionNavView}}
+                    {{> yield}}
+                {{/ionNavView}}
+                {{> deleteMarker}}
+            {{/ionSideMenuContent}}
+        {{/ionSideMenuContainer}}
+        {{else}}
+            {{> atForm}}
+        {{/if}}
+    {{/ionBody}}
+</template>

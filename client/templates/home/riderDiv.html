@@ -1,0 +1,23 @@
+<template name="riderDiv">
+
+			{{hideInput}}
+			<div class = "row rider">
+				<div class="alert alert-dismissable alert-success">
+  					<button type="button" class="close" data-dismiss="alert">×</button>
+  					<strong>Well done!</strong> Select an appropriate route and click on <strong>start</strong>, to go back click cancel.
+				</div>
+				<form class="form-horizontal">
+					<fieldset>
+						 <legend>Drive details</legend>
+						 {{selected}}
+						 <div class="form-group">
+						   <div class="">
+						     <button class="btn btn-default cancel">Cancel</button>
+						     <input type="submit" class="btn btn-primary" value="Submit">
+						   </div>
+						 </div>
+					</fieldset>
+				</form>
+			</div>
+
+</template>

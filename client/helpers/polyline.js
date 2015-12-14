@@ -92,7 +92,7 @@ polyline.decode = function(str, precision) {
         } while (byte >= 0x20);
 
         longitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
-        console.log(latitude_change,longitude_change);
+        //console.log(latitude_change,longitude_change);
         lat += latitude_change;
         lng += longitude_change;
 
@@ -122,6 +122,8 @@ polyline.hashdecode = function(str, precision) {
         lat = 0,
         lng = 0,
         coordinates = [],
+        gh6 = [],
+        dup = "",
         shift = 0,
         result = 0,
         byte = null,
@@ -173,18 +175,89 @@ polyline.hashdecode = function(str, precision) {
             for (var i = 0; i < interp; i++) {
                 lat += latitude_change/interp;
                 lng += longitude_change/interp;
-                coordinates.push([lat / factor, lng / factor]);
+                //coordinates.push([lat / factor, lng / factor]);
+                coordinates.push([lng / factor , lat / factor]);
+                var temp = geohash.encode(lat / factor,lng / factor,6);
+                if(dup != temp){
+                    dup = temp;
+                    gh6.push(temp);
+                }
             };
 
 
         }else{
             lat += latitude_change;
             lng += longitude_change;
-
-            coordinates.push([lat / factor, lng / factor]);
+            coordinates.push([lng / factor , lat / factor]);
+            //coordinates.push([lat / factor, lng / factor]);
+            var temp = geohash.encode(lat / factor,lng / factor,6);
+            if(dup != temp){
+                dup = temp;
+                gh6.push(temp);
+            }
         }
-        
+
     }
 
-    return coordinates;
+    return [coordinates,gh6];
+};
+
+polyline.dissect = function(str,srcHash,dstHash,src,dest) {
+    var index = 0,
+        lat = 0,
+        lng = 0,
+        coordinates = [], hashes = [],
+        shift = 0,
+        result = 0,
+        byte = null,
+        latitude_change,
+        longitude_change,
+        factor = Math.pow(10, 5);
+    //src = forwardMercator({x:src[0],y:src[1]});
+    //dest = forwardMercator({x:dest[0],y:dest[1]});
+    // Coordinates have variable length when encoded, so just keep
+    // track of whether we've hit the end of the string. In each
+    // loop iteration, a single coordinate is decoded.
+    while (index < str.length) {
+
+        // Reset shift, result, and byte
+        byte = null;
+        shift = 0;
+        result = 0;
+
+        do {
+            byte = str.charCodeAt(index++) - 63;
+            result |= (byte & 0x1f) << shift;
+            shift += 5;
+        } while (byte >= 0x20);
+
+        latitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
+
+        shift = result = 0;
+
+        do {
+            byte = str.charCodeAt(index++) - 63;
+            result |= (byte & 0x1f) << shift;
+            shift += 5;
+        } while (byte >= 0x20);
+
+        longitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
+        lat += latitude_change;
+        lng += longitude_change;
+
+        coordinates.push([lat / factor, lng / factor]);
+        hashes.push(geohash.encode(lat / factor,lng / factor,6));
+    }
+
+
+    var srcInfo = distanceToLine(src,coordinates);
+    var destInfo = distanceToLine(dest,coordinates);
+    var srcIndex = srcInfo.i;
+    var destIndex = destInfo.i;
+    var temp = coordinates.slice(srcIndex,destIndex);
+    //add the start point and destination point to new array
+    temp[0] = [srcInfo.x,srcInfo.y];
+    temp.push([destInfo.x,destInfo.y]);
+
+    return {overview:this.encode(temp),srcDistance:srcInfo.distance,destDistance:destInfo.distance};
 };

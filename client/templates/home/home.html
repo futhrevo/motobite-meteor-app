@@ -1,0 +1,79 @@
+<template name="home">
+
+    {{#contentFor "headerButtonLeft"}}
+        <button class="button button-clear pull-left" data-ion-menu-toggle="left">
+            {{#if isAndroid}}
+                {{> ionIcon icon='navicon'}}
+            {{else}}
+                {{> ionIcon icon='navicon'}}
+            {{/if}}
+        </button>
+    {{/contentFor}}
+
+    {{#contentFor "headerTitle"}}
+        <h1 class="title">MotoBite
+            {{#if countNotifications}}
+                <a href="{{pathFor route='inflateReq'}}">
+                    <span class="badge badge-assertive badgeNotif" data-val= {{countNotifications}}>{{countNotifications}}</span>
+                </a>
+            {{/if}}
+        </h1>
+
+    {{/contentFor}}
+
+    {{#contentFor "headerButtonRight"}}
+    <div class="buttons">
+    {{#if newMessage}}
+        <a href="{{pathFor 'recentChats'}}">
+            <button class="button button-clear" >
+                {{> ionIcon icon='chatbubble-working'}}
+            </button>
+        </a>
+    {{/if}}
+        <button class="button button-clear" data-ion-popover="_myPopover">
+            {{#if isAndroid}}
+                {{> ionIcon icon='android-more-vertical'}}
+            {{else}}
+                {{> ionIcon icon='more'}}
+            {{/if}}
+        </button>
+    </div>
+    {{/contentFor}}
+
+    {{#ionView}}
+        {{#ionContent class="homeClass" }}
+        {{> status}}
+            <div class="mapState">
+                {{#if isRecording}}
+                    <div class="bar bar-header">
+                        <h2 class="title">Start Recording a route</h2>
+                    </div>
+                {{/if}}
+                  
+                        <button class="locate-button" style="display:block;" data-action="centerBounds">
+                            <i class="ion-android-locate"></i>
+                        </button>
+                    <div class="hud-div">
+                        <button class="save-location-button" data-action="addSafeHouse">
+                            <i class="ion-star"></i>
+                        </button>
+                    </div>
+                {{> dispMap}}
+                {{#if isRecording}}
+                <div class="bar bar-footer bar-stable map-footer" style="">
+                    <div class="button-bar">         
+                        {{#if isRecordingStarted}}
+                            <a class="button" data-action="rec-pause">Pause</a>
+                            <a class="button" data-action="rec-stop">Stop</a>
+                        {{else}}
+                            <a class="button" data-action="rec-start">Start</a>
+                            <a class="button" data-action="rec-cancel">Cancel</a>
+                        {{/if}}
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+        {{/ionContent}}
+    {{/ionView}}
+
+</template>

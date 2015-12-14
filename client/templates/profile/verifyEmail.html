@@ -1,0 +1,40 @@
+<template name="verifyEmail">
+	{{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="profileTemplate"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+      <h1 class="title">Verify Email</h1>
+  {{/contentFor}}
+  
+  {{#ionView}}
+      {{#ionContent class="verifyEmailClass"}}
+         <div class="padding">
+          <button class="button button-block button-calm" data-action="send-emailotp-button">
+              Send OTP
+          </button>
+         </div>
+        <form>
+        <div class="card">
+          <!--<div class="item item-divider item-text-wrap">
+            Click "send OTP" button to send an email with OTP for email verification
+          </div>-->
+          <div class="item center">
+            {{email}}
+          </div>
+            <label class="item item-input">
+              <input type="text" placeholder="Enter OTP" class ="center">
+            </label>
+        </div>
+        <div class="padding">
+          <button class="button button-block button-balanced" data-action="verify-emailotp-button">
+              Verify OTP
+          </button>
+        </div>
+        </form>
+        <div class="bar bar-footer bar-dark">
+          <h1 class="title">Help!</h1>
+        </div>
+      {{/ionContent}}
+  {{/ionView}}
+</template>

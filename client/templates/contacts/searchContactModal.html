@@ -1,0 +1,38 @@
+<template name="searchContactModal">
+    {{#ionModal focusFirstInput=true title="Search by email ID"}}
+    <div class="list">
+        <form>
+        <div class="item item-input-inset">
+            <label class="item-input-wrapper">
+                <i class="icon ion-ios-search placeholder-icon"></i>
+                <input type="text" placeholder="Email" id="search-id">
+                <!--<button type="submit" class="button button-clear" data-action="search-contact">
+                    {{> ionIcon icon='search'}}
+                </button>-->
+            </label>
+            <button class="button button-clear" data-action="search-contact">
+                Submit
+            </button>
+        </div>
+        </form>
+        <div id="search-result" style="text-align:center">
+                <h5 class="assertive" id="no-user-error" style="display: none;">No user was found with given Email ID!</h5>
+
+                <div id="user-data" style="display: none;">
+                    <br>
+                    <img src="" width="128" height="128" id="resultAvatarUrl" class="rounded">
+                    <h5 id="resultDisplayName"></h5>
+                    <p id="resultStatus"></p>
+                    <input type="hidden" val="" id="to-id">
+                    <a href="#" data-action="send-request">
+                        <button class="button button-balanced">
+                            Send request
+                        </button>
+                    </a>
+                </div>
+        </div>
+    </div>
+
+
+    {{/ionModal}}
+</template>
