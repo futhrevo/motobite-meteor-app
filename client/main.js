@@ -62,13 +62,27 @@
 function onDeviceReady() {
     //add back button event
     //http://stackoverflow.com/questions/28055836/back-button-in-cordova-phongap-meteor-build-for-android-wont-close-application
-    document.addEventListener("backbutton", function () {
-        if (history.state && history.state.initial === true) {
+    document.addEventListener("backbutton", function (e) {
+        if(Router.current().route.getName() == "index"){
+            e.preventDefault();
+            if($("body").hasClass("action-sheet-open")){
+                IonActionSheet.close();
+                return;
+            }
+            if($('#inputFormOuterId').hasClass("inpShowing")){
+                $('#inputFormOuterId').removeClass("inpShowing").hide(100);
+                return;
+            }
             navigator.app.exitApp();
-        } else {
-            history.go(-1);
+        }else{
+            navigator.app.backHistory()
         }
-    });
+        // if (history.state && history.state.initial === true) {
+        //     navigator.app.exitApp();
+        // } else {
+        //     history.go(-1);
+        // }
+    }, false);
     console.log("Cordova is running");
 
 };

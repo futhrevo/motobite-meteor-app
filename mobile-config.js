@@ -4,15 +4,15 @@
 App.info({
   id: 'com.futrevo.reku.motobite',
   name: 'Motobite',
-  description: 'Future Evolved',
+  description: 'Community carpooling app for your mobile device',
   author: 'Rakesh Kalyankar',
   email: 'admin@motobite.com',
-  website: 'https://app.motobite.in'
+  website: 'https://app.motobite.in',
+  version: '0.0.1'
 });
 
 //https://github.com/dburles/meteor-google-maps/issues/27
 //TODO change this all access to particular ip address
-// App.accessRule('*');
 App.accessRule('https://app.motobite.in/*');
 App.accessRule('https://*.googleapis.com/*');
 App.accessRule('https://*.gstatic.com/*');
