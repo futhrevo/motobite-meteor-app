@@ -112,6 +112,7 @@ Template.inpForm.events({
         if (distance < 0.1) {
             // Display an error toast, with a title
             toastr.error("Please select a farther destination", "Input Error");
+            return;
         }
         var duration = 15 + (distance * 6);
         var validTime = validateTime(search.time, duration);
