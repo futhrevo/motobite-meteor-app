@@ -73,6 +73,14 @@ function onDeviceReady() {
                 $('#inputFormOuterId').removeClass("inpShowing").hide(100);
                 return;
             }
+            if($('[data-action=showInput]').is(":visible")){
+                $('[data-action=showInput]').trigger('click');
+                return;
+            }
+            if($('#outputDirectionDiv').is(":visible")){
+                $('[data-action=showInput]').trigger('click');
+                return;
+            }
             navigator.app.exitApp();
         }else{
             navigator.app.backHistory()

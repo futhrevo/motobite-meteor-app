@@ -299,8 +299,22 @@ gmap = {
 
         directionsService.route(request, function (response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
+               
+                if(response.routes.length == 1){
+                    console.log("single route available");
+                    var outputDiv = document.getElementById('directions-select');
+                    outputDiv.innerHTML = '<div>There is only one route available. Press submit to continue</div>';
+                } else if(response.routes.length == 0){
+                    console.log("No route available");
+                    if($('#outputDirectionDiv').is(":visible")){
+                        $('[data-action=showInput]').trigger('click');
+                        toastr.error("No direct routes available between these locations");
+                    
+                    }
+                } else{
                 directionsDisplay.setDirections(response);
                 directionsDisplay.time = search.time;
+                }
             }
         });
     }
