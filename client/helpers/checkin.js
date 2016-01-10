@@ -68,9 +68,11 @@ checkin = function(){
 };
 
 var drawCircle = function(index){
-    var src = checkinHeap.content[index].request.srcloc;
-    var rKey = Object.keys(src);
-    var center = new google.maps.LatLng(src[rKey[1]], src[rKey[0]]);
+    var src = checkinHeap.content[0].request.locs.coordinates[0];
+    var center = new google.maps.LatLng(src[1], src[0]);
+    // var src = checkinHeap.content[index].request.srcloc;
+    // var rKey = Object.keys(src);
+    // var center = new google.maps.LatLng(src[rKey[1]], src[rKey[0]]);
     //assuming distance near to pickup location
     var radius = 100;
     var circle = new google.maps.Circle({
@@ -114,11 +116,12 @@ var checkTime = function(index){
 
 var getLocObject = function(){
     //get the source location and construct loc object
-    var src = checkinHeap.content[0].request.srcloc;
-    var rKey = Object.keys(src);
+    // var src = checkinHeap.content[0].request.srcloc;
+    var src = checkinHeap.content[0].request.locs.coordinates[0];
+    // var rKey = Object.keys(src);
     var id = checkinHeap.content[0].advtRequest;
     var title = "Checkin";
-    var loc = {lat:src[rKey[0]], lng:src[rKey[1]],id:id,title:title};
+    var loc = {lat:src[1], lng:src[0],id:id,title:title};
 
 
     return loc;

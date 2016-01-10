@@ -299,22 +299,21 @@ gmap = {
 
         directionsService.route(request, function (response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
-               
-                if(response.routes.length == 1){
-                    console.log("single route available");
-                    var outputDiv = document.getElementById('directions-select');
-                    outputDiv.innerHTML = '<div>There is only one route available. Press submit to continue</div>';
-                } else if(response.routes.length == 0){
+               if(response.routes.length == 0){
                     console.log("No route available");
                     if($('#outputDirectionDiv').is(":visible")){
                         $('[data-action=showInput]').trigger('click');
                         toastr.error("No direct routes available between these locations");
-                    
+                        return;
                     }
-                } else{
-                directionsDisplay.setDirections(response);
-                directionsDisplay.time = search.time;
                 }
+                if(response.routes.length == 1){
+                    console.log("single route available");
+                    var outputDiv = document.getElementById('directions-select');
+                    outputDiv.innerHTML = '<div>There is only one route available. Press submit to continue</div>';
+                }
+                directionsDisplay.setDirections(response);
+                directionsDisplay.time = search.time;         
             }
         });
     }
@@ -515,11 +514,13 @@ var checkinTrackerInit = function () {
     var query = TransactColl.find({
         $and: [{status: true},
             {requester: Meteor.userId()}]
+    },{
+        sort:{"request.starts":-1}
     });
 
     var handle = query.observeChanges({
         added: function (id, user) {
-            console.log(user.requestee + " accepted " + moment.unix(user.accepted).calendar());
+            console.log(user.requestee + " accepted " + user.time);
             user.id = id;
             checkinHeap.push(user);
         },

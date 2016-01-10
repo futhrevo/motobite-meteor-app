@@ -30,9 +30,6 @@
     }
 
 
-    //Subscriptions goes here
-    // ?? subscriptions moved to iron router
-
     //initialize toastr
     toasterInit();
     //TODO implement Routeboxer into functions http://google-maps-utility-library-v3.googlecode.com/svn/tags/routeboxer/1.0/docs/examples.html
@@ -53,7 +50,7 @@
             return;
         }
         if (user.roles.indexOf('banned') >= 0) {
-            alert("you are banned! Contact adminstrator");
+            alert("Login disabled! Contact adminstrator");
             return Meteor.logout();
         }
     })
