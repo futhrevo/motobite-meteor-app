@@ -13,22 +13,6 @@ html, body {
   height: 100%;
 }
 
-.sidePic {
-  background: $status url(/mb2);
-  background-size: contain !important;
-  background-repeat: no-repeat !important;
-  background-position: right !important;
-}
-
-.sideEmail {
-  position: relative;
-  z-index: 12;
-  bottom: 20px;
-  text-align: center;
-  background-color: $status;
-  word-wrap: normal;
-}
-
 .popover {
   height: auto
 }
@@ -150,36 +134,11 @@ html, body {
   bottom : 0;
   position: absolute;
 }
-.snap-drawers {
-  background-color: $positive;
-}
-
-.snap-drawer-right {
-  background-color: floralwhite;
-}
-
-.snap-drawer-left {
-  color: #fff;
-  background-color: $positive;
-}
-
-.drawer-left-menu-item {
-  border-color: $positive;
-  background-color: $positive;
-}
 
 //this should solve whiteband for input fields
 //https://github.com/meteoric/meteor-ionic/issues/89
 .content.overflow-scroll {
   bottom: 0px !important;
-}
-
-#leftMenuId {
-  height: 100%;
-  touch-action: pan-y;
-  -webkit-user-select: none;
-  -webkit-user-drag: none;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .profileClass, .scheduletabsClass, .homeClass, .contactsClass, .profileViewClass, .recentChatsClass, .verifyEmailClass, .verifyMobileClass, .housesClass, .groupsClass, .groupViewClass{
@@ -244,6 +203,9 @@ html, body {
   color: white;
 }
 
+.poi-info-window .view-link{
+  display: none
+}
 .tinker-tabs .bar.bar-positive{
     border-color: $positive ;
     background-image: linear-gradient(0deg, $positive, $positive 50%, transparent 50%);

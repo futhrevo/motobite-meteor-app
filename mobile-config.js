@@ -7,12 +7,13 @@ App.info({
   description: 'Community carpooling app for your mobile device',
   author: 'Rakesh Kalyankar',
   email: 'admin@motobite.com',
-  website: 'https://app.motobite.in',
-  version: '0.0.1'
+  website: 'http://motobite.com',
+  version: '0.0.2'
 });
 
 //https://github.com/dburles/meteor-google-maps/issues/27
 //TODO change this all access to particular ip address
+App.accessRule('http://192.168.1.6:3000/*');
 App.accessRule('https://app.motobite.in/*');
 App.accessRule('https://*.googleapis.com/*');
 App.accessRule('https://*.gstatic.com/*');

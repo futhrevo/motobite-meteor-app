@@ -238,17 +238,14 @@ Meteor.methods({
         }]).map(function (u) {
             var srcIndex = u.gh6.indexOf(post.fromHashObj.c);
             var dstIndex = u.gh6.indexOf(post.toHashObj.c);
-
             var i = 1;
             while (srcIndex == -1 && i < 9) {
-                srcIndex = u.gh6.indexOf(post.fromHashObj.dKeys[i]);
-                console.log(i);
+                srcIndex = u.gh6.indexOf(post["fromHashObj"][dKeys[i]]);
                 i++;
             }
             i = 1;
             while (dstIndex == -1 && i < 9) {
-                dstIndex = u.gh6.indexOf(post.toHashObj.dKeys[i]);
-                console.log(i);
+                dstIndex = u.gh6.indexOf(post["toHashObj"][dKeys[i]]);
                 i++;
             }
             console.log("srcIndex " + srcIndex);

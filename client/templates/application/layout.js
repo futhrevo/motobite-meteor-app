@@ -4,11 +4,20 @@ Template.layout.onCreated(function () {
 });
 Template.layout.onRendered(function () {
     if(typeof IonSideMenu.snapper !== 'undefined'){
-        IonSideMenu.snapper.disable();
+        // IonSideMenu.snapper.disable();
         IonSideMenu.snapper.settings({
             tapToClose: true, // If true, tapping an open pane will close it
-            flickThreshold: 300, // Number of pixels the user needs to swiftly travel to activate a "flick" open
-            hyperextensible: true
+            flickThreshold: 50, // Number of pixels the user needs to swiftly travel to activate a "flick" open
+            hyperextensible: true,
+            disable: 'right',
+            maxPosition: 266,
+            minPosition: -266,
+            resistance: 0.5,
+            transitionSpeed: 0.3,
+            easing: 'ease',
+            // touchToDrag: true,
+            minDragDistance: 5
+            
         });
         // $('#navheader').css('background-image', 'url(profile.jpg)');
         IonSideMenu.snapper.on('open', menuOpenBody);
