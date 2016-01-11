@@ -16,6 +16,7 @@ caching-html-compiler@1.0.2
 callback-hook@1.0.4
 check@1.1.0
 chrismbeckett:toastr@2.1.2_1
+chriswessels:hammer@4.0.2
 coffeescript@1.0.11
 copleykj:livestamp@1.1.7
 ddp@1.2.2

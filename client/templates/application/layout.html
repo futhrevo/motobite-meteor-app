@@ -9,6 +9,7 @@
 
                 {{#ionSideMenu class="menu"}}
                 <div id="leftMenuId">
+                    {{#HammerTouchArea gestureMap=templateGestures}}
                     <div class="expanded bar bar-header sidePic" href="{{pathFor 'profileTemplate'}}" >
                                 <img src="{{currentUser.profile.avatarUrl}}" class="avatar motion spin fade rounded">
 
@@ -60,6 +61,7 @@
                             </a>
                         </div>
                     </div>
+                    {{/HammerTouchArea}}
                     </div>
                 {{/ionSideMenu}}
 

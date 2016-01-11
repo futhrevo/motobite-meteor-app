@@ -7,10 +7,12 @@
 
 html, body {
   height: 100%;
+  overflow-x: hidden;
 }
 
 .ionic-body {
   height: 100%;
+  position: relative;
 }
 
 .popover {
@@ -272,4 +274,8 @@ html, body {
 }
 .groupsClass a{
   text-decoration: none;
+}
+
+.menu-content{
+  z-index: 2;
 }

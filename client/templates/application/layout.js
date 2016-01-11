@@ -1,3 +1,4 @@
+/* global Hammer */
 /* global IonSideMenu */
 Template.layout.onCreated(function () {
 
@@ -8,7 +9,6 @@ Template.layout.onRendered(function () {
         IonSideMenu.snapper.settings({
             tapToClose: true, // If true, tapping an open pane will close it
             flickThreshold: 50, // Number of pixels the user needs to swiftly travel to activate a "flick" open
-            hyperextensible: true,
             disable: 'right',
             maxPosition: 266,
             minPosition: -266,
@@ -22,7 +22,7 @@ Template.layout.onRendered(function () {
         // $('#navheader').css('background-image', 'url(profile.jpg)');
         IonSideMenu.snapper.on('open', menuOpenBody);
         IonSideMenu.snapper.on('close', menuCloseBody);
-    }
+    }    
 });
 
 Template.layout.events({
@@ -53,6 +53,15 @@ Template.layout.helpers({
     countNotifications: function () {
         return TransactColl.find({$and: [{requestee: Meteor.userId()}, {status: null}]}).count();
     },
+    templateGestures: {
+    'swipeleft div': function (event, templateInstance) {
+      /* `event` is the Hammer.js event object */
+      console.log("Swipe right");
+      menuClose();
+      /* `templateInstance` is the `Blaze.TemplateInstance` */
+      /* `this` is the data context of the element in your template, so in this case `someField` from `someArray` in the template */
+    },
+  }
 });
 
 function menuOpenBody() {
