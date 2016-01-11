@@ -13,7 +13,6 @@ App.info({
 
 //https://github.com/dburles/meteor-google-maps/issues/27
 //TODO change this all access to particular ip address
-App.accessRule('http://192.168.1.6:3000/*');
 App.accessRule('https://app.motobite.in/*');
 App.accessRule('https://*.googleapis.com/*');
 App.accessRule('https://*.gstatic.com/*');
