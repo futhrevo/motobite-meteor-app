@@ -42,7 +42,7 @@
     markArray = new ReactiveArray();
 
     Tracker.autorun(function(){
-        var user;
+        let user;
         if (!(user = Meteor.user())) {
             return;
         }

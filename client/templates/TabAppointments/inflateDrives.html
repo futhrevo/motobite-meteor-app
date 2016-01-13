@@ -7,6 +7,7 @@
     {{/contentFor}}
     {{#ionView}}
         {{#ionContent class="scheduletabsClass" }}
+        <div data-snap-ignore="true" style="height: 100%;width: 100%;">
             {{#ionList}}
                 <div class="item item-divider">
                     <p>Total riders offering you rides - {{total}}</p>
@@ -24,6 +25,7 @@
                     {{/ionItem}}
                 {{/each}}
             {{/ionList}}
+            </div>
         {{/ionContent}}
     {{/ionView}}
     {{> _tabs}}
