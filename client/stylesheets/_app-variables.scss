@@ -142,9 +142,11 @@ html, body {
 .content.overflow-scroll {
   bottom: 0px !important;
 }
-
-.profileClass, .scheduletabsClass, .homeClass, .contactsClass, .profileViewClass, .recentChatsClass, .verifyEmailClass, .verifyMobileClass, .housesClass, .groupsClass, .groupViewClass{
-  background-color: gainsboro;
+.genericClass{
+    background-color: gainsboro;
+}
+.verifyEmailClass, .verifyMobileClass, .groupsClass{
+  @extend .genericClass;
 }
 
 
