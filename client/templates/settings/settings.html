@@ -8,7 +8,10 @@
     {{#ionView}} 
     {{#if currentUser}}
         {{#ionContent class="genericClass"}}
-            <div class="list card">
+            <div class="list">
+                <div class="item item-divider">
+                    General
+                </div>
                 <div class="item item-toggle">
                         Push notifications
                         <label class="toggle toggle-positive">
@@ -17,11 +20,23 @@
                                 <div class="handle"></div>
                             </div>
                         </label>
-                    </div>
-                    <div class="item item-button-right">
+                </div>
+                <div class="item item-button-right">
                         Password
                         <a href= "{{pathFor 'changePswd'}}" class="button button-icon icon ion-lock-combination"></a>
+                </div>
+                <div class="item item-divider">
+                    Tracking
+                </div>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Idle
                     </div>
+                    <select id="inpTrackSel">
+                        <option value = true>Aggressive</option>
+                        <option value = false>Calm</option>
+                    </select>
+                </label>
             </div>
         {{/ionContent}} 
     {{else}}

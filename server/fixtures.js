@@ -98,12 +98,13 @@ Meteor.methods({
             return;
         }
         check(this.userId, String);
+        console.log(postAttributes.loc.coordinates[0]);
         check(postAttributes, {
             gh: String,
             heading: Match.OneOf(Number,null),
             loc:{
                 type:String,
-                coordinates:[Number]
+                coordinates: Match.OneOf([Number],null)
             }
         });
         var userid = Meteor.user()._id;
@@ -556,6 +557,16 @@ Meteor.methods({
         var user = this.userId;
         SafeHouseColl.remove({ _id: _id, id: user });
         return {type:"success",message:"removed the selected safehouse"};
+    },
+    setIdleTracking: function(status){
+        check(status, Boolean);
+
+        if (!this.userId) {
+            return false;
+        }
+
+        var me = this.userId;
+        Meteor.users.update({_id:me}, {$set: {'settings.idleTracking': status}});   
     }
 });
 
