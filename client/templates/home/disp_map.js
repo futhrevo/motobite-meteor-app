@@ -7,7 +7,7 @@ var vibrate = navigator.vibrate ? 'vibrate' : navigator.webkitVibrate ? 'webkitV
 Template.dispMap.helpers({
     marker: function() {
         if (Session.get('map'))
-            return MarkerColl.find({
+            return MarkerColl._collection.find({
                 valid: true
             });
         else
@@ -113,7 +113,7 @@ Template.dispMap.onDestroyed(function(){
     }
 	//Session.set('map', false);
     if(Meteor.isCordova){
-        // window.motobite.location.stop();
+        window.motobite.location.stop();
     }
     $('body').removeClass('mb-has-fab');
 });
@@ -121,8 +121,20 @@ Template.dispMap.onDestroyed(function(){
 Template.dispMap.onCreated(function(){
     console.log("display map created");
     if (Meteor.isCordova) {
-        window.motobite.location.configure();
-        // window.motobite.location.start({background:false});
+        window.motobite.location.echo("echo");
+        window.motobite.location.start({background:false}, locSuccessFunc,locFailFunc);
+        console.log("foreground location started");
     }
     $('body').addClass('mb-has-fab');
 });
+
+var locSuccessFunc = function(obj){
+    MarkerColl._collection.update({id:Meteor.userId()},{$set:{'loc.coordinates.0':obj.longitude, 'loc.coordinates.1':obj.latitude}});
+    Session.set('lat', obj.latitude);
+    Session.set('lng', obj.longitude);
+    console.log("working loc");
+}
+
+var locFailFunc = function(){
+    console.log("loc failed");
+}

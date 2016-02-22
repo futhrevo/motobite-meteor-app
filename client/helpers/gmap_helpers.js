@@ -205,6 +205,39 @@ gmap = {
         markerManager = new MarkerManager(this.map);
         checkinTrackerInit();
         safehouseTrackerInit();
+/***  Code to limit map display for only India, uncomment before production    
+        // Bounds for India
+        let strictBounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(6, 70),
+            new google.maps.LatLng(36, 98));
+        
+        // Listen for the dragend event
+        google.maps.event.addListener(this.map, 'dragend', function () {
+            if (strictBounds.contains(gmap.map.getCenter())) return;
+
+            // We're out of bounds - Move the map back within the bounds
+
+            var c = gmap.map.getCenter(),
+                x = c.lng(),
+                y = c.lat(),
+                maxX = strictBounds.getNorthEast().lng(),
+                maxY = strictBounds.getNorthEast().lat(),
+                minX = strictBounds.getSouthWest().lng(),
+                minY = strictBounds.getSouthWest().lat();
+
+            if (x < minX) x = minX;
+            if (x > maxX) x = maxX;
+            if (y < minY) y = minY;
+            if (y > maxY) y = maxY;
+
+            gmap.map.setCenter(new google.maps.LatLng(y, x));
+        });
+*/        
+        // Limit the zoom level
+        let minZoomLevel = 15;
+        google.maps.event.addListener(this.map, 'zoom_changed', function () {
+            if (gmap.map.getZoom() < minZoomLevel) gmap.map.setZoom(minZoomLevel);
+        });
     },
 
     //distance calculation using Haversine formula

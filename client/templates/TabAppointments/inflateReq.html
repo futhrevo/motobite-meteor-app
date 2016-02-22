@@ -8,8 +8,10 @@
 
 
     {{#ionView}}
-        {{#ionContent class="scheduletabsClass"}}
+        {{#ionContent class="genericClass"}}
+        <div data-snap-ignore="true" style="height: 100%;width: 100%;">  
             {{> listReq}}
+        </div>
         {{/ionContent}}
     {{/ionView}}
     {{> _tabs}}
@@ -38,5 +40,5 @@
                 <i class="icon ion-ios-arrow-right"></i>
             </a>
         {{/each}}
-    {{/ionList}}
+    {{/ionList}} 
 </template>

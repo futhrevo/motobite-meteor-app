@@ -52,11 +52,8 @@ Template.profileTemplate.events({
                 Meteor.call('setStatus', status);
             }
         });
-    },
-
-    'change #notif': function() {
-        Meteor.call('setNotification', $('#notif').is(':checked'));
     }
+
 
 });
 

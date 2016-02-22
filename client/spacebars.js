@@ -17,3 +17,7 @@ Template.registerHelper('getDate', function(timestamp) {
 Template.registerHelper('isCordova', function(){
     return Meteor.isCordova;
 });
+
+Template.registerHelper('checked', function(value){
+        return value === true ? 'checked' : '';
+});

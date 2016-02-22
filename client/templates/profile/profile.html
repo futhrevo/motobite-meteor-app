@@ -9,7 +9,7 @@
 
     {{#ionView}}
         {{#if currentUser}}
-            {{#ionContent class="profileClass"}}
+            {{#ionContent class="genericClass"}}
 
                 <div class="list card">
                     <div class="item" style="text-align:center">
@@ -52,16 +52,6 @@
                         {{/if}}
                     </div>
 
-                    <div class="item item-toggle">
-                        Push notifications
-                        <label class="toggle toggle-positive">
-                            <input type="checkbox" id="notif" {{checked currentUser.profile.notifications}}>
-                            <div class="track">
-                                <div class="handle"></div>
-                            </div>
-                        </label>
-                    </div>
-
                     <div class="item">
                         Points Accumulated
                         <span class="badge badge-positive">{{currentUser.profile.points}}</span>
@@ -97,12 +87,6 @@
                              </a>
                         {{/if}}
                     </div>
-
-                    <div class="item item-button-right">
-                        Password
-                        <a href= "{{pathFor 'changePswd'}}" class="button button-icon icon ion-lock-combination"></a>
-                    </div>
-
 
                     <div class="item item-button-right" >
                         Sign Out

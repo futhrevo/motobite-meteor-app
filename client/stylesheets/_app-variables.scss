@@ -7,10 +7,12 @@
 
 html, body {
   height: 100%;
+  overflow-x: hidden;
 }
 
 .ionic-body {
   height: 100%;
+  position: relative;
 }
 
 .popover {
@@ -140,9 +142,11 @@ html, body {
 .content.overflow-scroll {
   bottom: 0px !important;
 }
-
-.profileClass, .scheduletabsClass, .homeClass, .contactsClass, .profileViewClass, .recentChatsClass, .verifyEmailClass, .verifyMobileClass, .housesClass, .groupsClass, .groupViewClass{
-  background-color: gainsboro;
+.genericClass{
+    background-color: gainsboro;
+}
+.verifyEmailClass, .verifyMobileClass, .groupsClass{
+  @extend .genericClass;
 }
 
 
@@ -272,4 +276,8 @@ html, body {
 }
 .groupsClass a{
   text-decoration: none;
+}
+
+.menu-content{
+  z-index: 2;
 }
