@@ -121,9 +121,9 @@ Template.dispMap.onDestroyed(function(){
 Template.dispMap.onCreated(function(){
     console.log("display map created");
     if (Meteor.isCordova) {
-        window.motobite.location.configure();
-        console.log("foreground location started");
+        window.motobite.location.echo("echo");
         window.motobite.location.start({background:false}, locSuccessFunc,locFailFunc);
+        console.log("foreground location started");
     }
     $('body').addClass('mb-has-fab');
 });

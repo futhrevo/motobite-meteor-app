@@ -2,13 +2,13 @@
 // This section sets up some basic app metadata,
 // the entire section is optional.
 App.info({
-  id: 'com.futrevo.reku.motobite',
+  id: 'in.hedera.motobite.reku',
   name: 'Motobite',
   description: 'Community carpooling app for your mobile device',
   author: 'Rakesh Kalyankar',
   email: 'admin@motobite.com',
   website: 'http://motobite.com',
-  version: '0.0.2'
+  version: '0.0.1'
 });
 
 //https://github.com/dburles/meteor-google-maps/issues/27

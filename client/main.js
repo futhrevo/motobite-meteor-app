@@ -57,6 +57,8 @@
 }());
 
 function onDeviceReady() {
+    window.motobite.location.configure();
+    window.motobite.location.echo();
     //add back button event
     //http://stackoverflow.com/questions/28055836/back-button-in-cordova-phongap-meteor-build-for-android-wont-close-application
     document.addEventListener("backbutton", function (e) {
