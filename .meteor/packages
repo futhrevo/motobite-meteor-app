@@ -46,5 +46,10 @@ reactive-var
 ecmascript
 aldeed:autoform
 edgee:slingshot
-meteoric:camera
 chriswessels:hammer
+meteoric:camera
+accounts-facebook
+accounts-google
+service-configuration
+accounts-ui
+splendido:accounts-meld

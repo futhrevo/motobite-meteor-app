@@ -11,83 +11,17 @@
 /* global DriversAdvtColl */
 /* global DrivesAdvtColl */
 Meteor.startup(function () {
-    // to enable indexing based on 2d sphere for DrivesAdvtColl
-    DrivesAdvtColl._ensureIndex({
-        "nodes.locs": "2dsphere"
-    },{ background: true });
+    Modules.server.configureDBs();
+    Modules.server.configureServices();
+    Modules.server.configureEmail();
+    Modules.server.configureCron();
 
-
-    DriversAdvtColl._ensureIndex({
-        "locs": "2dsphere"
-    },{ background: true });
-    DriversAdvtColl._ensureIndex({ "ends": 1 }, { expireAfterSeconds: 300 });
-    EmailOtpColl._ensureIndex({"id":1});
-    EmailOtpColl._ensureIndex({ "at": 1 }, { expireAfterSeconds: 3600 });
-    SmsOtpColl._ensureIndex({"id":1});
-    SmsOtpColl._ensureIndex({ "at": 1 }, { expireAfterSeconds: 900 });
-    SafeHouseColl._ensureIndex({"id":1});
-    MarkerColl._ensureIndex({"id":1});
-    MarkerColl._ensureIndex({"loc" : "2dsphere","at":-1},{ background: true });
-    //Messages.find({room: room, users: this.userId}, {sort: {time: -1}, limit: 1})
-    Messages._ensureIndex({"room": 1, "users": 1, "time": -1});
-    CommColl._ensureIndex({ "owner": 1 });
-    CommColl._ensureIndex({ "id": 1 });
-    CommColl._ensureIndex({ "members": 1 });
-    CommColl._ensureIndex({ "name": "text" });
-    TransactColl._ensureIndex({ requestee: 1, requester: 1, 'advtRequest': 1 });
-    TransactColl._ensureIndex({ "ends": 1 }, { expireAfterSeconds: 300 });
-    //DriversTTL._ensureIndex({ "ends": 1 }, { expireAfterSeconds: 10800 });
-
-    if (MarkerColl.find().count() === 0) {
-        MarkerColl.insert({
-            gh: 'tdr38juym8ns',
-            type: "taxi",
-            at: Date.now(),
-            valid: true,
-            heading:null,
-            loc:{
-                type:"Point",
-                coordinates:[77,12]
-            },
-            id:"tEsTdAtA"
-        });
-    }
-    if(AvatarOpsColl.find().count() === 0){
-        AvatarOpsColl.insert({
-            _id: "deleteOps1",
-            ops:[]  
-        })
-    }
-    var smtp = {
-        username: 'mailer.motobite@gmail.com',
-        password: 'I0Hd723TJFq7-u2wKBCyRA',
-        server:   'smtp.mandrillapp.com',
-        port: 587
-    };
-    process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
-
-    //start process in later to handle old records deletions
-    var Later = Meteor.npmRequire('later');
-    var wrapLater = Later;
-    // will fire every 1 minutes
-    var textSched = wrapLater.parse.text('every 1 min');
-    // execute logTime one time on the next occurrence of the text schedule
-    wrapLater.setInterval(Meteor.bindEnvironment(logTime), textSched);
-    // function to execute
-    function logTime() {
-        console.log(new Date());
-        //3 hour old time stamp
-        var epochTime = (Date.now() / 1000 | 0) - (3600 * 3);
-
-        // DriversAdvtColl.remove({startTime: {$lt: epochTime}});
-        DrivesAdvtColl.remove({startTime: {$lt: epochTime}});
-    }
-    //Email.send({
+    // Email.send({
     //    from: "admin@motobite.com",
     //    to: "k.rakeshlal@gmail.com",
-    //    subject: "Meteor Can Send Emails via Mandrill without gmail",
-    //    text: "Meteors sends emails via Mandrill without gmail."
-    //});
+    //    subject: "Meteor Can Send Emails via Sendgrid without gmail",
+    //    text: "Meteors sends emails via Sendgrid without gmail."
+    // });
 });
 
 

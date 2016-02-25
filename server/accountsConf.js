@@ -14,11 +14,11 @@ Accounts.config({
 
 // Support to add blank profile images
 Accounts.onCreateUser(function(options, user) {
-
+   console.log(user);
   // We still want the default hook's 'profile' behavior.
   if (options.profile)
     user["works"] = {};
-    user["roles"] = ["banned"];
+    user["roles"] = ["banned", "demo"];
     user["works"]["emails"] = [{ address: options.profile.workEmail, verified: false }];
     user["mobile"] = [{number:options.profile.mobile, verified: false}];
     delete options.profile.workEmail;
@@ -59,8 +59,8 @@ Accounts.validateLoginAttempt(function (attempt) {
             // check if user is banned
             if (attempt.user.roles) {
                 if (attempt.user.roles.indexOf('banned') >= 0) {
-                    throw new Meteor.Error(403, "Login suspended, Please contact adminstrator");
-                    return false;
+                    // throw new Meteor.Error(403, "Login suspended, Please contact adminstrator");
+                    // return false;
                 }
             }
         }

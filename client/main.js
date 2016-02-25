@@ -49,10 +49,10 @@
         if (!user.roles) {
             return;
         }
-        if (user.roles.indexOf('banned') >= 0) {
-            alert("Login disabled! Contact adminstrator");
-            return Meteor.logout();
-        }
+        // if (user.roles.indexOf('banned') >= 0) {
+        //     alert("Login disabled! Contact adminstrator");
+        //     return Meteor.logout();
+        // }
     })
 }());
 

@@ -3,5 +3,17 @@
 		"gsBucketURL": "https://mbavatar.storage.googleapis.com"
 	},
 	"gsBucket": "mbavatar",
-	"GoogleAccessId": "account-1@motobite-1137.iam.gserviceaccount.com"
+	"GoogleAccessId": "account-1@motobite-1137.iam.gserviceaccount.com",
+    "private": {
+    "oAuth": {
+      "facebook": {
+        "appId": "770847263015507",
+        "secret": "cc4d3fe884b8fca32f28c2acd3abc10e"
+      },
+      "google": {
+        "clientId": "1043722404151-3qfabntp26hr9ja7ah505bj40o0a0s7f.apps.googleusercontent.com",
+        "secret": "_iEhc0OUOWtpSSODCAKRqhS4"
+      }
+    }
+  }
 }
