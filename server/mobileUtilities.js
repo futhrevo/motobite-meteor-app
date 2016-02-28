@@ -47,6 +47,12 @@ SendEmailOtp = function (text, query) {
     }
 
     console.log("TODO: send " + mmail + " - " + text);
+    Email.send({
+       from: "MotoBite Accounts <accounts@motobite.com>",
+       to: mmail,
+       subject: "MotoBite email verification",
+       text: text + "\n\n MotoBite Team"
+    });
 }
 
 SendSms = function (text, query) {

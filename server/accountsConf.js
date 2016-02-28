@@ -11,7 +11,19 @@ Accounts.config({
     loginExpirationInDays:120
 
 });
-
+Accounts.emailTemplates.siteName = "MotoBite";
+Accounts.emailTemplates.from = "MotoBite Accounts <accounts@motobite.com>";
+Accounts.emailTemplates.enrollAccount.subject = function (user) {
+    return "Welcome to MotoBite App, " + user.profile.name;
+};
+Accounts.emailTemplates.enrollAccount.text = function (user, url) {
+   return "You have been selected to participate in building a better future!"
+     + " To activate your account, simply click the link below:\n\n"
+     + url;
+};
+Accounts.emailTemplates.verifyEmail.subject = function(user) {
+  return 'Welcome to MotoBite App';
+};
 // Support to add blank profile images
 Accounts.onCreateUser(function(options, user) {
    console.log(user);
