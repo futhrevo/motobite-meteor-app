@@ -10,8 +10,8 @@ EmailOtpColl = new Meteor.Collection('emailotp');
 // create smsotp for user
 SmsOtpColl = new Meteor.Collection('smsotp');
 
-Meteor.methods({
-	
+Meteor.methods({ 
+        
 	createSmsOtp: function (index) {
 		check(this.userId, String);
 		check(index, Number);

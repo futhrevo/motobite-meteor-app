@@ -58,8 +58,8 @@
                     </div>
 
                     <div class="item item-icon-left item-icon-right">
-                        <i class="icon ion-email"></i>{{currentUser.emails.[0].address}}
-                        {{#if currentUser.emails.[0].verified}}
+                        <i class="icon ion-email"></i>{{currentUser.registered_emails.[0].address}}
+                        {{#if currentUser.registered_emails.[0].verified}}
                             <i class="icon ion-checkmark-circled positive" ></i>
                         {{else}}
                             <a href = "{{pathFor 'verifyEmail' cat='emails' index='0'}}" class="icon ion-alert-circled assertive">
@@ -68,7 +68,12 @@
                     </div>
                     
                     <div class="item item-icon-left item-icon-right">
-                        <i class="icon ion-briefcase"></i>{{currentUser.works.emails.[0].address}}
+                        <i class="icon ion-briefcase"></i>
+                        {{#if currentUser.works.emails.[0].address}}
+                            {{currentUser.works.emails.[0].address}}
+                        {{else}}
+                        No Valid work email present
+                        {{/if}}
                         {{#if currentUser.works.emails.[0].verified}}
                             <i class="icon ion-checkmark-circled positive"></i>
                         {{else}}
@@ -79,7 +84,12 @@
                     </div>
 
                     <div class="item item-icon-left item-icon-right" >
-                        <i class="icon ion-iphone"></i>{{currentUser.mobile.[0].number}}
+                        <i class="icon ion-iphone"></i>
+                        {{#if currentUser.mobile.[0].number}}
+                            {{currentUser.mobile.[0].number}}
+                        {{else}}
+                        No valid mobile number found
+                        {{/if}}
                          {{#if currentUser.mobile.[0].verified}}
                             <i class="icon ion-checkmark-circled positive"></i>
                         {{else}}

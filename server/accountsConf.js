@@ -44,6 +44,11 @@ Accounts.onCreateUser(function(options, user) {
     options.profile.city = null;
     options.profile.country = null;
     options.profile.points = 0;
+    if(user.services.google){
+        options.profile.avatarUrl = user.services.google.picture;
+        options.profile.gender = user.services.google.gender;
+        options.profile.fullname = user.services.google.name;
+    }
     user.profile = options.profile;
     console.log("placeholder for controlling accounts");
   return user;

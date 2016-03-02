@@ -9,6 +9,7 @@
   
   {{#ionView}}
       {{#ionContent class="verifyEmailClass"}}
+      {{#if email}}
          <div class="padding">
           <button class="button button-block button-calm" data-action="send-emailotp-button">
               Send OTP
@@ -32,6 +33,20 @@
           </button>
         </div>
         </form>
+        {{else}}
+        <form>
+            <div class="card">
+                <label class="item item-input">
+                    <input type="email" placeholder="Enter a valid email address" required>
+                </label> 
+            </div> 
+             <div class="padding">
+                 <button class="button button-block button-balanced" data-action="add-email-button">
+              Add Email
+          </button>
+        </div>
+        </form>
+        {{/if}}
         <div class="bar bar-footer bar-dark">
           <h1 class="title">Help!</h1>
         </div>

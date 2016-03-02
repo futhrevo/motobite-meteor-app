@@ -1,3 +1,4 @@
+/* global toastr*/
 Template.verifyEmail.helpers({
 	email: function () {
 		if (this.cat === "emails") {
@@ -21,8 +22,8 @@ Template.verifyEmail.events({
 		});
 	},
 	'click [data-action=verify-emailotp-button]': function (event, template) { 
-		var str = template.$('.verifyEmailClass input').val();
-		if (str.length != 8) {
+		const str = template.$('.verifyEmailClass input').val();
+		if (str.length !== 8) {
 			toastr.error("check code again");
 			return false;
 		}
@@ -38,5 +39,20 @@ Template.verifyEmail.events({
 		})
 		// to prevent form reload when submitted
 		return false;
-	}
+	},
+    'click [data-action=add-email-button]' : function(event, template){
+        const str = template.$('.verifyEmailClass input').val();
+        if(str.length < 2){
+            toastr.error("check email again");
+			return false;
+        }
+        Meteor.call('addEmail', this.cat, this.index, str, function(err){
+        if (err) {
+				toastr.error("Error Processing Request");
+			}
+        });
+        // to prevent form reload when submitted
+		return false;
+    }
+    
 });

@@ -1,8 +1,8 @@
 {
-"compilerOptions": {
-	"target": "ES6"
-},
-"files": [
-	"typings"
-]
+    "compilerOptions": {
+        "target": "ES6"
+    },
+    "exclude": [
+        ".meteor", "packages", "private", "public", "resources", "tests", "typings"
+    ]
 }

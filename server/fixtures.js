@@ -1,15 +1,6 @@
-/* global AvatarOpsColl */
-/* global ULogsColl */
-/* global SafeHouseColl */
-/* global EJSON */
-/* global Match */
-/* global process */
-/* global Messages */
-/* global MarkerColl */
-/* global SmsOtpColl */
-/* global EmailOtpColl */
-/* global DriversAdvtColl */
-/* global DrivesAdvtColl */
+/* global ULogsColl, Modules, SafeHouseColl, EJSON, Match, process, MarkerColl, 
+DriversAdvtColl, DrivesAdvtColl, TransactColl */
+
 Meteor.startup(function () {
     Modules.server.configureDBs();
     Modules.server.configureServices();
@@ -41,9 +32,9 @@ Meteor.methods({
                 coordinates: Match.OneOf([Number],null)
             }
         });
-        var userid = Meteor.user()._id;
-        var qw = MarkerColl.findOne({id: userid});
-        var post;
+        const userid = Meteor.user()._id;
+        let qw = MarkerColl.findOne({id: userid});
+        let post;
         if (!qw) {
             console.log("new user");
             post = _.extend(postAttributes, {
@@ -81,7 +72,7 @@ Meteor.methods({
             initialBearing : Number,
             finalBearing : Number
         });
-        var docs = DriversAdvtColl.find(
+        DriversAdvtColl.find(
             {
                 $and: [
                     {
@@ -125,11 +116,11 @@ Meteor.methods({
         //TODO mongo aggregation http://joshowens.me/using-mongodb-aggregations-to-power-a-meteor-js-publication/
         //TODO if DriversAdvtColl is empty, bypass the procedure to escape server error
         // var result = DriversAdvtColl.find({"locs": {$near: {$geometry : {type : "Point", coordinates:post[0]},$maxDistance : 200}}},{fields: {"locs":0}});
-        var ids = [];
+        let ids = [];
         //all keys present as neighbours for a geohash
-        var dKeys = ["c", "e", "w", "n", "s", "se", "sw", "ne", "nw"];
+        const dKeys = ["c", "e", "w", "n", "s", "se", "sw", "ne", "nw"];
         // Find all the _ids near to source coordinates
-        var nearSrc = DriversAdvtColl.aggregate([{
+        let nearSrc = DriversAdvtColl.aggregate([{
             "$geoNear": {
                 near: {
                     type: "Point",
@@ -154,12 +145,12 @@ Meteor.methods({
             return null;
         }
         // get the list of _ids from the cursor
-        for (var i = 0; i < nearSrc.length; i++) {
+        for (let i = 0; i < nearSrc.length; i++) {
             ids[i] = nearSrc[i]._id;
         }
         console.log(nearSrc);
         // take the list of _ids and search those for destination proximity
-        var nearDst = DriversAdvtColl.aggregate([{
+        let nearDst = DriversAdvtColl.aggregate([{
             "$geoNear": {
                 near: {
                     type: "Point",
@@ -171,24 +162,24 @@ Meteor.methods({
                 query: {_id: {$in: ids}}
             }
         }]).map(function (u) {
-            var srcIndex = u.gh6.indexOf(post.fromHashObj.c);
-            var dstIndex = u.gh6.indexOf(post.toHashObj.c);
-            var i = 1;
-            while (srcIndex == -1 && i < 9) {
+            let srcIndex = u.gh6.indexOf(post.fromHashObj.c);
+            let dstIndex = u.gh6.indexOf(post.toHashObj.c);
+            let i = 1;
+            while (srcIndex === -1 && i < 9) {
                 srcIndex = u.gh6.indexOf(post["fromHashObj"][dKeys[i]]);
                 i++;
             }
             i = 1;
-            while (dstIndex == -1 && i < 9) {
+            while (dstIndex === -1 && i < 9) {
                 dstIndex = u.gh6.indexOf(post["toHashObj"][dKeys[i]]);
                 i++;
             }
             console.log("srcIndex " + srcIndex);
             console.log("dstIndex " + dstIndex);
             if (srcIndex < dstIndex)
-                for (var i = 0; i < nearSrc.length; i++) {
-                    if (u._id == nearSrc[i]._id) {
-                        var ret = {
+                for (let i = 0; i < nearSrc.length; i++) {
+                    if (u._id === nearSrc[i]._id) {
+                        let ret = {
                             _id: u._id,
                             srcDist: nearSrc[i].srcDist,
                             dstDist: u.dstDist,
@@ -205,13 +196,13 @@ Meteor.methods({
 
         //Filter nulls inserted after map function
 
-        var nearDst = nearDst.filter(function (element) {
-            return element != null;
+         nearDst = nearDst.filter(function (element) {
+            return element !== null;
         });
 
         // get the list of _ids from the cursor
         ids = [];
-        for (var i = 0; i < nearDst.length; i++) {
+        for (let i = 0; i < nearDst.length; i++) {
             ids[i] = nearDst[i]._id;
         }
 
@@ -219,7 +210,7 @@ Meteor.methods({
         console.log(nearDst);
         console.log("TODO limit the number of results for performance");
         console.log(ids);
-        var driverpool = DriversAdvtColl.find({
+        let driverpool = DriversAdvtColl.find({
             _id: {$in: ids}
         }, {
             fields: {
@@ -259,7 +250,7 @@ Meteor.methods({
         });
         console.log("TODO riderquery buildup");
         console.log("Querying markers for " + this.userId);
-        var drivepool = DrivesAdvtColl.find({"nodes.locs": {$geoWithin: {$box: [[77.676245, 12.926030], [100, 100]]}}});
+        let drivepool = DrivesAdvtColl.find({"nodes.locs": {$geoWithin: {$box: [[77.676245, 12.926030], [100, 100]]}}});
         return drivepool.fetch();
     },
     postDriveReq: function(postAttributes){
@@ -283,8 +274,8 @@ Meteor.methods({
             startTime: Number
         });
         postAttributes.id = this.userId;
-        var insertId = DrivesAdvtColl.insert(postAttributes);
-        
+        let insertId = DrivesAdvtColl.insert(postAttributes);
+        return insertId;
     },
     //Entry for drive advertisement
     postDriveAdvt: function (postAttributes) {
@@ -304,8 +295,8 @@ Meteor.methods({
             finalBearing : Number,
             duration : Number
         });
-        var userid = this.userId;
-        var post = {
+        const userid = this.userId;
+        const post = {
             id: userid,
             at: new Date(),
             mapid: null,
@@ -352,10 +343,10 @@ Meteor.methods({
             dstDist: Number,
             duration: Number,
             src: [String],
-            srcDist: Number,
+            srcDist: Number
         });
-        var requestee = DriversAdvtColl.findOne({_id: obj._id},{fields: {id: 1,ends:1}});
-        var requester = this.userId;
+        const requestee = DriversAdvtColl.findOne({_id: obj._id},{fields: {id: 1,ends:1}});
+        const requester = this.userId;
         if (requestee.id === requester) {
             return {type:"info",message:'You can not send request to yourself'};
         }
@@ -364,7 +355,7 @@ Meteor.methods({
             return {type:"info",message:'You already sent a request for this rider'};
         }
 
-        var post = {
+        const post = {
             requester: requester,
             requestee: requestee.id,
             advtRequest: obj._id,
@@ -380,13 +371,13 @@ Meteor.methods({
                 dstDist: obj.dstDist,
                 duration: obj.duration,
                 src: obj.src,
-                srcDist: obj.srcDist,
+                srcDist: obj.srcDist
             },
             ends: requestee.ends,
             status: null
 
         };
-        var requestId = TransactColl.insert(post);
+        let requestId = TransactColl.insert(post);
         DriversAdvtColl.update({_id: obj._id}, {$push: {pending: {requestId:requestId,requester:requester}}}, {upsert: true});
     },
     // function to set rider actions
@@ -401,18 +392,19 @@ Meteor.methods({
             status: Boolean
         });
         // first check if advt exists
-        var advt = TransactColl.findOne({_id:obj._id},{fields:{advtRequest:1,requester:1}});
+        let advt = TransactColl.findOne({_id:obj._id},{fields:{advtRequest:1,requester:1}});
         console.log(advt);
         // check if user is in pending state and pull
-        var state = DriversAdvtColl.update({_id:advt.advtRequest,"pending.requester":advt.requester}, {$pull: {"pending":{"requester":advt.requester}}});
+        let state = DriversAdvtColl.update({_id:advt.advtRequest,"pending.requester":advt.requester}, {$pull: {"pending":{"requester":advt.requester}}});
         console.log(state);
-        if(state > 0){
+        if (state > 0) {
+            let send;
             if(obj.status){
                 DriversAdvtColl.update({_id: advt.advtRequest}, {$push: {accepted: {requestId:obj._id,requester:advt.requester}}}, {upsert: true});
-                var send = {type:"success",message:"Request Accepted"};
+                send = {type:"success",message:"Request Accepted"};
             }else{
                 DriversAdvtColl.update({_id: advt.advtRequest}, {$push: {rejected: {requestId:obj._id,requester:advt.requester}}}, {upsert: true});
-                var send = {type:"success",message:"Request Rejected"};
+                send = {type:"success",message:"Request Rejected"};
             }
             // change status to boolean sent
             TransactColl.update(obj._id,{$set:{status:obj.status,time:new Date()}});
@@ -429,8 +421,8 @@ Meteor.methods({
             _id: String
         });
         // fetch all pending, accepted and rejected requests for this _id
-        var data = DriversAdvtColl.findOne({_id:obj._id,id:this.userId},{fields:{pending:1,accepted:1,rejected:1}});
-        var pendReq = [],accReq = [],rejReq = [];
+        let data = DriversAdvtColl.findOne({_id:obj._id,id:this.userId},{fields:{pending:1,accepted:1,rejected:1}});
+        let pendReq = [],accReq = [],rejReq = [];
         if(data.pending){
             pendReq = _.pluck(data.pending, 'requestId');
             console.log(pendReq);
@@ -445,17 +437,17 @@ Meteor.methods({
         }
         // send notification to accepted users about cancellation
         if(accReq.length > 0){
-            var accUsers = _.pluck(data.accepted, 'requester');
-            var senderName = "MotoBite Traffic";
-            var title = senderName;
-            var text = "One of your scheduled rider cancelled his ride";
-            var query = {userId: {$in: accUsers}};
-            var payload = {sender: senderName};
+            const accUsers = _.pluck(data.accepted, 'requester');
+            const senderName = "MotoBite Traffic";
+            const title = senderName;
+            const text = "One of your scheduled rider cancelled his ride";
+            const query = {userId: {$in: accUsers}};
+            const payload = {sender: senderName};
             //SendNotification(title, text, query, payload);
 
         }
         // delete from transacts pending and rejected
-        var total = pendReq.concat(accReq,rejReq);
+        const total = pendReq.concat(accReq,rejReq);
         TransactColl.remove({_id:{$in: total}});
         DriversAdvtColl.remove({_id:obj._id});
         return {type:"info",message:"successfully deleted ride"};
@@ -469,11 +461,11 @@ Meteor.methods({
             name: String,
             address: String
         });
-        var user = this.userId;
+        const user = this.userId;
         if (SafeHouseColl.find({ id: user }).count() > 5) {
             return {type:"info",message:"only 5 safe houses are allowed at this time, please delete any"};
         }
-        var post = {
+        const post = {
             id: user,
             radius: obj.radius,
             name: obj.name,
@@ -488,7 +480,7 @@ Meteor.methods({
     },
     deleteSafeHouse: function (_id) {
         check(this.userId, String);
-        var user = this.userId;
+        const user = this.userId;
         SafeHouseColl.remove({ _id: _id, id: user });
         return {type:"success",message:"removed the selected safehouse"};
     },
@@ -499,7 +491,7 @@ Meteor.methods({
             return false;
         }
 
-        var me = this.userId;
+        const me = this.userId;
         Meteor.users.update({_id:me}, {$set: {'settings.idleTracking': status}});   
     }
 });

@@ -9,6 +9,7 @@
   
   {{#ionView}}
       {{#ionContent class="verifyMobileClass"}}
+      {{#if number}}
         <div class="padding">
           <button class="button button-block button-calm" data-action="send-smsotp-button">
               Send OTP
@@ -32,7 +33,21 @@
           </button>
         </div>
         </form>
-        <div class="bar bar-footer bar-dark">
+      {{else}}
+        <form>
+            <div class="card">
+                <label class="item item-input">
+                    <input type="text" placeholder="Enter a valid Mobile Number" maxlength="10" required>
+                </label> 
+            </div> 
+             <div class="padding">
+                 <button class="button button-block button-balanced" data-action="add-number-button">
+              Add Mobile Number
+          </button>
+        </div>
+        </form>
+      {{/if}}
+      <div class="bar bar-footer bar-dark">
       <h1 class="title">Help!</h1>
       </div>
       {{/ionContent}}

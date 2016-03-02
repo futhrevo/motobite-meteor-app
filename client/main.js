@@ -1,7 +1,12 @@
-/* global Tracker */
-/* global markArray */
-/* global ReactiveArray */
-(function () {
+/* global  markArray, polyArray, toastr, IonActionSheet, Tracker, ReactiveArray */
+/* exported markArray, polyArray */
+
+(function() {
+// TODO: Enable in production
+    // var console = {};
+    // console.log = function() { };
+    // console.info = function() { };
+    // window.console = console;
     console.info("Immediate function fired up at "+ new Date().toTimeString());
     Session.set('map', false);
     Session.set('mode', null);
@@ -62,7 +67,7 @@ function onDeviceReady() {
     //add back button event
     //http://stackoverflow.com/questions/28055836/back-button-in-cordova-phongap-meteor-build-for-android-wont-close-application
     document.addEventListener("backbutton", function (e) {
-        if(Router.current().route.getName() == "index"){
+        if(Router.current().route.getName() === "index"){
             e.preventDefault();
             if($("body").hasClass("action-sheet-open")){
                 IonActionSheet.close();
@@ -92,7 +97,7 @@ function onDeviceReady() {
     }, false);
     console.log("Cordova is running");
 
-};
+}
 
 function supports_html5_storage() {
     if (Meteor.isCordova) {
