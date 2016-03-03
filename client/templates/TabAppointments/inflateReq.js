@@ -1,4 +1,4 @@
-/* global IonSideMenu */
+/* global IonSideMenu, TransactColl, IonPopup, moment, toastr*/
 Template.listReq.helpers({
     totalReqs:function(){
         // return TransactColl.find({ $and: [ {requestee:Meteor.userId() },{status:null} ] }).count();
@@ -40,12 +40,12 @@ Template.listReq.events({
     },
     'click .list-group-item': function(event) {
 		event.preventDefault();
-    	$(event.currentTarget).addClass("active").siblings().removeClass('active');
+        $(event.currentTarget).addClass("active").siblings().removeClass('active');
     },
     'click .gotInfo':function(event){
         event.preventDefault();
-        var _id = this._id;
-        var obj = TransactColl.findOne({_id:_id});
+        // const _id = this._id;
+        // const obj = TransactColl.findOne({_id:_id});
         IonPopup.confirm({
             title: 'Are you sure?',
             template: 'Are you <strong>really</strong> sure?',
@@ -59,9 +59,9 @@ Template.listReq.events({
     },
     'click .btnInfo':function(event){
         event.preventDefault();
-        var _id = this._id;
-        var obj = TransactColl.findOne({_id:_id});
-        var post = {_id:_id};
+        const _id = this._id;
+        const obj = TransactColl.findOne({_id:_id});
+        const post = {_id:_id};
         IonPopup.confirm({
             title: "Are you Sure?",
             template: popupAcceptScreen(obj),
@@ -69,7 +69,7 @@ Template.listReq.events({
             okType: 'button-assertive', // String (default: 'button-positive'). The type of the OK button.
             cancelText: 'Cancel', // String (default: 'Cancel'). The text of the Cancel button.
             onOk: function() {
-                var unixTime = moment().format('X');
+                // const unixTime = moment().format('X');
                 if($("#decisionVal").is(':checked')){
                     post.status = true;
                 }else{
@@ -96,12 +96,12 @@ Template.listReq.events({
             else
                 $('[data-index="1"]').html('Reject').addClass("button-assertive").removeClass("button-balanced");
         });
-    },
+    }
 
 });
 
 function popupAcceptScreen(obj){
-	var myvar = '<div class="list card">'+
+	const myvar = '<div class="list card">'+
     '<div class="item item-toggle">'+
 '     Accept ?'+
 '     <label class="toggle toggle-balanced">'+

@@ -1,4 +1,5 @@
-    const configure = () => {
+/* global Modules, DrivesAdvtColl, DriversAdvtColl, EmailOtpColl, SmsOtpColl, SafeHouseColl, MarkerColl, Messages, CommColl, TransactColl, AvatarOpsColl*/
+const configure = () => {
     // to enable indexing based on 2d sphere for DrivesAdvtColl
     DrivesAdvtColl._ensureIndex({
         "nodes.locs": "2dsphere"

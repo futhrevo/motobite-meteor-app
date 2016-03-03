@@ -1,3 +1,4 @@
+/* global Modules */
 const configure = () => {
     const smtp = {
             username: 'motobite',

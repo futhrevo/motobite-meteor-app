@@ -1,3 +1,4 @@
+/* global MarkerColl, DriversAdvtColl, DrivesAdvtColl, ULogsColl, TransactColl, createRoom, Messages, SafeHouseColl, CommColl */
 //Publications from the server after removal of autopublish
 
 Meteor.publish('theMarkers',function(){
@@ -5,7 +6,7 @@ Meteor.publish('theMarkers',function(){
         return;
     }
     check(this.userId, String);
-    var userid = this.userId;
+    const userid = this.userId;
     return MarkerColl.find({id:userid});
 });
 
@@ -14,7 +15,7 @@ Meteor.publish('theDrivers',function(){
         return;
     }
     check(this.userId, String);
-    var userid = this.userId;
+    const userid = this.userId;
     return DriversAdvtColl.find({id:userid});
 });
 
@@ -23,7 +24,7 @@ Meteor.publish('theDrives',function(){
         return;
     }
     check(this.userId, String);
-    var userid = this.userId;
+    const userid = this.userId;
     return DrivesAdvtColl.find({id:userid});
 });
 
@@ -40,7 +41,7 @@ Meteor.publish('theRiderReqs',function(){
         return;
     }
     check(this.userId, String);
-    var userid = this.userId;
+    const userid = this.userId;
     return TransactColl.find({ $or: [ {requestee:userid },{requester:userid} ] },{sort: {'request.at': -1}});
 });
 Meteor.publish('thefences',function(){
@@ -48,7 +49,7 @@ Meteor.publish('thefences',function(){
         return;
     }
     check(this.userId, String);
-    var userid = this.userId;
+    const userid = this.userId;
     return TransactColl.find({$and:[{ $or: [ {requestee:userid },{requester:userid} ] },{'request.starts':{$gt:1436079608}},{status:true}]});
 });
 
@@ -56,7 +57,7 @@ Meteor.publish(null ,function(){
     if(! this.userId){
         return;
     }
-    var userid = this.userId;
+    const userid = this.userId;
     return Meteor.users.find (
         {_id: userid},
         {fields: { roles: 1, mobile:1,works:1,settings:1,registered_emails:1}});
@@ -92,7 +93,7 @@ Meteor.publish('recentChats', function(friendId) {
     }
     check(this.userId, String);
     check(friendId, String);
-    var room = createRoom(this.userId, friendId);
+    const room = createRoom(this.userId, friendId);
 
     return Messages.find({room: room, users: this.userId}, {sort: {time: -1}, limit: 1});
 });
@@ -116,7 +117,7 @@ Meteor.publish('chat', function(friendId, limit) {
     check(this.userId, String);
     check(friendId, String);
     check(limit, Number);
-    var room = createRoom(this.userId, friendId);
+    const room = createRoom(this.userId, friendId);
 
     return Messages.find({room: room, users: this.userId}, {sort: {time: -1}, limit: limit});
 });
@@ -126,7 +127,7 @@ Meteor.publish('theHouses',function(){
         return;
     }
     check(this.userId, String);
-    var userid = this.userId;
+    const userid = this.userId;
     return SafeHouseColl.find({id:userid});
 });
 
@@ -135,7 +136,7 @@ Meteor.publish('myOwnGroups', function(){
         return;
     }
     check(this.userId, String);
-    var userid = this.userId;
+    const userid = this.userId;
     return CommColl.find({owner:userid});
 });
 Meteor.publish('myGroups', function(){
@@ -143,7 +144,7 @@ Meteor.publish('myGroups', function(){
         return;
     }
     check(this.userId, String);
-    var userid = this.userId;
+    const userid = this.userId;
     return CommColl.find({members:userid},{fields:{pending:0,blocked:0,members:0}});
 });
 

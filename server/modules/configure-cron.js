@@ -1,4 +1,5 @@
-    const configure = () => {
+/* global Modules, DrivesAdvtColl*/
+const configure = () => {
         //start process in later to handle old records deletions
         const Later = Meteor.npmRequire('later');
         let wrapLater = Later;

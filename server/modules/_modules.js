@@ -1,1 +1,2 @@
+/* global Modules*/
 Modules.server = {};

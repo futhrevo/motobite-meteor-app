@@ -1,7 +1,5 @@
-/* global SendNotification */
-/* global SendSms */
-/* global SendEmailOtp */
-/* global Push */
+/* global SendNotification, SendSms, SendEmailOtp, Push */
+/* exported SendNotification, SendSms, SendEmailOtp */
 /**
  * Created by rakeshkalyankar on 16/07/15.
  */
@@ -12,7 +10,7 @@ SendNotification = function (title, text, query, payload) {
     check(query, Object);
     check(payload, Object);
 
-    var notifications = true;
+    let notifications = true;
 
     if (query.userId) {
         notifications = Meteor.users.findOne({ _id: query.userId }, { fields: { _id: 0, "profile.notifications": 1 } }).profile.notifications;
@@ -37,7 +35,7 @@ SendEmailOtp = function (text, query) {
         index: Number,
         cat: String
     });
-    var mmail = "";
+    let mmail = "";
     if (query.cat === "emails") {
         mmail = Meteor.users.findOne({ _id: query.user }, { fields: { _id: 0, "emails.address": 1 } }).emails[query.index].address;
     } else if (query.cat === "works") {
@@ -61,7 +59,7 @@ SendSms = function (text, query) {
         user: String,
         index: Number
     });
-    var mNum = Meteor.users.findOne({ _id: query.user }, { fields: { _id: 0, "mobile.number": 1 } }).mobile[query.index].number;
+    const mNum = Meteor.users.findOne({ _id: query.user }, { fields: { _id: 0, "mobile.number": 1 } }).mobile[query.index].number;
     console.log("TODO: send " + mNum + " - " + text);
 
 }

@@ -7,24 +7,24 @@ Meteor.methods({
         check(friendId, String);
         check(this.userId, String);
 
-        var userId1 = this.userId;
-        var userId2 = friendId;
+        const userId1 = this.userId;
+        const userId2 = friendId;
 
         if (userId1 === userId2) {
             return 'You can not add yourself to your friends. Are you hacking :)';
         }
 
         //check whether users exists
-        var userExists = Meteor.users.findOne({_id: userId2}, {fields: {_id: 1}});
+        const userExists = Meteor.users.findOne({_id: userId2}, {fields: {_id: 1}});
         if (!userExists) {
             return 'There is no user with given ID!';
         }
 
         //check friendship state
-        var user = Meteor.users.findOne({_id: userId1, 'profile.friends._id': userId2}, {fields: {_id: 0, 'profile.friends':1} });
+        const user = Meteor.users.findOne({_id: userId1, 'profile.friends._id': userId2}, {fields: {_id: 0, 'profile.friends':1} });
 
         if (user) {
-            var state = _.find(user.profile.friends, function(u) {
+            let state = _.find(user.profile.friends, function(u) {
                 return u._id === userId2;
             }).state;
 
@@ -58,18 +58,18 @@ Meteor.methods({
         check(friendId, String);
         check(this.userId, String);
 
-        var userId1 = this.userId;
-        var userId2 = friendId;
+        const userId1 = this.userId;
+        const userId2 = friendId;
 
         if (userId1 === userId2) {
             return false;
         }
         //check friendship state
-        var user = Meteor.users.findOne({_id: userId1, 'profile.friends._id': userId2},
+        const user = Meteor.users.findOne({_id: userId1, 'profile.friends._id': userId2},
             {fields: {_id: 0, 'profile.friends':1} });
 
         if (user) {
-            var state = _.find(user.profile.friends, function(u) {
+            let state = _.find(user.profile.friends, function(u) {
                 return u._id === userId2;
             }).state;
 
@@ -88,8 +88,8 @@ Meteor.methods({
         check(friendId, String);
         check(this.userId, String);
 
-        var userId1 = this.userId;
-        var userId2 = friendId;
+        const userId1 = this.userId;
+        const userId2 = friendId;
 
         if (userId1 === userId2) {
             return false;
@@ -104,8 +104,8 @@ Meteor.methods({
         check(friendId, String);
         check(this.userId, String);
 
-        var userId1 = this.userId;
-        var userId2 = friendId;
+        const userId1 = this.userId;
+        const userId2 = friendId;
 
         if (userId1 === userId2) {
             return false;
@@ -124,19 +124,19 @@ Meteor.methods({
         check(friendId, String);
         check(this.userId, String);
 
-        var userId1 = this.userId;
-        var userId2 = friendId;
+        const userId1 = this.userId;
+        const userId2 = friendId;
 
         if (userId1 === userId2) {
             return false;
         }
 
         //check friendship state
-        var user = Meteor.users.findOne({_id: userId1, 'profile.friends._id': userId2},
+        const user = Meteor.users.findOne({_id: userId1, 'profile.friends._id': userId2},
             {fields: {_id: 0, 'profile.friends':1} });
 
         if (user) {
-            var state = _.find(user.profile.friends, function(u) {
+            let state = _.find(user.profile.friends, function(u) {
                 return u._id === userId2;
             }).state;
 
@@ -149,5 +149,5 @@ Meteor.methods({
                     {$set: {'profile.friends.$.state': 'active'}});
             }
         }
-    },
+    }
 });

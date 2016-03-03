@@ -1,3 +1,4 @@
+/* global Modules, ServiceConfiguration */
 // to configure various login services for account login
 const services = Meteor.settings.private.oAuth;
 

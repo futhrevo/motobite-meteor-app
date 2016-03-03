@@ -437,12 +437,12 @@ Meteor.methods({
         }
         // send notification to accepted users about cancellation
         if(accReq.length > 0){
-            const accUsers = _.pluck(data.accepted, 'requester');
-            const senderName = "MotoBite Traffic";
-            const title = senderName;
-            const text = "One of your scheduled rider cancelled his ride";
-            const query = {userId: {$in: accUsers}};
-            const payload = {sender: senderName};
+            // const accUsers = _.pluck(data.accepted, 'requester');
+            // const senderName = "MotoBite Traffic";
+            // const title = senderName;
+            // const text = "One of your scheduled rider cancelled his ride";
+            // const query = {userId: {$in: accUsers}};
+            // const payload = {sender: senderName};
             //SendNotification(title, text, query, payload);
 
         }

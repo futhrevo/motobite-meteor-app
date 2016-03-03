@@ -1,3 +1,5 @@
+/* global moment*/
+/* exported moment*/
 /**
  * Created by rakeshkalyankar on 16/07/15.
  */

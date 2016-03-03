@@ -1,4 +1,4 @@
-/* global CommColl */
+/* global CommColl, Schema */
 Meteor.methods({
 	createGroup: function(doc){
 		if(! this.userId){
@@ -6,13 +6,13 @@ Meteor.methods({
         }
         check(this.userId, String);
 		check(doc, Schema.group);
-		var me = this.userId;
-		var dup = CommColl.findOne({id:doc.id});
-		if(dup != null){
+		const me = this.userId;
+		const dup = CommColl.findOne({id:doc.id});
+		if(dup !== null){
 			return {type:"error",message:"Group with this id already exists, please choose another"}
 		}
 		_.extend(doc, {owner:me,pending:[],blocked:[],members:[], createdAt: new Date()});
-		var docid = CommColl.insert(doc);
+		const docid = CommColl.insert(doc);
 		Meteor.users.update({ _id: me }, { $addToSet: { 'profile.communities': { _id: docid, private: doc.private, isowned:true } } });
 		return {type:"success",message:"Success"}
 	},
@@ -23,12 +23,12 @@ Meteor.methods({
         check(this.userId, String);
 		check(doc, String);
 		check(skip, Number);
-		var dup = CommColl.findOne({ id: doc });
-		if(dup != null){
+		const dup = CommColl.findOne({ id: doc });
+		if(dup !== null){
 			return [dup];
 		}
 		console.log(doc);
-		var cursor = CommColl.find({ $text: { $search: doc } },
+		let cursor = CommColl.find({ $text: { $search: doc } },
 			{
 				fields: { score: { $meta: "textScore" } },
 				sort: { score: { $meta: "textScore" } },
@@ -43,14 +43,14 @@ Meteor.methods({
             return;
         }
         check(this.userId, String);
-		var user = this.userId;
+		const user = this.userId;
 		check(id, String);
-		var comm = CommColl.findOne({ _id: id });
-		if (comm == null) {
+		const comm = CommColl.findOne({ _id: id });
+		if (comm === null) {
 			return {type:"error",message:"No group exists with this name"}
 		}
 		//if owner
-		if (comm.owner == user) {
+		if (comm.owner === user) {
 			return {type:"info",message:"You own this group"}
 		}
 		// if already added
@@ -82,10 +82,10 @@ Meteor.methods({
             return;
         }
         check(this.userId, String);
-		var user = this.userId;
+		const user = this.userId;
 		check(id, String);
-		var comm = CommColl.findOne({ _id: id, owner: user });
-		if (comm == null) {
+		const comm = CommColl.findOne({ _id: id, owner: user });
+		if (comm === null) {
 			return {type:"error",message:"You cannot delete group you dont own"}
 		}
 		// if (comm.members.length() > 0) {
@@ -101,20 +101,20 @@ Meteor.methods({
             return;
         }
         check(this.userId, String);
-		var user = this.userId;
+		const user = this.userId;
 		check(doc, {
 			groupId: String,
 			memId: String
 		});
-		var comm = CommColl.findOne({ _id: doc.groupId, owner: user });
-		if (comm == null) {
+		const comm = CommColl.findOne({ _id: doc.groupId, owner: user });
+		if (comm === null) {
 			return {type:"error",message:"You cannot perform this action"}
 		}
 		// if already added
 		if (_.indexOf(comm.members, doc.memId) > -1) {
 			CommColl.update({ _id: doc.groupId, owner: user }, { $pull: { members: doc.memId } });
 			CommColl.update({ _id: doc.groupId, owner: user  }, { $push: { blocked: doc.memId } }, { upsert: true });
- 			Meteor.users.update({_id: doc.memId}, {$pull: {'profile.communities': {_id: doc.groupId}}});
+            Meteor.users.update({_id: doc.memId}, {$pull: {'profile.communities': {_id: doc.groupId}}});
 			return { type: "success", message: "Member blocked" }
 		} else {
 			return {type:"info",message:"Member not found"}
@@ -125,13 +125,13 @@ Meteor.methods({
             return;
         }
         check(this.userId, String);
-		var user = this.userId;
+		const user = this.userId;
 		check(doc, {
 			groupId: String,
 			memId: String
 		});
-		var comm = CommColl.findOne({ _id: doc.groupId, owner: user });
-		if (comm == null) {
+		const comm = CommColl.findOne({ _id: doc.groupId, owner: user });
+		if (comm === null) {
 			return {type:"error",message:"You cannot perform this action"}
 		}
 		// if pending
@@ -150,13 +150,13 @@ Meteor.methods({
             return;
         }
         check(this.userId, String);
-		var user = this.userId;
+		const user = this.userId;
 		check(doc, {
 			groupId: String,
 			memId: String
 		});
-		var comm = CommColl.findOne({ _id: doc.groupId, owner: user });
-		if (comm == null) {
+		const comm = CommColl.findOne({ _id: doc.groupId, owner: user });
+		if (comm === null) {
 			return {type:"error",message:"You cannot perform this action"}
 		}
 		// if pending
@@ -173,13 +173,13 @@ Meteor.methods({
             return;
         }
         check(this.userId, String);
-		var user = this.userId;
+		const user = this.userId;
 		check(doc, {
 			groupId: String,
 			memId: String
 		});
-		var comm = CommColl.findOne({ _id: doc.groupId, owner: user });
-		if (comm == null) {
+		const comm = CommColl.findOne({ _id: doc.groupId, owner: user });
+		if (comm === null) {
 			return {type:"error",message:"You cannot perform this action"}
 		}
 		// if pending
@@ -197,13 +197,13 @@ Meteor.methods({
             return;
         }
         check(this.userId, String);
-		var user = this.userId;
+		// const user = this.userId;
 		check(doc, {
 			groupId: String,
 			memId: String
 		});
-		var comm = CommColl.findOne({ _id: doc.groupId});
-		if (comm == null) {
+		const comm = CommColl.findOne({ _id: doc.groupId});
+		if (comm === null) {
 			return {type:"error",message:"You cannot perform this action"}
 		}
 		//if member
