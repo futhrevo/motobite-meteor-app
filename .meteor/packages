@@ -15,7 +15,6 @@ sacha:spin
 less
 meteorhacks:aggregate
 meteoric:ionic
-meteoric:autoform-ionic
 useraccounts:ionic
 copleykj:livestamp
 chrismbeckett:toastr
@@ -40,11 +39,8 @@ ejson
 spacebars
 check
 raix:push
-meteoric:ionic-sass
-meteoric:ionicons-sass
 reactive-var
 ecmascript
-aldeed:autoform
 edgee:slingshot
 chriswessels:hammer
 meteoric:camera
@@ -52,5 +48,10 @@ accounts-facebook
 accounts-google
 service-configuration
 accounts-ui
-react
 splendido:accounts-meld
+meteoric:autoform-ionic
+fourseven:scss@=3.2.0
+meteoric:ionic-sass
+meteoric:ionicons-sass
+aldeed:simple-schema
+aldeed:autoform

@@ -50,6 +50,7 @@ Accounts.onCreateUser(function(options, user) {
         options.profile.fullname = user.services.google.name;
     }
     if (user.services.facebook) {
+        options.profile.avatarUrl = "http://graph.facebook.com/" + user.services.facebook.id + "/picture/?type=large";
         options.profile.gender = user.services.facebook.gender;
     }
     user.profile = options.profile;
