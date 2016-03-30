@@ -7,6 +7,8 @@
         <h1 class="title">Chat</h1>
     {{/contentFor}}
 
+    {{#if chatReady}}
+        {{#with chatData}}
     {{#contentFor 'headerButtonRight'}}
         <button class="button button-clear" data-ion-popover="chatActions">
             {{#if isAndroid}}
@@ -76,4 +78,8 @@
             </button>
         </div>
     {{/ionView}}
+            {{/with}}
+    {{else}}
+        {{> loading}}
+    {{/if}}
 </template>

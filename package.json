@@ -1,0 +1,23 @@
+{
+  "name": "polo_meteor",
+  "version": "1.0.0",
+  "description": "Community carpooling app",
+  "main": "/client/main.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "jquery": "^2.2.2",
+    "later": "^1.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:teampolo/polo_meteor.git"
+  },
+  "author": "Rakesh Kalyankar",
+  "license": "UNLICENSED"
+}

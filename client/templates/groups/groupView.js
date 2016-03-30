@@ -1,3 +1,24 @@
+Template.groupView.onCreated(function(){
+	var template = this;
+	template.autorun(function(){
+		template.subscribe('members', Router.current().params._id);
+	});
+});
+
+Template.groupView.helpers({
+	ready: function(){
+		return Template.instance().subscriptionsReady();
+	},
+	groupInfo: function(){
+		let group = CommColl.findOne({ _id: _id });
+        let isOwner = false;
+        if (group && group.owner === Meteor.userId()) {
+            isOwner = true;
+        }
+        return {group: group , isowner:isOwner};
+	},
+
+});
 Template.groupView.events({
 	'click [data-action=unjoin-group]': function (event) { 
 		event.preventDefault();

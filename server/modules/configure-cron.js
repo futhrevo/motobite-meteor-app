@@ -1,7 +1,7 @@
 /* global Modules, DrivesAdvtColl*/
 const configure = () => {
         //start process in later to handle old records deletions
-        const Later = Meteor.npmRequire('later');
+        const Later = require('later');
         let wrapLater = Later;
         // will fire every 1 minutes
         const textSched = wrapLater.parse.text('every 1 min');

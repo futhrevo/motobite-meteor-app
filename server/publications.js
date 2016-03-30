@@ -64,18 +64,38 @@ Meteor.publish(null ,function(){
 });
 
 Meteor.publish('friends', function(userIds) {
-    if(! this.userId){
-        return;
+    if(! this.userId ){
+        return null;
     }
     check(this.userId, String);
     check(userIds, [String]);
-    return Meteor.users.find(
-        {_id: {$in: userIds}},
-        {fields: {_id: 1, 'profile.name': 1, 'profile.status': 1,
+        return Meteor.users.find({_id: {$in: userIds}},
+            {fields: {_id: 1, 'profile.name': 1, 'profile.status': 1,
             'profile.updatedAt': 1, 'profile.avatarUrl': 1}});
+    return null;
 });
 
+Meteor.publish('members', function(groupId){
+    if(! this.userId ){
+        return null;
+    }
+    check(this.userId, String);
+    check(groupId, String);
+    const me = this.userId;
+    let group = CommColl.findOne({ _id: groupId});
+    if (group && group.owner === me) {
+        let members = group.members;
+        let blocked = group.blocked;
+        let pending = group.pending;
+        let userIds = members.concat(blocked, pending);
+        return Meteor.users.find({_id: {$in: userIds}},
+            {fields: {_id: 1, 'profile.name': 1, 'profile.status': 1,
+            'profile.updatedAt': 1, 'profile.avatarUrl': 1}});
+    }
+    return null;
+});
 Meteor.publish('acquaintance',function(userIds){
+    // Meteor._sleepForMs(2000);
     if(! this.userId){
         return;
     }

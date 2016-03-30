@@ -2,6 +2,13 @@
 /**
  * Created by rakeshkalyankar on 16/07/15.
  */
+Template.chat.onCreated(function(){
+    Template.instance().chatLimit = parseInt(Router.current().params.limit) || 15;
+    let template = this;
+    template.autorun(function(){
+        template.subscribe('chat', Router.current().params.friend, Template.instance().chatLimit);
+    });
+});
 Template.chat.onRendered (function () {
 
     //setting window focuses
@@ -35,7 +42,23 @@ Template.chat.onRendered (function () {
 });
 
 Template.chat.helpers({
-
+    chatReady: function(){
+        return Template.instance().subscriptionsReady();
+    },
+    chatData: function () {
+        const increment = 15;
+        const room = createRoom(Meteor.userId(), Router.current().params.friend);
+        const findOptions = {sort: {time: 1}};
+        let messages = Messages.find({room: room}, findOptions);
+        let hasMore = messages.count() === Template.instance().chatLimit;
+        let olderChats = Router.go('chat', {friend: Router.current().params.friend, limit: Template.instance().chatLimit + increment})
+        return {
+            room: room,
+            messages: messages,
+            ready: Template.instance().subscriptionsReady(),
+            olderChats: hasMore ? olderChats : null
+        };
+    },
     // Read last new-msg and set state=read
     readMessage: function(room) {
         var msg = Messages.findOne({room: room, to: Meteor.userId(), state: 'new-msg'});
