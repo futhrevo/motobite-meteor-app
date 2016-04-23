@@ -1,7 +1,7 @@
 Template.groupView.onCreated(function(){
 	var template = this;
 	template.autorun(function(){
-		template.subscribe('members', Router.current().params._id);
+		template.subscribe('members', FlowRouter.getParam('_id'));
 	});
 });
 

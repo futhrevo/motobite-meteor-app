@@ -23,3 +23,7 @@ Template.registerHelper('isCordova', function(){
 Template.registerHelper('checked', function(value){
         return value === true ? 'checked' : '';
 });
+
+Template.registerHelper('instance', function () {
+    return Template.instance();
+});

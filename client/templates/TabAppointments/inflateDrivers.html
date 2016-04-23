@@ -1,4 +1,6 @@
 <template name="inflateDrivers">
+{{#forceLoggedIn}}
+    {{#layout}}
     {{#HammerTouchArea gestureMap=inflateDriversGestures}}
     {{#contentFor "headerButtonLeft"}}
         {{>ionNavBackButton path="index"}}
@@ -31,4 +33,6 @@
     {{/ionView}}
     {{> _tabs}}
     {{/HammerTouchArea}}
+    {{/layout}}
+{{/forceLoggedIn}}
 </template>

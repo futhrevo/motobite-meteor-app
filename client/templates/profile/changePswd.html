@@ -1,4 +1,6 @@
 <template name="changePswd">
+    {{#forceLoggedIn}}
+        {{#layout}}
   {{#contentFor "headerButtonLeft"}}
     {{>ionNavBackButton path="settings"}}
   {{/contentFor}}
@@ -13,4 +15,6 @@
           {{> atForm state='changePwd'}}
       {{/ionContent}}
   {{/ionView}}
+        {{/layout}}
+    {{/forceLoggedIn}}
 </template>

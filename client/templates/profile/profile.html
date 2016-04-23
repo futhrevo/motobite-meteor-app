@@ -1,4 +1,6 @@
 <template name="profileTemplate">
+{{#forceLoggedIn}}
+    {{#layout}}
     {{#contentFor "headerButtonLeft"}}
         {{>ionNavBackButton path="index"}}
     {{/contentFor}}
@@ -8,7 +10,6 @@
     {{/contentFor}}
 
     {{#ionView}}
-        {{#if currentUser}}
             {{#ionContent class="genericClass"}}
 
                 <div class="list card">
@@ -104,9 +105,7 @@
                     </div>
                 </div>
             {{/ionContent}}
-        {{else}}
-            {{> atForm}}
-        {{/if}}
     {{/ionView}}
-
+    {{/layout}}
+    {{/forceLoggedIn}}
 </template>

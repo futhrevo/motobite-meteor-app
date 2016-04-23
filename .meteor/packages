@@ -10,11 +10,9 @@ jquery
 accounts-base
 manuel:reactivearray
 matb33:collection-hooks
-iron:router
 sacha:spin
 less
 meteorhacks:aggregate
-meteoric:ionic
 useraccounts:ionic
 copleykj:livestamp
 chrismbeckett:toastr
@@ -22,7 +20,6 @@ momentjs:moment
 launch-screen
 email
 mizzao:user-status
-useraccounts:iron-routing
 meteor-base
 mobile-experience
 mongo
@@ -40,7 +37,6 @@ reactive-var
 ecmascript
 edgee:slingshot
 chriswessels:hammer
-meteoric:camera
 accounts-facebook
 accounts-google
 service-configuration
@@ -54,3 +50,8 @@ aldeed:simple-schema
 aldeed:autoform
 standard-minifier-css
 standard-minifier-js
+kadira:flow-router
+kadira:blaze-layout
+arillo:flow-router-helpers
+meteorhacks:picker
+useraccounts:flow-routing

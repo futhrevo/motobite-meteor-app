@@ -1,4 +1,6 @@
 <template name="createGroup">
+    {{#forceLoggedIn}}
+        {{#layout}}
 	{{#contentFor "headerButtonLeft"}}
         {{>ionNavBackButton path="groups"}}
     {{/contentFor}}
@@ -10,4 +12,6 @@
 			{{> quickForm schema=groupSchema id="myGroupForm" template="ionic" type="method" meteormethod="createGroup"}}
 		{{/ionContent}}
     {{/ionView}}
+        {{/layout}}
+    {{/forceLoggedIn}}
 </template>

@@ -1,4 +1,6 @@
 <template name="profileView">
+    {{#forceLoggedIn}}
+        {{#layout}}
     {{#contentFor 'headerButtonLeft'}}
         {{>ionNavBackButton path=''}}
     {{/contentFor}}
@@ -95,4 +97,6 @@
             </div>
         {{/ionContent}}
     {{/ionView}}
+        {{/layout}}
+    {{/forceLoggedIn}}
 </template>

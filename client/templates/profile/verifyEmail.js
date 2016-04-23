@@ -1,17 +1,48 @@
 /* global toastr*/
+Template.verifyEmail.onCreated(function(){
+	var template = this;
+	const cat = FlowRouter.getParam('cat');
+    const index = parseInt(FlowRouter.getParam('index'));
+    template.catValue = new ReactiveVar();
+    template.indexValue = new ReactiveVar();
+    if (typeof (cat) === 'string' && typeof (index) === 'number' && Meteor.user()) {
+    	let proj ;
+            if (cat === "works") {
+                if (Meteor.user().works.emails.length > index) {
+                    proj = Meteor.user().works.emails[index].verified;
+                }
+            } else if (cat === "emails") {
+                if (Meteor.user().emails.length > index) {
+                    proj = Meteor.user().emails[index].verified;
+                }
+            } else {
+                return Router.go('profileTemplate');
+            }
+            if (proj === false) {
+            	template.catValue.set(cat);
+            	template.indexValue.set(index)
+                return ;
+            } else {
+                return Router.go('profileTemplate');
+            }
+    } else {
+            console.log("not printed");
+            return Router.go('profileTemplate');
+        }
+});
 Template.verifyEmail.helpers({
 	email: function () {
-		if (this.cat === "emails") {
-			return Meteor.user().emails[this.index].address;
+		if (Template.instance().catValue.get() === "emails") {
+			return Meteor.user().emails[Template.instance().indexValue.get()].address;
 		} else {
-			return Meteor.user().works.emails[this.index].address;
+			return Meteor.user().works.emails[Template.instance().indexValue.get()].address;
 		}
 	}
 });
 
 Template.verifyEmail.events({
 	'click [data-action=send-emailotp-button]': function (event, template) { 
-		Meteor.call('createEmailOtp', this.cat, this.index, function (err, res) {
+		Meteor.call('createEmailOtp', template.catValue.get(), template.indexValue.get(), function (err, res) {
 			if (err) {
 				toastr[err.type](err.message);
 			}
@@ -46,7 +77,7 @@ Template.verifyEmail.events({
             toastr.error("check email again");
 			return false;
         }
-        Meteor.call('addEmail', this.cat, this.index, str, function(err){
+        Meteor.call('addEmail', template.catValue.get(), template.indexValue.get(), str, function(err){
         if (err) {
 				toastr.error("Error Processing Request");
 			}

@@ -4,6 +4,30 @@
  */
 
 Template.recentChats.helpers({
+    recentChats: function(){
+        let friends = _.map(Meteor.user().profile.friends, function(f){
+                return f._id;
+            });
+
+            let recentChats = [];
+
+            for(let i=0;i < friends.length;i++){
+                let room = createRoom(Meteor.userId(),friends[i]);
+                let message = Messages.findOne({room:room},{sort:{time:-1}});
+
+                if(message){
+                    recentChats.push({room:room,message:message});
+                }
+            }
+
+            // newest first
+            recentChats = _.sortBy(recentChats,function(chat){
+                return -1 * chat.message.time;
+            });
+
+            return recentChats;
+
+    },
     totalRecentChats: function() {
         return Messages.find().count();
     },

@@ -1,4 +1,6 @@
 <template name="myContacts">
+    {{#forceLoggedIn}}
+        {{#layout}}
     {{#contentFor "headerButtonLeft"}}
         {{>ionNavBackButton path="index"}}
     {{/contentFor}}
@@ -88,4 +90,6 @@
         </div>
         {{/ionContent}}
     {{/ionView}}
+        {{/layout}}
+    {{/forceLoggedIn}}
 </template>

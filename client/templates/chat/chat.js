@@ -3,10 +3,12 @@
  * Created by rakeshkalyankar on 16/07/15.
  */
 Template.chat.onCreated(function(){
-    Template.instance().chatLimit = parseInt(Router.current().params.limit) || 15;
+
     let template = this;
+    template.chatLimit = new ReactiveVar(parseInt(FlowRouter.getParam('limit')) || 15);
     template.autorun(function(){
-        template.subscribe('chat', Router.current().params.friend, Template.instance().chatLimit);
+        let chatLimit = template.chatLimit.get();
+        template.subscribe('chat', FlowRouter.getParam('friend'), chatLimit);
     });
 });
 Template.chat.onRendered (function () {
@@ -47,11 +49,11 @@ Template.chat.helpers({
     },
     chatData: function () {
         const increment = 15;
-        const room = createRoom(Meteor.userId(), Router.current().params.friend);
+        const room = createRoom(Meteor.userId(), FlowRouter.getParam('friend'));
         const findOptions = {sort: {time: 1}};
         let messages = Messages.find({room: room}, findOptions);
         let hasMore = messages.count() === Template.instance().chatLimit;
-        let olderChats = Router.go('chat', {friend: Router.current().params.friend, limit: Template.instance().chatLimit + increment})
+        let olderChats = Router.go('chat', {friend: FlowRouter.getParam('friend'), limit: Template.instance().chatLimit.get() + increment})
         return {
             room: room,
             messages: messages,

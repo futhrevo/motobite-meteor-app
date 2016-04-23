@@ -1,4 +1,6 @@
 <template name="inflateReq">
+    {{#forceLoggedIn}}
+        {{#layout}}
     {{#contentFor "headerButtonLeft"}}
         {{>ionNavBackButton path="index"}}
     {{/contentFor}}
@@ -15,6 +17,8 @@
         {{/ionContent}}
     {{/ionView}}
     {{> _tabs}}
+{{/layout}}
+{{/forceLoggedIn}}
 </template>
 
 <template name="listReq">

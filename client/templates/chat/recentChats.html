@@ -1,4 +1,6 @@
 <template name="recentChats">
+    {{#forceLoggedIn}}
+        {{#layout}}
     {{#contentFor 'headerButtonLeft'}}
         {{>ionNavBackButton path=''}}
     {{/contentFor}}
@@ -26,4 +28,6 @@
             {{/if}}
         {{/ionContent}}
     {{/ionView}}
+        {{/layout}}
+    {{/forceLoggedIn}}
 </template>

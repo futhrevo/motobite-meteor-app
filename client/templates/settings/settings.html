@@ -1,4 +1,6 @@
 <template name="settings">
+    {{#forceLoggedIn}}
+    {{#layout}}
     {{#contentFor "headerButtonLeft"}} 
         {{>ionNavBackButton path="index"}} 
         {{/contentFor}} 
@@ -6,7 +8,6 @@
         <h1 class="title">Settings</h1> 
     {{/contentFor}} 
     {{#ionView}} 
-    {{#if currentUser}}
         {{#ionContent class="genericClass"}}
             <div class="list">
                 <div class="item item-divider">
@@ -38,9 +39,8 @@
                     </select>
                 </label>
             </div>
-        {{/ionContent}} 
-    {{else}}
-            {{> atForm}}
-        {{/if}}
+        {{/ionContent}}
     {{/ionView}}
+        {{/layout}}
+        {{/forceLoggedIn}}
 </template>

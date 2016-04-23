@@ -1,0 +1,7 @@
+<template name="forceLoggedIn">
+    {{#if currentUser}}
+        {{> Template.contentBlock}}
+    {{else}}
+        {{> atForm}}
+    {{/if}}
+</template>

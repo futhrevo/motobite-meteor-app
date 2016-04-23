@@ -1,4 +1,6 @@
 <template name="changeAvatar">
+{{#forceLoggedIn}}
+    {{#layout}}
     {{#contentFor "headerButtonLeft"}}
         {{>ionNavBackButton path="profileTemplate"}}
     {{/contentFor}}
@@ -59,4 +61,6 @@
             </div>
         {{/ionContent}}
     {{/ionView}}
+    {{/layout}}
+    {{/forceLoggedIn}}
 </template>

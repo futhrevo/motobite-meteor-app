@@ -1,0 +1,7 @@
+<template name="app">
+    {{#if appReady}}
+        {{>Template.dynamic template=main}}
+    {{else}}
+        {{> loading}}
+    {{/if}}
+</template>

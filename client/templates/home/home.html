@@ -1,5 +1,6 @@
 <template name="home">
-
+    {{#forceLoggedIn}}
+        {{#layout}}
     {{#contentFor "headerButtonLeft"}}
         <button class="button button-clear pull-left" data-ion-menu-toggle="left">
             {{#if isAndroid}}
@@ -75,5 +76,6 @@
             </div>
         {{/ionContent}}
     {{/ionView}}
-
+            {{/layout}}
+    {{/forceLoggedIn}}
 </template>

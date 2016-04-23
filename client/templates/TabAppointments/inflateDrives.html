@@ -1,4 +1,6 @@
 <template name="inflateDrives">
+{{#forceLoggedIn}}
+    {{#layout}}
     {{#contentFor "headerButtonLeft"}}
         {{>ionNavBackButton path="index"}}
     {{/contentFor}}
@@ -29,4 +31,6 @@
         {{/ionContent}}
     {{/ionView}}
     {{> _tabs}}
+    {{/layout}}
+{{/forceLoggedIn}}
 </template>

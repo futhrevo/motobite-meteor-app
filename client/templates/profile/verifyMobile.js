@@ -1,13 +1,31 @@
 /* global toastr*/
+Template.verifyMobile.onCreated(function(){
+	var template = this;
+	template.indexValue = new ReactiveVar();
+	const index = parseInt(FlowRouter.getParam('index'));
+        if (typeof (index) === 'number' && Meteor.user()) { 
+            let proj;
+            if (Meteor.user().mobile.length > index) { 
+                proj = Meteor.user().mobile[index].verified;
+            }
+            if (proj === false) {
+                return template.indexValue.set(index);
+            } else {
+                return Router.go('profileTemplate');
+            }
+        } else {
+            return Router.go('profileTemplate');
+        }
+});
 Template.verifyMobile.helpers({
 	number: function () {
-		return Meteor.user().mobile[this.index].number;
+		return Meteor.user().mobile[Template.instance().indexValue.get()].number;
 	}
 });
 
 Template.verifyMobile.events({
 	'click [data-action=send-smsotp-button]': function (event, template) { 
-		Meteor.call('createSmsOtp', this.index, function (err, res) {
+		Meteor.call('createSmsOtp', template.indexValue.get(), function (err, res) {
 			if (err) {
 				toastr[err.type](err.message);
 			}

@@ -1,4 +1,6 @@
 <template name="verifyMobile">
+    {{#forceLoggedIn}}
+        {{#layout}}
 	{{#contentFor "headerButtonLeft"}}
     {{>ionNavBackButton path="profileTemplate"}}
   {{/contentFor}}
@@ -52,4 +54,6 @@
       </div>
       {{/ionContent}}
   {{/ionView}}
+        {{/layout}}
+    {{/forceLoggedIn}}
 </template>

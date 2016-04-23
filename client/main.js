@@ -67,7 +67,7 @@ function onDeviceReady() {
     //add back button event
     //http://stackoverflow.com/questions/28055836/back-button-in-cordova-phongap-meteor-build-for-android-wont-close-application
     document.addEventListener("backbutton", function (e) {
-        if(Router.current().route.getName() === "index"){
+        if(FlowRouter.getRouteName() === "home"){
             e.preventDefault();
             if($("body").hasClass("action-sheet-open")){
                 IonActionSheet.close();

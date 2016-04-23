@@ -714,9 +714,9 @@ function mapDom() {
     if (typeof google !== "undefined") {
         google.maps.event.trigger(gmap.map,'resize');
     }
-    var query = Router.current().params.query;
+    var query = FlowRouter.getParam('query');
         if (_.has(query, "lat") && _.has(query, "lng")) {
-            Router.go('index');
+            FlowRouter.go('home');
             if (typeof google !== "undefined") {
                 var center = new google.maps.LatLng(query.lat, query.lng);
                 gmap.map.panTo(center);
@@ -730,7 +730,7 @@ function drawCanvas() {
     if ($('#map-canvas').length) {
         console.info("map-canvas added to the dom");
         $('#map-canvas').ready(gmap.initialize());
-    } else if (Router.current().lookupTemplate() == "Index" || Router.current().lookupTemplate() == "Home"){
+    } else if (FlowRouter.getRouteName() === "home"){
         console.info("wait for map-canvas to be ready");
         setTimeout(drawCanvas, 500);
     } else {

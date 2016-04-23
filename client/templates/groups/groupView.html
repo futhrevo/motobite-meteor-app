@@ -1,4 +1,6 @@
 <template name="groupView">
+    {{#forceLoggedIn}}
+        {{#layout}}
 	{{#contentFor "headerButtonLeft"}}
 		{{>ionNavBackButton path="groups"}}
 	{{/contentFor}}
@@ -69,4 +71,6 @@
 			{{> loading}}
 		{{/if}}
 	{{/ionView}}
+        {{/layout}}
+    {{/forceLoggedIn}}
 </template>

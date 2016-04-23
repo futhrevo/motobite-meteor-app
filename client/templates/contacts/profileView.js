@@ -3,12 +3,21 @@
 /**
  * Created by rakeshkalyankar on 15/07/15.
  */
-
+Template.profileView.onCreated(function () {
+    let template = this;
+    const _id = FlowRouter.getParam('_id');
+    if(!Meteor.users.findOne({_id: _id})){
+        Router.go('index');
+    }
+});
 Template.profileView.onRendered(function () {
     $('.popup-image').magnificPopup({type:'image'});
 });
 
 Template.profileView.helpers({
+    'user': function(){
+        return Meteor.users.findOne({_id: FlowRouter.getParam('_id')})
+    },
     'isNewRequest': function(friendId) {
         var user = _.find(Meteor.user().profile.friends, function(u) {
             return u._id === friendId;
