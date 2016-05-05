@@ -75,63 +75,63 @@ Template.home.events({
         }
     }
 });
-Template.ionBody.events({
-    "click [data-action=centerBounds]": function () {
-        console.log("Center Map");
-        navigator[vibrate](10);
-        var clat = Session.get('lat');
-        var clng = Session.get('lng');
-        var loc = new google.maps.LatLng(clat, clng);
-        gmap.map.setCenter(loc);
-        if (gmap.map.getZoom() < 16)
-            gmap.map.setZoom(16);
-        updateLocation();
-    },
-    "click [data-action=addSafeHouse]": function () {
-        console.log("Add safe house");
-        navigator[vibrate](10);
-        updateLocation();
-        var lat = Session.get('lat');
-        var lng = Session.get('lng');
-        gmap.geocode(lat,lng);
-        IonPopup.show({
-            title: "Add a Safe House ?",
-            subTitle: "A region where you are not tracked with GPS, hence better battery life. You can add your home, work or other areas where you spend most time",
-            template: '<div class="list"><label class="item item-input">' +
-                        '<input type="text" placeholder="Enter a name" name="prompt"></label>' +
-                        '<div class="item range range-positive"><i>300m</i><input type="range" name="distance" min="300" max="700" value="500"><i>700m</i></div>' + 
-                        '<output for="range" class="output"></output></div>',
-            buttons: [
-                {
-                    text: 'Cancel',
-                    type: 'button-default',
-                    onTap: function (event, template) {
-                        console.log("user cancelled safe house adition!");
-                        return true;
-                    }
-                },
-                {
-                    text: 'Add Safe house',
-                    type: 'button-positive',
-                    onTap: function (event, template) {
-                        console.log("user add safe house");
-                        var name = template.$("input[name='prompt']").val();
-                        if (name === "") {
-                            toastr.error("Please give a name to your safe House!");
-                            return false;
-                        }
-                        var radius = template.$("input[name='distance']").val();
-                        insertSafeHouseCircle(name, radius);
-                        return true;
-                    }
-                }
-            ]
-        });
-        $("input[name='distance']").on("change", function() {
-            $('.output').html("A circle with <strong>radius "+this.value +" meters</strong> will be your Do Not Track area" );
-        }).trigger("change");
-    }
-});
+// Template.ionBody.events({
+//     "click [data-action=centerBounds]": function () {
+//         console.log("Center Map");
+//         navigator[vibrate](10);
+//         var clat = Session.get('lat');
+//         var clng = Session.get('lng');
+//         var loc = new google.maps.LatLng(clat, clng);
+//         gmap.map.setCenter(loc);
+//         if (gmap.map.getZoom() < 16)
+//             gmap.map.setZoom(16);
+//         updateLocation();
+//     },
+//     "click [data-action=addSafeHouse]": function () {
+//         console.log("Add safe house");
+//         navigator[vibrate](10);
+//         updateLocation();
+//         var lat = Session.get('lat');
+//         var lng = Session.get('lng');
+//         gmap.geocode(lat,lng);
+//         IonPopup.show({
+//             title: "Add a Safe House ?",
+//             subTitle: "A region where you are not tracked with GPS, hence better battery life. You can add your home, work or other areas where you spend most time",
+//             template: '<div class="list"><label class="item item-input">' +
+//                         '<input type="text" placeholder="Enter a name" name="prompt"></label>' +
+//                         '<div class="item range range-positive"><i>300m</i><input type="range" name="distance" min="300" max="700" value="500"><i>700m</i></div>' +
+//                         '<output for="range" class="output"></output></div>',
+//             buttons: [
+//                 {
+//                     text: 'Cancel',
+//                     type: 'button-default',
+//                     onTap: function (event, template) {
+//                         console.log("user cancelled safe house adition!");
+//                         return true;
+//                     }
+//                 },
+//                 {
+//                     text: 'Add Safe house',
+//                     type: 'button-positive',
+//                     onTap: function (event, template) {
+//                         console.log("user add safe house");
+//                         var name = template.$("input[name='prompt']").val();
+//                         if (name === "") {
+//                             toastr.error("Please give a name to your safe House!");
+//                             return false;
+//                         }
+//                         var radius = template.$("input[name='distance']").val();
+//                         insertSafeHouseCircle(name, radius);
+//                         return true;
+//                     }
+//                 }
+//             ]
+//         });
+//         $("input[name='distance']").on("change", function() {
+//             $('.output').html("A circle with <strong>radius "+this.value +" meters</strong> will be your Do Not Track area" );
+//         }).trigger("change");
+//     }
+// });
 
 var insertSafeHouseCircle = function (name, radius) {
     var lat = Session.get('lat');
