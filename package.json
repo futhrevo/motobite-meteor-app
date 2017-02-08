@@ -1,0 +1,24 @@
+{
+  "name": "polo_meteor",
+  "version": "1.0.0",
+  "description": "* [x] Accounts pages\r * [x] Schedule tabs\r * [ ] Server side filtering\r * [x] input panel Today/tomorrow\r * [x] better timepicker preferably polymer\r * [ ] map heigth adjustement according to view port\r     * [x] map terms and conditions minimize\r     * [x] remove zoom icons and support pinching\r     * [ ] limit map to india/bangalore\r     * [x] hide map type on top of map\r * [x] User profile page\r * [ ] Fuel points management, billing and charging\r * [ ] User input validation - remove or implement parsely input panel\r * [x] Remove Insecure Package\r * [x] Not Required - Remove geohash package\r * [x] modify core tool-bar height according to ios specs\r * [ ] Use north when showing map in realtime\r * [ ] tabs doesnt show any accepted rides\r * [ ] Wait button when rider is waiting\r * [ ] edit delete disable after drive started\r * [ ] driver renting\r * [ ] fill outputDirectionDiv if only one route available\r * [x] clear button to clear input panel\r * [x] checkin function\r     * [ ] CheckinHeap remove\r TODO SERVER\r * [x] Remove 1 day old records to archives\r * [ ] Need ways to request clients to checkin in seamless way",
+  "main": ".eslintrc.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/teampolo/polo_meteor.git"
+  },
+  "author": "Rakesh Kalyankar",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/teampolo/polo_meteor#readme",
+  "dependencies": {
+    "bcrypt": "^0.8.7",
+    "jquery": "^3.1.1",
+    "later":"1.1.6"
+  }
+}

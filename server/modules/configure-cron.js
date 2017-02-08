@@ -1,10 +1,12 @@
 /* global Modules, DrivesAdvtColl*/
+import Later from 'later';
+
 const configure = () => {
         //start process in later to handle old records deletions
-        const Later = Meteor.npmRequire('later');
-        let wrapLater = Later;
+        // const Later = Meteor.npmRequire('later');
+        // let wrapLater = Later;
         // will fire every 1 minutes
-        const textSched = wrapLater.parse.text('every 1 min');
+        const textSched = Later.parse.text('every 1 min');
         // function to execute       
         const logTime = () =>{
             console.log(new Date());
@@ -16,7 +18,7 @@ const configure = () => {
         }
         
         // execute logTime one time on the next occurrence of the text schedule
-        wrapLater.setInterval(Meteor.bindEnvironment(logTime), textSched);
+        Later.setInterval(Meteor.bindEnvironment(logTime), textSched);
     }
     
     Modules.server.configureCron = configure;
