@@ -25,7 +25,7 @@ Accounts.emailTemplates.enrollAccount.text = function (user, url) {
      + url;
 };
 Accounts.emailTemplates.verifyEmail.subject = function() {
-  return 'Welcome to MotoBite App';
+  return 'Welcome to MotoBite App - Verify your Email';
 };
 // Support to add blank profile images
 Accounts.onCreateUser(function(options, user) {

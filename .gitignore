@@ -3,3 +3,4 @@
 /zzz.ts-compiler.ts
 /node_modules
 npm-debug.log.*
+/.meteor
