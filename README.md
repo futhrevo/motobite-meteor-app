@@ -1,6 +1,49 @@
-# README #
+![Motobite logo](https://github.com/futhrevo/motobite-meteor-app/blob/master/public/play_graphic.png?raw=true)
 
-##TODO
+# Summary #
+MotoBite is a free real-time personal carpooling app with social features. We want to take a new look at pooling cars and to solve problems in process. Riders just need to enter their trip details whenever they wish to start and we connect users going in the same way. We want to provide alternate means of transport to commuters where security is never compromised.
+
+MotoBite is targeted for corporate employees to share their daily commute. MotoBite stands different from other apps in ease of use because there will be no sync ups on the phone and no need to explain directions for pickup. Once a user enters his destination he will be presented with riders who are currently going via his current location to his destination. Users can select the appropriate rider and request a ride. The rider then can either accept/ reject this request. Once accepted the user is presented with a circle in his map where he needs to checkin in order to be picked up by the rider. Once the user checks in at that circle he will be given vehicle number and color. Once the trip is complete the user can pay the rider with a wallet linked to his number.
+
+MotoBite also has some social features like adding people as friends, chat with them and create groups specific to their company, interest, colony etc and pool within their group. MotoBite aims to benefit both the rider and user thereby making less congested roads and step towards Swachh Bharat.
+
+## Features
+* Option for Ladies only pooling
+* Community based carpooling
+* For Android and iOS or anything
+* Record your own route and pool it
+
+## Security
+Security is multilayer. Users upon registering need to verify their work and personal email ID.
+Periodic verification of work email through OTP. Each driver or rider is given ratings and feedback. Upon accepting a ride the rider is provided with a vehicle number which can be shared to anyone. Each user can become a rider by entering their vehicle registration number. Riders are requested to check vehicle number and description may be provided with photos. Panic button for both, once pressed tight tracking is enabled and user is contacted, if doesn't respond the issue will be escalated. Upon completing the trip each user needs to confirm it.
+
+## Design Ideas
+1. Light weight and less battery consuming
+
+    We use fused location provider coupled with activity detection API to get user location only when the user is moving. Further geofences are added to user’s safe locations where there won't be any type of tracking.
+2. Community based carpooling
+
+    User will be added to communities based on his company, work location and residential location and opt to get riders or rides from closed user groups
+3. Option for Ladies only pooling
+
+    Ladies can opt for ladies only users as co-travellers from a preference input
+4. Ability to record routes
+
+    No need to use only gmaps given routes, users can record their routes and get suggestions based on it.
+
+
+## FAQs
+* Is it a commercial app or a free app?
+
+    it is a free app but subscription based
+* How is different from any other regular carpooling app?
+
+    Up until  now carpooling is small scale and mostly pre-planned It involves lot of waiting and chances of not using it are more We on other hand make it realtime
+* Who are eligible to use?
+
+	Carpooling is limited to private vehicles (whiteboard) and users with corporate email id
+
+## TODO
 * [x] Accounts pages
 * [x] Schedule tabs
 * [ ] Server side filtering
@@ -84,7 +127,7 @@ meteor add cordova:cordova-plugin-device-orientation@https://github.com/apache/c
 https://github.com/Initsogar/cordova-webintent
 
 #########trash can
-adb logcat | grep -E "cordova|LocationUpdateService" 
+adb logcat | grep -E "cordova|LocationUpdateService"
 
 publications in meteor
 http://matthewfieger.com/posts/me/2014/06/18/pseudo-collections-in-meteor.html
@@ -225,10 +268,10 @@ localhost 27017
     Private Key
     /home/reku/.ssh/google_compute_engine
     rakesh
-    
+
 ./letsencrypt-auto certonly -a manual -d app.motobite.in --server https://acme-v01.api.letsencrypt.org/directory
 // list all containers
 docker ps
- 
+
 ./letsencrypt-auto certonly -a manual -d app.motobite.in --server https://acme-v01.api.letsencrypt.org/directory
 ./letsencrypt-auto certonly -a standalone -d app.motobite.in --server https://acme-v01.api.letsencrypt.org/directory --agree-dev-preview
