@@ -226,9 +226,16 @@ localhost 27017
     /home/reku/.ssh/google_compute_engine
     rakesh
     
-./letsencrypt-auto certonly -a manual -d app.motobite.in --server https://acme-v01.api.letsencrypt.org/directory
+
 // list all containers
 docker ps
  
-./letsencrypt-auto certonly -a manual -d app.motobite.in --server https://acme-v01.api.letsencrypt.org/directory
-./letsencrypt-auto certonly -a standalone -d app.motobite.in --server https://acme-v01.api.letsencrypt.org/directory --agree-dev-preview
+ sudo service stud stop
+ ./letsencrypt-auto -d app.motobite.in --email k.rakeshlal@gmail.com certonly --standalone
+cd /home/reku/todel
+rm *.pem
+sudo su
+cp /etc/letsencrypt/live/app.motobite.in/* .
+
+gcloud compute copy-files reku@instance-1:~/todel .
+
