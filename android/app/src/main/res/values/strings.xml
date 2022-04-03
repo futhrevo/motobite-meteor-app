@@ -1,0 +1,6 @@
+<resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">3BTyA9Ck0liQ1bBg55qZ51695rEEE1BhAPLFf</string>
+    <string name="app_name">mbappNative</string>
+    <string name="facebook_app_id">770847263015507</string>
+    <string name="google_map_key">geo_API_KEY</string>
+</resources>
