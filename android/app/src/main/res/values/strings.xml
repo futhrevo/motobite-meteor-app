@@ -1,0 +1,13 @@
+<resources>
+
+
+
+
+
+
+
+
+    <string name="app_name">mbapp</string>
+    <string name="facebook_app_id">770847263015507</string>
+    <string name="google_map_key">AIzaSyCQxtlqd3EmG0boD_mWuTdDAh2fDgAWM_0</string>
+</resources>

@@ -1,8 +1,9 @@
 {
-"compilerOptions": {
-	"target": "ES6"
-},
-"files": [
-	"typings"
-]
+    "compilerOptions": {
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
 }
