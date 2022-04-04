@@ -7,6 +7,9 @@ MotoBite is targeted for corporate employees to share their daily commute. MotoB
 
 MotoBite also has some social features like adding people as friends, chat with them and create groups specific to their company, interest, colony etc and pool within their group. MotoBite aims to benefit both the rider and user thereby making less congested roads and step towards Swachh Bharat.
 
+Available currently from Play store 
+<https://play.google.com/store/apps/details?id=in.hedera.motobite.reku>
+
 ## Features
 * Option for Ladies only pooling
 * Community based carpooling
